@@ -4,47 +4,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>For You 💌</title>
+
     <link rel="stylesheet" href="style.css">
 </head>
 
+
 <body>
 
-    <!-- INTRO SCREEN -->
+
+    <!-- =========================
+         INTRO
+    ========================== -->
 
     <main class="container" id="intro">
-        <h1>Hey...</h1>
-        <p>I made something for you.</p>
-        <button id="openButton">Open 💌</button>
+
+        <h1>
+            Hey...
+        </h1>
+
+        <p>
+            I made something for you.
+        </p>
+
+        <button id="openButton">
+            Open 💌
+        </button>
+
     </main>
 
 
-    <!-- LETTER SCREEN -->
+
+    <!-- =========================
+         LETTER
+    ========================== -->
 
     <section class="letter hidden" id="letter">
 
+
         <div class="message">
-            <p>I've been wanting to tell you something...</p>
+
+            <p>
+                I've been wanting to tell you something...
+            </p>
+
         </div>
+
+
 
         <div class="envelope" id="envelope">
 
+
             <div class="envelope-top"></div>
 
+
             <div class="envelope-body">
-                <span>💌</span>
-                <p>Click me</p>
+
+                <span>
+                    💌
+                </span>
+
+                <p>
+                    Click me
+                </p>
+
             </div>
+
+
 
             <div class="paper">
-                <h2>For You 💗</h2>
 
-                <p>There's something I've been wanting to say...</p>
+                <h2>
+                    For You 💗
+                </h2>
 
-                <p>I'll put the actual message here later.</p>
+                <p>
+                    There's something I've been wanting to say...
+                </p>
+
+                <p>
+                    I'll put the actual message here later.
+                </p>
+
             </div>
 
+
         </div>
+
 
 
         <!-- CONTINUE BUTTON -->
@@ -53,28 +100,116 @@
             Continue →
         </button>
 
+
     </section>
 
 
-    <!-- QUESTION SCREEN -->
+
+    <!-- =========================
+         QUESTION
+    ========================== -->
 
     <section class="question hidden" id="question">
 
+
         <div class="question-box">
 
-            <h1>Do you like me back? 💗</h1>
+            <h1>
+                Do you like me back? 💗
+            </h1>
+
 
             <div class="answer-buttons">
-                <button id="yesButton">Yes 💕</button>
-                <button id="noButton">No 🥲</button>
+
+                <button id="yesButton">
+                    Yes 💕
+                </button>
+
+                <button id="noButton">
+                    No 🥲
+                </button>
+
             </div>
 
         </div>
 
+
     </section>
 
 
+
+    <!-- =========================
+         YES RESPONSE
+    ========================== -->
+
+    <section class="response hidden" id="yesResponse">
+
+
+        <div class="response-box">
+
+            <h1>
+                YAYY!! 🥹💗
+            </h1>
+
+            <p>
+                Do you mind telling me why you like me back?
+            </p>
+
+
+            <textarea
+                id="yesReason"
+                placeholder="Tell me why... 💕"
+            ></textarea>
+
+
+            <button id="yesSubmit">
+                Send 💌
+            </button>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =========================
+         NO RESPONSE
+    ========================== -->
+
+    <section class="response hidden" id="noResponse">
+
+
+        <div class="response-box">
+
+            <h1>
+                Awww man 😭
+            </h1>
+
+            <p>
+                That's okay... but do you mind telling me why?
+            </p>
+
+
+            <textarea
+                id="noReason"
+                placeholder="Be honest with me... 🥲"
+            ></textarea>
+
+
+            <button id="noSubmit">
+                Send 💌
+            </button>
+
+        </div>
+
+
+    </section>
+
+
+
     <script src="script.js"></script>
+
 
 </body>
 
