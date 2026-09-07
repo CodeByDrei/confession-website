@@ -1,198 +1,113 @@
-const openButton =
-    document.querySelector("#openButton");
+const openButton = document.querySelector("#openButton");
 
-const intro =
-    document.querySelector("#intro");
+const intro = document.querySelector("#intro");
+const letter = document.querySelector("#letter");
 
-const letter =
-    document.querySelector("#letter");
+const envelope = document.querySelector("#envelope");
 
-const envelope =
-    document.querySelector("#envelope");
+const continueButton = document.querySelector("#continueButton");
 
-const continueButton =
-    document.querySelector("#continueButton");
+const question = document.querySelector("#question");
 
-const question =
-    document.querySelector("#question");
+const yesButton = document.querySelector("#yesButton");
+const noButton = document.querySelector("#noButton");
 
-const yesButton =
-    document.querySelector("#yesButton");
+const yesResponse = document.querySelector("#yesResponse");
+const noResponse = document.querySelector("#noResponse");
 
-const noButton =
-    document.querySelector("#noButton");
 
-const yesResponse =
-    document.querySelector("#yesResponse");
+// =========================
+// INTRO → LETTER
+// =========================
 
-const noResponse =
-    document.querySelector("#noResponse");
+openButton.addEventListener("click", function () {
 
+    intro.classList.add("fade-out");
 
+    setTimeout(function () {
 
-/* =========================
-   INTRO → LETTER
-========================= */
+        intro.classList.add("hidden");
 
-openButton.addEventListener(
-    "click",
-    function () {
+        letter.classList.remove("hidden");
 
-        intro.classList.add(
-            "fade-out"
-        );
+        letter.classList.add("fade-in");
 
+    }, 500);
 
-        setTimeout(
-            function () {
+});
 
-                intro.classList.add(
-                    "hidden"
-                );
 
-                letter.classList.remove(
-                    "hidden"
-                );
+// =========================
+// OPEN ENVELOPE
+// =========================
 
-                letter.classList.add(
-                    "fade-in"
-                );
+envelope.addEventListener("click", function () {
 
-            },
-            500
-        );
+    envelope.classList.add("open");
 
-    }
-);
+    letter.classList.add("opened");
 
+});
 
 
-/* =========================
-   OPEN ENVELOPE
-========================= */
+// =========================
+// LETTER → QUESTION
+// =========================
 
-envelope.addEventListener(
-    "click",
-    function () {
+continueButton.addEventListener("click", function () {
 
-        envelope.classList.add(
-            "open"
-        );
+    letter.classList.add("fade-out");
 
-        letter.classList.add(
-            "opened"
-        );
+    setTimeout(function () {
 
-    }
-);
+        letter.classList.add("hidden");
 
+        question.classList.remove("hidden");
 
+        question.classList.add("fade-in");
 
-/* =========================
-   LETTER → QUESTION
-========================= */
+    }, 500);
 
-continueButton.addEventListener(
-    "click",
-    function () {
+});
 
-        letter.classList.add(
-            "fade-out"
-        );
 
+// =========================
+// YES
+// =========================
 
-        setTimeout(
-            function () {
+yesButton.addEventListener("click", function () {
 
-                letter.classList.add(
-                    "hidden"
-                );
+    question.classList.add("fade-out");
 
-                question.classList.remove(
-                    "hidden"
-                );
+    setTimeout(function () {
 
-                question.classList.add(
-                    "fade-in"
-                );
+        question.classList.add("hidden");
 
-            },
-            500
-        );
+        yesResponse.classList.remove("hidden");
 
-    }
-);
+        yesResponse.classList.add("fade-in");
 
+    }, 500);
 
+});
 
-/* =========================
-   YES
-========================= */
 
-yesButton.addEventListener(
-    "click",
-    function () {
+// =========================
+// NO
+// =========================
 
-        question.classList.add(
-            "fade-out"
-        );
+noButton.addEventListener("click", function () {
 
+    question.classList.add("fade-out");
 
-        setTimeout(
-            function () {
+    setTimeout(function () {
 
-                question.classList.add(
-                    "hidden"
-                );
+        question.classList.add("hidden");
 
-                yesResponse.classList.remove(
-                    "hidden"
-                );
+        noResponse.classList.remove("hidden");
 
-                yesResponse.classList.add(
-                    "fade-in"
-                );
+        noResponse.classList.add("fade-in");
 
-            },
-            500
-        );
+    }, 500);
 
-    }
-);
-
-
-
-/* =========================
-   NO
-========================= */
-
-noButton.addEventListener(
-    "click",
-    function () {
-
-        question.classList.add(
-            "fade-out"
-        );
-
-
-        setTimeout(
-            function () {
-
-                question.classList.add(
-                    "hidden"
-                );
-
-                noResponse.classList.remove(
-                    "hidden"
-                );
-
-                noResponse.classList.add(
-                    "fade-in"
-                );
-
-            },
-            500
-        );
-
-    }
-);
+});
