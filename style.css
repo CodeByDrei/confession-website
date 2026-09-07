@@ -1,9 +1,17 @@
+/* =========================
+   RESET
+========================= */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+
+/* =========================
+   BODY
+========================= */
 
 body {
     min-height: 100vh;
@@ -14,13 +22,16 @@ body {
 
     font-family: Arial, sans-serif;
 
-    background: linear-gradient(
-        135deg,
-        #ffe6ee,
-        #fff5f8
-    );
+    background:
+        linear-gradient(
+            135deg,
+            #ffe6ee,
+            #fff5f8
+        );
 
     color: #3b2630;
+
+    overflow-x: hidden;
 }
 
 
@@ -46,32 +57,45 @@ body {
 }
 
 
-h1 {
-    font-size: clamp(2.5rem, 8vw, 4rem);
+.container h1 {
+    font-size:
+        clamp(2.5rem, 8vw, 4rem);
+
     margin-bottom: 15px;
 }
 
 
-p {
-    font-size: clamp(1rem, 3vw, 1.25rem);
+.container p {
+    font-size:
+        clamp(1rem, 3vw, 1.25rem);
+
     margin-bottom: 30px;
 }
 
+
+/* =========================
+   BUTTONS
+========================= */
 
 button {
     padding: 14px 30px;
 
     border: none;
+
     border-radius: 999px;
 
     background: #ff8fab;
+
     color: white;
 
     font-size: 1rem;
 
     cursor: pointer;
 
-    transition: 0.25s ease;
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        opacity 0.4s ease;
 }
 
 
@@ -80,6 +104,12 @@ button:hover {
 
     box-shadow:
         0 8px 20px rgba(255, 100, 140, 0.3);
+}
+
+
+button:disabled {
+    cursor: default;
+    opacity: 0.7;
 }
 
 
@@ -103,12 +133,14 @@ button:hover {
 
 
 .fade-out {
-    animation: fadeOut 0.5s ease forwards;
+    animation:
+        fadeOut 0.5s ease forwards;
 }
 
 
 .fade-in {
-    animation: fadeIn 0.8s ease;
+    animation:
+        fadeIn 0.8s ease;
 }
 
 
@@ -143,7 +175,7 @@ button:hover {
 
 
 /* =========================
-   LETTER
+   LETTER SCREEN
 ========================= */
 
 .letter {
@@ -153,6 +185,7 @@ button:hover {
     display: flex;
 
     align-items: center;
+
     justify-content: space-between;
 
     gap: 80px;
@@ -175,7 +208,8 @@ button:hover {
 
 
 .message p {
-    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-size:
+        clamp(1.5rem, 4vw, 2.5rem);
 
     line-height: 1.3;
 }
@@ -197,7 +231,8 @@ button:hover {
 
     filter:
         drop-shadow(
-            0 15px 20px rgba(100, 50, 70, 0.2)
+            0 15px 20px
+            rgba(100, 50, 70, 0.2)
         );
 
     transition:
@@ -212,6 +247,10 @@ button:hover {
 }
 
 
+/* =========================
+   ENVELOPE BODY
+========================= */
+
 .envelope-body {
     width: 100%;
     height: 100%;
@@ -225,6 +264,7 @@ button:hover {
     flex-direction: column;
 
     align-items: center;
+
     justify-content: center;
 
     position: relative;
@@ -243,11 +283,16 @@ button:hover {
 
 .envelope-body p {
     margin-top: 8px;
+
     margin-bottom: 0;
 
     font-size: 1rem;
 }
 
+
+/* =========================
+   ENVELOPE FLAP
+========================= */
 
 .envelope-top {
     position: absolute;
@@ -277,6 +322,14 @@ button:hover {
 }
 
 
+.envelope.open .envelope-top {
+    transform:
+        rotateX(180deg);
+
+    z-index: 0;
+}
+
+
 /* =========================
    PAPER
 ========================= */
@@ -300,7 +353,8 @@ button:hover {
     padding: 30px;
 
     box-shadow:
-        0 8px 25px rgba(80, 40, 50, 0.15);
+        0 8px 25px
+        rgba(80, 40, 50, 0.15);
 
     z-index: 1;
 
@@ -350,29 +404,24 @@ button:hover {
 
 
 /* =========================
-   OPEN ENVELOPE
+   OPEN PAPER
 ========================= */
-
-.envelope.open .envelope-top {
-    transform:
-        rotateX(180deg);
-
-    z-index: 0;
-}
-
 
 .envelope.open .paper {
     opacity: 1;
 
-    width: min(700px, 55vw);
+    width:
+        min(700px, 55vw);
 
-    height: min(680px, 82vh);
+    height:
+        min(680px, 82vh);
 
     padding: 55px;
 
     position: fixed;
 
     right: 3%;
+
     left: auto;
 
     top: 50%;
@@ -395,20 +444,15 @@ button:hover {
 }
 
 
+/* =========================
+   OPENED LETTER
+========================= */
+
 .letter.opened .message {
     opacity: 1;
 
     transform:
         translateX(0);
-}
-
-
-/* =========================
-   HIDDEN
-========================= */
-
-.hidden {
-    display: none !important;
 }
 
 
@@ -425,34 +469,42 @@ button:hover {
     padding: 14px 25px;
 
     border: none;
+
     border-radius: 999px;
 
     background: #ff8fab;
+
     color: white;
 
     font-size: 1rem;
+
     font-weight: 600;
 
     cursor: pointer;
 
     box-shadow:
-        0 8px 20px rgba(255, 100, 140, 0.2);
+        0 8px 20px
+        rgba(255, 100, 140, 0.2);
 
     opacity: 0;
+
     visibility: hidden;
+
     pointer-events: none;
 
     transition:
         opacity 0.4s ease,
+        visibility 0.4s ease,
         transform 0.25s ease,
-        box-shadow 0.25s ease,
-        visibility 0.4s ease;
+        box-shadow 0.25s ease;
 }
 
 
 .letter.opened .continue-button {
     opacity: 1;
+
     visibility: visible;
+
     pointer-events: auto;
 }
 
@@ -462,12 +514,13 @@ button:hover {
         translateY(-4px);
 
     box-shadow:
-        0 12px 25px rgba(255, 100, 140, 0.3);
+        0 12px 25px
+        rgba(255, 100, 140, 0.3);
 }
 
 
 /* =========================
-   QUESTION
+   QUESTION SCREEN
 ========================= */
 
 .question {
@@ -477,6 +530,7 @@ button:hover {
     display: flex;
 
     justify-content: center;
+
     align-items: center;
 
     padding: 30px;
@@ -494,9 +548,11 @@ button:hover {
     border-radius: 25px;
 
     box-shadow:
-        0 15px 40px rgba(100, 50, 70, 0.15);
+        0 15px 40px
+        rgba(100, 50, 70, 0.15);
 
     max-width: 600px;
+
     width: 100%;
 }
 
@@ -524,7 +580,7 @@ button:hover {
 
 
 /* =========================
-   RESPONSE SCREENS
+   YES / NO RESPONSE
 ========================= */
 
 .response {
@@ -534,6 +590,7 @@ button:hover {
     display: flex;
 
     justify-content: center;
+
     align-items: center;
 
     padding: 30px;
@@ -541,7 +598,8 @@ button:hover {
 
 
 .response-box {
-    width: min(90%, 650px);
+    width:
+        min(90%, 650px);
 
     text-align: center;
 
@@ -553,7 +611,8 @@ button:hover {
     border-radius: 28px;
 
     box-shadow:
-        0 15px 40px rgba(100, 50, 70, 0.15);
+        0 15px 40px
+        rgba(100, 50, 70, 0.15);
 }
 
 
@@ -574,6 +633,10 @@ button:hover {
     margin-bottom: 25px;
 }
 
+
+/* =========================
+   TEXTAREA
+========================= */
 
 .response-box textarea {
     width: 100%;
@@ -604,12 +667,37 @@ button:hover {
 
 
 .response-box textarea:focus {
-    border-color: #ff8fab;
+    border-color:
+        #ff8fab;
 }
 
 
-.response-box button {
-    padding: 14px 30px;
+.response-box form {
+    width: 100%;
+}
+
+
+/* =========================
+   FORM STATUS
+========================= */
+
+.form-status {
+    min-height: 24px;
+
+    margin-top: 18px;
+
+    margin-bottom: 0 !important;
+
+    font-size: 0.95rem !important;
+}
+
+
+/* =========================
+   HIDDEN
+========================= */
+
+.hidden {
+    display: none !important;
 }
 
 
@@ -653,10 +741,14 @@ button:hover {
 
     .envelope-top {
         border-left-width: 125px;
+
         border-right-width: 125px;
+
         border-top-width: 90px;
     }
 
+
+    /* MOBILE PAPER */
 
     .envelope.open .paper {
         width: 88vw;
@@ -668,6 +760,7 @@ button:hover {
         position: fixed;
 
         left: 50%;
+
         right: auto;
 
         top: 50%;
@@ -677,6 +770,8 @@ button:hover {
     }
 
 
+    /* MOBILE CONTINUE */
+
     .continue-button {
         right: 20px;
 
@@ -685,6 +780,8 @@ button:hover {
         padding: 12px 20px;
     }
 
+
+    /* MOBILE QUESTION */
 
     .answer-buttons {
         flex-direction: column;
@@ -697,6 +794,8 @@ button:hover {
         width: 160px;
     }
 
+
+    /* MOBILE RESPONSE */
 
     .response {
         padding: 20px;
