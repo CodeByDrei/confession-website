@@ -363,11 +363,15 @@ button:hover {
 }
 
 
+/* =========================
+   KEEP LEFT TEXT VISIBLE
+========================= */
+
 .letter.opened .message {
-    opacity: 0;
+    opacity: 1;
 
     transform:
-        translateX(-40px);
+        translateX(0);
 }
 
 
@@ -532,6 +536,16 @@ button:hover {
         font-size: 1rem;
 
         line-height: 1.6;
+    }
+
+
+    /* Keep the message visible on phones too */
+
+    .letter.opened .message {
+        opacity: 1;
+
+        transform:
+            translateX(0);
     }
 
 }
