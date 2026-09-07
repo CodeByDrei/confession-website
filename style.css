@@ -14,7 +14,6 @@ body {
     color: #3b2630;
 }
 
-
 /* =========================
    INTRO SCREEN
 ========================= */
@@ -54,7 +53,6 @@ button:hover {
     transform: translateY(-3px);
     box-shadow: 0 8px 20px rgba(255, 100, 140, 0.3);
 }
-
 
 /* =========================
    INTRO ANIMATION
@@ -104,7 +102,6 @@ button:hover {
     }
 }
 
-
 /* =========================
    LETTER SCREEN
 ========================= */
@@ -118,7 +115,6 @@ button:hover {
     gap: 80px;
     padding: 60px 10%;
 }
-
 
 /* =========================
    LEFT MESSAGE
@@ -135,7 +131,6 @@ button:hover {
     font-size: clamp(1.5rem, 4vw, 2.5rem);
     line-height: 1.3;
 }
-
 
 /* =========================
    ENVELOPE
@@ -179,7 +174,6 @@ button:hover {
     font-size: 1rem;
 }
 
-
 /* =========================
    ENVELOPE FLAP
 ========================= */
@@ -197,7 +191,6 @@ button:hover {
     transform-origin: top center;
     transition: transform 0.8s ease;
 }
-
 
 /* =========================
    PAPER
@@ -248,14 +241,13 @@ button:hover {
     transition: opacity 0.7s ease 1.2s;
 }
 
-
 /* =========================
    OPEN ENVELOPE
 ========================= */
 
 .envelope.open .envelope-top {
     transform: rotateX(180deg);
-    z-index: 1;
+    z-index: 0;
 }
 
 .envelope.open .paper {
@@ -286,7 +278,6 @@ button:hover {
     opacity: 0;
 }
 
-
 /* Keep left message visible */
 
 .letter.opened .message {
@@ -294,13 +285,12 @@ button:hover {
     transform: translateX(0);
 }
 
-
 /* =========================
    CONTINUE BUTTON
 ========================= */
 
 .continue-button {
-    position: fixed !important;
+    position: fixed;
     right: 40px;
     bottom: 35px;
 
@@ -319,15 +309,12 @@ button:hover {
     box-shadow: 0 8px 20px rgba(255, 100, 140, 0.2);
 
     transition: all 0.25s ease;
-
-    z-index: 20;
 }
 
 .continue-button:hover {
     transform: translateY(-4px);
     box-shadow: 0 12px 25px rgba(255, 100, 140, 0.3);
 }
-
 
 /* =========================
    QUESTION SCREEN
@@ -336,25 +323,18 @@ button:hover {
 .question {
     width: 100%;
     min-height: 100vh;
-
     display: flex;
     justify-content: center;
     align-items: center;
-
     padding: 30px;
 }
 
 .question-box {
     text-align: center;
-
     background: rgba(255, 255, 255, 0.75);
-
     padding: 50px 40px;
-
     border-radius: 25px;
-
     box-shadow: 0 15px 40px rgba(100, 50, 70, 0.15);
-
     max-width: 600px;
     width: 100%;
 }
@@ -374,7 +354,6 @@ button:hover {
     min-width: 120px;
 }
 
-
 /* =========================
    HIDDEN
 ========================= */
@@ -382,7 +361,6 @@ button:hover {
 .hidden {
     display: none;
 }
-
 
 /* =========================
    MOBILE
