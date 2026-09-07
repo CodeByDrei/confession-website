@@ -12,13 +12,20 @@
 
 <body>
 
-    <!-- INTRO -->
+
+    <!-- =========================
+         INTRO
+    ========================== -->
 
     <main class="container" id="intro">
 
-        <h1>Hey...</h1>
+        <h1>
+            Hey...
+        </h1>
 
-        <p>I made something for you.</p>
+        <p>
+            I made something for you.
+        </p>
 
         <button id="openButton">
             Open 💌
@@ -27,14 +34,18 @@
     </main>
 
 
-    <!-- LETTER -->
+    <!-- =========================
+         LETTER
+    ========================== -->
 
     <section class="letter hidden" id="letter">
 
         <div class="message">
+
             <p>
                 I've been wanting to tell you something...
             </p>
+
         </div>
 
 
@@ -42,9 +53,12 @@
 
             <div class="envelope-top"></div>
 
+
             <div class="envelope-body">
 
-                <span>💌</span>
+                <span>
+                    💌
+                </span>
 
                 <p>
                     Click me
@@ -72,14 +86,21 @@
         </div>
 
 
-        <button class="continue-button" id="continueButton">
+        <!-- CONTINUE -->
+
+        <button
+            class="continue-button"
+            id="continueButton"
+        >
             Continue →
         </button>
 
     </section>
 
 
-    <!-- QUESTION -->
+    <!-- =========================
+         QUESTION
+    ========================== -->
 
     <section class="question hidden" id="question">
 
@@ -88,6 +109,7 @@
             <h1>
                 Do you like me back? 💗
             </h1>
+
 
             <div class="answer-buttons">
 
@@ -106,7 +128,9 @@
     </section>
 
 
-    <!-- YES RESPONSE -->
+    <!-- =========================
+         YES RESPONSE
+    ========================== -->
 
     <section class="response hidden" id="yesResponse">
 
@@ -120,21 +144,50 @@
                 Do you mind telling me why you like me back?
             </p>
 
-            <textarea
-                id="yesReason"
-                placeholder="Tell me why... 💕"
-            ></textarea>
 
-            <button id="yesSubmit">
-                Send 💌
-            </button>
+            <form
+                id="yesForm"
+                action="https://formspree.io/f/mljepglw"
+                method="POST"
+            >
+
+                <input
+                    type="hidden"
+                    name="response"
+                    value="YES 💕"
+                >
+
+                <textarea
+                    id="yesReason"
+                    name="reason"
+                    placeholder="Tell me why... 💕"
+                    required
+                ></textarea>
+
+
+                <button
+                    type="submit"
+                    id="yesSubmit"
+                >
+                    Send 💌
+                </button>
+
+            </form>
+
+
+            <p
+                class="form-status"
+                id="yesStatus"
+            ></p>
 
         </div>
 
     </section>
 
 
-    <!-- NO RESPONSE -->
+    <!-- =========================
+         NO RESPONSE
+    ========================== -->
 
     <section class="response hidden" id="noResponse">
 
@@ -148,14 +201,41 @@
                 That's okay... but do you mind telling me why?
             </p>
 
-            <textarea
-                id="noReason"
-                placeholder="Be honest with me... 🥲"
-            ></textarea>
 
-            <button id="noSubmit">
-                Send 💌
-            </button>
+            <form
+                id="noForm"
+                action="https://formspree.io/f/mljepglw"
+                method="POST"
+            >
+
+                <input
+                    type="hidden"
+                    name="response"
+                    value="NO 🥲"
+                >
+
+                <textarea
+                    id="noReason"
+                    name="reason"
+                    placeholder="Be honest with me... 🥲"
+                    required
+                ></textarea>
+
+
+                <button
+                    type="submit"
+                    id="noSubmit"
+                >
+                    Send 💌
+                </button>
+
+            </form>
+
+
+            <p
+                class="form-status"
+                id="noStatus"
+            ></p>
 
         </div>
 
