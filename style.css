@@ -54,217 +54,10 @@ button:hover {
     box-shadow: 0 8px 20px rgba(255, 100, 140, 0.3);
 }
 
-/* =========================
-   SECOND SCREEN
-========================= */
-
-.letter {
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 80px;
-    padding: 60px 10%;
-}
-
-/* LEFT MESSAGE */
-
-.message {
-    max-width: 400px;
-    text-align: left;
-    flex: 1;
-    transition: opacity 0.5s ease, transform 0.5s ease;
-}
-
-.message p {
-    font-size: clamp(1.5rem, 4vw, 2.5rem);
-    line-height: 1.3;
-}
 
 /* =========================
-   ENVELOPE
+   INTRO ANIMATION
 ========================= */
-
-.envelope {
-    width: 280px;
-    height: 190px;
-    position: relative;
-    cursor: pointer;
-    flex-shrink: 0;
-    filter: drop-shadow(0 15px 20px rgba(100, 50, 70, 0.2));
-    transition: transform 0.3s ease;
-}
-
-.envelope:hover {
-    transform: translateY(-8px) rotate(1deg);
-}
-
-/* Envelope body */
-
-.envelope-body {
-    width: 100%;
-    height: 100%;
-    background: white;
-    border-radius: 12px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    z-index: 2;
-
-    transition: opacity 0.25s ease;
-}
-
-.envelope-body span {
-    font-size: 3rem;
-}
-
-.envelope-body p {
-    margin-top: 8px;
-    margin-bottom: 0;
-    font-size: 1rem;
-}
-
-/* Envelope flap */
-
-.envelope-top {
-    position: absolute;
-    width: 0;
-    height: 0;
-
-    border-left: 140px solid transparent;
-    border-right: 140px solid transparent;
-    border-top: 100px solid #ffd1dc;
-
-    top: 0;
-    left: 0;
-
-    z-index: 3;
-    transform-origin: top center;
-
-    transition: transform 0.8s ease;
-}
-
-/* =========================
-   PAPER
-========================= */
-
-.paper {
-    position: absolute;
-
-    width: 245px;
-    height: 155px;
-
-    left: 50%;
-    bottom: 20px;
-
-    transform: translateX(-50%);
-
-    background: #fffdf9;
-    border-radius: 5px;
-
-    padding: 30px;
-
-    box-shadow: 0 8px 25px rgba(80, 40, 50, 0.15);
-
-    z-index: 1;
-    opacity: 0;
-    overflow: hidden;
-
-    transition:
-        width 1.2s ease,
-        height 1.2s ease,
-        padding 1.2s ease,
-        opacity 0.25s ease,
-        top 1.2s ease,
-        left 1.2s ease,
-        right 1.2s ease,
-        transform 1.2s ease;
-}
-
-.paper h2 {
-    font-family: Georgia, serif;
-    font-size: 2rem;
-    margin-bottom: 25px;
-
-    opacity: 0;
-
-    transition: opacity 0.7s ease 1.1s;
-}
-
-.paper p {
-    font-family: Georgia, serif;
-    font-size: 1.05rem;
-    line-height: 1.7;
-    margin-bottom: 20px;
-
-    opacity: 0;
-
-    transition: opacity 0.7s ease 1.2s;
-}
-
-/* =========================
-   OPEN ENVELOPE
-========================= */
-
-.envelope.open .envelope-top {
-    transform: rotateX(180deg);
-    z-index: 1;
-}
-
-.envelope.open .paper {
-    opacity: 1;
-
-    /* BIG PAPER */
-    width: min(700px, 55vw);
-    height: min(680px, 82vh);
-
-    padding: 55px;
-
-    /* RIGHT EDGE STAYS IN PLACE */
-    position: fixed;
-    right: 5%;
-    left: auto;
-
-    top: 50%;
-
-    transform: translateY(-50%);
-
-    z-index: 10;
-}
-
-.envelope.open .paper h2,
-.envelope.open .paper p {
-    opacity: 1;
-}
-
-/* Envelope disappears quickly while paper expands */
-
-.envelope.open .envelope-body {
-    opacity: 0;
-    transition: opacity 0.25s ease;
-}
-
-/* Keep left message visible */
-
-.letter.opened .message {
-    opacity: 1;
-    transform: translateX(0);
-}
-
-/* =========================
-   ANIMATIONS
-========================= */
-
-.fade-out {
-    animation: fadeOut 0.5s ease forwards;
-}
-
-.fade-in {
-    animation: fadeIn 0.8s ease;
-}
 
 @keyframes appear {
     from {
@@ -276,6 +69,14 @@ button:hover {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+.fade-out {
+    animation: fadeOut 0.5s ease forwards;
+}
+
+.fade-in {
+    animation: fadeIn 0.8s ease;
 }
 
 @keyframes fadeOut {
@@ -302,6 +103,199 @@ button:hover {
     }
 }
 
+
+/* =========================
+   LETTER SCREEN
+========================= */
+
+.letter {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 80px;
+    padding: 60px 10%;
+}
+
+
+/* =========================
+   LEFT MESSAGE
+========================= */
+
+.message {
+    max-width: 400px;
+    text-align: left;
+    flex: 1;
+    transition: 0.5s ease;
+}
+
+.message p {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    line-height: 1.3;
+}
+
+
+/* =========================
+   ENVELOPE
+========================= */
+
+.envelope {
+    width: 280px;
+    height: 190px;
+    position: relative;
+    cursor: pointer;
+    flex-shrink: 0;
+    filter: drop-shadow(0 15px 20px rgba(100, 50, 70, 0.2));
+    transition: transform 0.3s ease;
+}
+
+.envelope:hover {
+    transform: translateY(-8px) rotate(1deg);
+}
+
+.envelope-body {
+    width: 100%;
+    height: 100%;
+    background: white;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+    transition: opacity 0.6s ease 0.5s;
+}
+
+.envelope-body span {
+    font-size: 3rem;
+}
+
+.envelope-body p {
+    margin-top: 8px;
+    margin-bottom: 0;
+    font-size: 1rem;
+}
+
+
+/* =========================
+   ENVELOPE FLAP
+========================= */
+
+.envelope-top {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 140px solid transparent;
+    border-right: 140px solid transparent;
+    border-top: 100px solid #ffd1dc;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    transform-origin: top center;
+    transition: transform 0.8s ease;
+}
+
+
+/* =========================
+   PAPER
+========================= */
+
+.paper {
+    position: absolute;
+    width: 245px;
+    height: 155px;
+    left: 50%;
+    bottom: 20px;
+    transform: translateX(-50%);
+
+    background: #fffdf9;
+    border-radius: 5px;
+    padding: 30px;
+
+    box-shadow: 0 8px 25px rgba(80, 40, 50, 0.15);
+
+    z-index: 1;
+    opacity: 0;
+    overflow: hidden;
+
+    transition:
+        width 1.2s ease,
+        height 1.2s ease,
+        padding 1.2s ease,
+        opacity 0.5s ease,
+        top 1.2s ease,
+        left 1.2s ease,
+        transform 1.2s ease;
+}
+
+.paper h2 {
+    font-family: Georgia, serif;
+    font-size: 2rem;
+    margin-bottom: 25px;
+    opacity: 0;
+    transition: opacity 0.7s ease 1.1s;
+}
+
+.paper p {
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    margin-bottom: 20px;
+    opacity: 0;
+    transition: opacity 0.7s ease 1.2s;
+}
+
+
+/* =========================
+   OPEN ENVELOPE
+========================= */
+
+.envelope.open .envelope-top {
+    transform: rotateX(180deg);
+    z-index: 1;
+}
+
+.envelope.open .paper {
+    opacity: 1;
+
+    width: min(700px, 55vw);
+    height: min(680px, 82vh);
+    padding: 55px;
+
+    position: fixed;
+
+    /* ONLY CHANGE:
+       paper is slightly farther right */
+    right: 3%;
+    left: auto;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    z-index: 5;
+}
+
+.envelope.open .paper h2,
+.envelope.open .paper p {
+    opacity: 1;
+}
+
+.envelope.open .envelope-body {
+    opacity: 0;
+}
+
+
+/* Keep left message visible */
+
+.letter.opened .message {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+
 /* =========================
    HIDDEN
 ========================= */
@@ -309,6 +303,7 @@ button:hover {
 .hidden {
     display: none;
 }
+
 
 /* =========================
    MOBILE
@@ -344,15 +339,12 @@ button:hover {
         border-top-width: 90px;
     }
 
-    /* Center paper on phones */
-
     .envelope.open .paper {
         width: 88vw;
         height: 78vh;
         padding: 35px;
 
         position: fixed;
-
         left: 50%;
         right: auto;
         top: 50%;
