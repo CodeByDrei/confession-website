@@ -1,11 +1,21 @@
+/* =========================
+   BASIC RESET
+========================= */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+
+/* =========================
+   PAGE
+========================= */
+
 body {
     min-height: 100vh;
+
     display: flex;
     justify-content: center;
     align-items: center;
@@ -21,93 +31,322 @@ body {
     color: #3b2630;
 }
 
+
+/* =========================
+   FIRST SCREEN
+========================= */
+
 .container {
     width: min(90%, 600px);
+
     padding: 50px 30px;
 
     text-align: center;
 
     background: rgba(255, 255, 255, 0.75);
+
     border-radius: 25px;
 
-    box-shadow: 0 15px 40px rgba(100, 50, 70, 0.15);
+    box-shadow:
+        0 15px 40px rgba(100, 50, 70, 0.15);
+
+    animation: appear 1s ease;
 }
+
 
 h1 {
     font-size: clamp(2.5rem, 8vw, 4rem);
+
     margin-bottom: 15px;
 }
 
+
 p {
     font-size: clamp(1rem, 3vw, 1.25rem);
+
     margin-bottom: 30px;
 }
+
+
+/* =========================
+   BUTTON
+========================= */
 
 button {
     padding: 14px 30px;
 
     border: none;
+
     border-radius: 999px;
 
     background: #ff8fab;
+
     color: white;
 
     font-size: 1rem;
+
     cursor: pointer;
 
     transition: 0.25s ease;
 }
 
+
 button:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(255, 100, 140, 0.3);
-}
-.container {
-    animation: appear 1s ease;
+
+    box-shadow:
+        0 8px 20px rgba(255, 100, 140, 0.3);
 }
 
-@keyframes appear {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+/* =========================
+   LETTER SCREEN
+========================= */
+
+.letter {
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 80px;
+
+    padding: 60px 10%;
 }
+
+
+/* LEFT MESSAGE */
+
+.message {
+    max-width: 400px;
+
+    text-align: left;
+
+    flex: 1;
+}
+
+
+.message p {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+
+    line-height: 1.3;
+}
+
+
+/* =========================
+   ENVELOPE
+========================= */
+
+.envelope {
+    width: 280px;
+    height: 190px;
+
+    position: relative;
+
+    cursor: pointer;
+
+    flex-shrink: 0;
+
+    filter:
+        drop-shadow(
+            0 15px 20px rgba(100, 50, 70, 0.2)
+        );
+
+    transition: transform 0.3s ease;
+}
+
+
+.envelope:hover {
+    transform:
+        translateY(-8px)
+        rotate(1deg);
+}
+
+
+/* Envelope body */
+
+.envelope-body {
+    width: 100%;
+    height: 100%;
+
+    background: white;
+
+    border-radius: 12px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    position: relative;
+
+    z-index: 2;
+}
+
+
+.envelope-body span {
+    font-size: 3rem;
+}
+
+
+.envelope-body p {
+    margin-top: 8px;
+
+    margin-bottom: 0;
+
+    font-size: 1rem;
+}
+
+
+/* Envelope flap */
+
+.envelope-top {
+    position: absolute;
+
+    width: 0;
+    height: 0;
+
+    border-left: 140px solid transparent;
+    border-right: 140px solid transparent;
+    border-top: 100px solid #ffd1dc;
+
+    top: 0;
+    left: 0;
+
+    z-index: 3;
+
+    transform-origin: top center;
+}
+
+
+/* =========================
+   VISIBILITY
+========================= */
+
 .hidden {
     display: none;
 }
+
+
+/* =========================
+   PAGE TRANSITIONS
+========================= */
+
 .fade-out {
     animation: fadeOut 0.5s ease forwards;
 }
+
 
 .fade-in {
     animation: fadeIn 0.8s ease;
 }
 
+
 @keyframes fadeOut {
+
     from {
         opacity: 1;
-        transform: translateY(0);
+
+        transform:
+            translateY(0);
     }
 
     to {
         opacity: 0;
-        transform: translateY(-20px);
+
+        transform:
+            translateY(-20px);
     }
 }
 
+
 @keyframes fadeIn {
+
     from {
         opacity: 0;
-        transform: translateY(20px);
+
+        transform:
+            translateY(20px);
     }
 
     to {
         opacity: 1;
-        transform: translateY(0);
+
+        transform:
+            translateY(0);
+    }
+}
+
+
+/* =========================
+   FIRST SCREEN ANIMATION
+========================= */
+
+@keyframes appear {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+}
+
+
+/* =========================
+   PHONE RESPONSIVENESS
+========================= */
+
+@media (max-width: 700px) {
+
+    .letter {
+        flex-direction: column;
+
+        justify-content: center;
+
+        text-align: center;
+
+        gap: 50px;
+
+        padding: 40px 25px;
+    }
+
+
+    .message {
+        max-width: 500px;
+
+        text-align: center;
+    }
+
+
+    .message p {
+        font-size: clamp(1.5rem, 7vw, 2.2rem);
+    }
+
+
+    .envelope {
+        width: 250px;
+        height: 170px;
+    }
+
+
+    .envelope-top {
+        border-left-width: 125px;
+        border-right-width: 125px;
+        border-top-width: 90px;
     }
 }
