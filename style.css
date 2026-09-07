@@ -113,7 +113,8 @@ button:hover {
     justify-content: center;
     position: relative;
     z-index: 2;
-    transition: opacity 0.6s ease 0.5s;
+
+    transition: opacity 0.25s ease;
 }
 
 .envelope-body span {
@@ -132,13 +133,17 @@ button:hover {
     position: absolute;
     width: 0;
     height: 0;
+
     border-left: 140px solid transparent;
     border-right: 140px solid transparent;
     border-top: 100px solid #ffd1dc;
+
     top: 0;
     left: 0;
+
     z-index: 3;
     transform-origin: top center;
+
     transition: transform 0.8s ease;
 }
 
@@ -148,14 +153,18 @@ button:hover {
 
 .paper {
     position: absolute;
+
     width: 245px;
     height: 155px;
+
     left: 50%;
     bottom: 20px;
+
     transform: translateX(-50%);
 
     background: #fffdf9;
     border-radius: 5px;
+
     padding: 30px;
 
     box-shadow: 0 8px 25px rgba(80, 40, 50, 0.15);
@@ -168,7 +177,7 @@ button:hover {
         width 1.2s ease,
         height 1.2s ease,
         padding 1.2s ease,
-        opacity 0.5s ease,
+        opacity 0.25s ease,
         top 1.2s ease,
         left 1.2s ease,
         right 1.2s ease,
@@ -179,7 +188,9 @@ button:hover {
     font-family: Georgia, serif;
     font-size: 2rem;
     margin-bottom: 25px;
+
     opacity: 0;
+
     transition: opacity 0.7s ease 1.1s;
 }
 
@@ -188,7 +199,9 @@ button:hover {
     font-size: 1.05rem;
     line-height: 1.7;
     margin-bottom: 20px;
+
     opacity: 0;
+
     transition: opacity 0.7s ease 1.2s;
 }
 
@@ -204,21 +217,22 @@ button:hover {
 .envelope.open .paper {
     opacity: 1;
 
-    /* BIGGER PAPER */
+    /* BIG PAPER */
     width: min(700px, 55vw);
     height: min(680px, 82vh);
 
     padding: 55px;
 
-    /* Keep the RIGHT side roughly where it is */
+    /* RIGHT EDGE STAYS IN PLACE */
     position: fixed;
     right: 5%;
     left: auto;
 
     top: 50%;
+
     transform: translateY(-50%);
 
-    z-index: 5;
+    z-index: 10;
 }
 
 .envelope.open .paper h2,
@@ -226,8 +240,11 @@ button:hover {
     opacity: 1;
 }
 
+/* Envelope disappears quickly while paper expands */
+
 .envelope.open .envelope-body {
     opacity: 0;
+    transition: opacity 0.25s ease;
 }
 
 /* Keep left message visible */
@@ -335,6 +352,7 @@ button:hover {
         padding: 35px;
 
         position: fixed;
+
         left: 50%;
         right: auto;
         top: 50%;
