@@ -48,14 +48,12 @@ body {
 
 h1 {
     font-size: clamp(2.5rem, 8vw, 4rem);
-
     margin-bottom: 15px;
 }
 
 
 p {
     font-size: clamp(1rem, 3vw, 1.25rem);
-
     margin-bottom: 30px;
 }
 
@@ -64,11 +62,9 @@ button {
     padding: 14px 30px;
 
     border: none;
-
     border-radius: 999px;
 
     background: #ff8fab;
-
     color: white;
 
     font-size: 1rem;
@@ -147,18 +143,16 @@ button:hover {
 
 
 /* =========================
-   LETTER SCREEN
+   LETTER
 ========================= */
 
 .letter {
     width: 100%;
-
     min-height: 100vh;
 
     display: flex;
 
     align-items: center;
-
     justify-content: space-between;
 
     gap: 80px;
@@ -181,11 +175,7 @@ button:hover {
 
 
 .message p {
-    font-size: clamp(
-        1.5rem,
-        4vw,
-        2.5rem
-    );
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
 
     line-height: 1.3;
 }
@@ -197,7 +187,6 @@ button:hover {
 
 .envelope {
     width: 280px;
-
     height: 190px;
 
     position: relative;
@@ -223,11 +212,8 @@ button:hover {
 }
 
 
-/* Envelope body */
-
 .envelope-body {
     width: 100%;
-
     height: 100%;
 
     background: white;
@@ -239,7 +225,6 @@ button:hover {
     flex-direction: column;
 
     align-items: center;
-
     justify-content: center;
 
     position: relative;
@@ -258,20 +243,16 @@ button:hover {
 
 .envelope-body p {
     margin-top: 8px;
-
     margin-bottom: 0;
 
     font-size: 1rem;
 }
 
 
-/* Envelope flap */
-
 .envelope-top {
     position: absolute;
 
     width: 0;
-
     height: 0;
 
     border-left:
@@ -284,7 +265,6 @@ button:hover {
         100px solid #ffd1dc;
 
     top: 0;
-
     left: 0;
 
     z-index: 3;
@@ -305,11 +285,9 @@ button:hover {
     position: absolute;
 
     width: 245px;
-
     height: 155px;
 
     left: 50%;
-
     bottom: 20px;
 
     transform:
@@ -395,7 +373,6 @@ button:hover {
     position: fixed;
 
     right: 3%;
-
     left: auto;
 
     top: 50%;
@@ -418,8 +395,6 @@ button:hover {
 }
 
 
-/* Keep left message visible */
-
 .letter.opened .message {
     opacity: 1;
 
@@ -433,7 +408,7 @@ button:hover {
 ========================= */
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 
@@ -445,21 +420,17 @@ button:hover {
     position: fixed;
 
     right: 40px;
-
     bottom: 35px;
 
     padding: 14px 25px;
 
     border: none;
-
     border-radius: 999px;
 
     background: #ff8fab;
-
     color: white;
 
     font-size: 1rem;
-
     font-weight: 600;
 
     cursor: pointer;
@@ -467,12 +438,8 @@ button:hover {
     box-shadow:
         0 8px 20px rgba(255, 100, 140, 0.2);
 
-    /* HIDDEN UNTIL ENVELOPE OPENS */
-
     opacity: 0;
-
     visibility: hidden;
-
     pointer-events: none;
 
     transition:
@@ -483,13 +450,9 @@ button:hover {
 }
 
 
-/* Show Continue after envelope opens */
-
 .letter.opened .continue-button {
     opacity: 1;
-
     visibility: visible;
-
     pointer-events: auto;
 }
 
@@ -509,13 +472,11 @@ button:hover {
 
 .question {
     width: 100%;
-
     min-height: 100vh;
 
     display: flex;
 
     justify-content: center;
-
     align-items: center;
 
     padding: 30px;
@@ -536,7 +497,6 @@ button:hover {
         0 15px 40px rgba(100, 50, 70, 0.15);
 
     max-width: 600px;
-
     width: 100%;
 }
 
@@ -564,18 +524,16 @@ button:hover {
 
 
 /* =========================
-   YES / NO RESPONSE
+   RESPONSE SCREENS
 ========================= */
 
 .response {
     width: 100%;
-
     min-height: 100vh;
 
     display: flex;
 
     justify-content: center;
-
     align-items: center;
 
     padding: 30px;
@@ -689,21 +647,16 @@ button:hover {
 
     .envelope {
         width: 250px;
-
         height: 170px;
     }
 
 
     .envelope-top {
         border-left-width: 125px;
-
         border-right-width: 125px;
-
         border-top-width: 90px;
     }
 
-
-    /* Mobile paper */
 
     .envelope.open .paper {
         width: 88vw;
@@ -715,7 +668,6 @@ button:hover {
         position: fixed;
 
         left: 50%;
-
         right: auto;
 
         top: 50%;
@@ -725,8 +677,6 @@ button:hover {
     }
 
 
-    /* Mobile Continue */
-
     .continue-button {
         right: 20px;
 
@@ -735,8 +685,6 @@ button:hover {
         padding: 12px 20px;
     }
 
-
-    /* Mobile question */
 
     .answer-buttons {
         flex-direction: column;
@@ -749,8 +697,6 @@ button:hover {
         width: 160px;
     }
 
-
-    /* Mobile response */
 
     .response {
         padding: 20px;
