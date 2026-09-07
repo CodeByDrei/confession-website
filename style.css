@@ -4,61 +4,95 @@
     box-sizing: border-box;
 }
 
+
 body {
     min-height: 100vh;
+
     display: flex;
     justify-content: center;
     align-items: center;
+
     font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #ffe6ee, #fff5f8);
+
+    background: linear-gradient(
+        135deg,
+        #ffe6ee,
+        #fff5f8
+    );
+
     color: #3b2630;
 }
 
+
 /* =========================
-   INTRO SCREEN
+   INTRO
 ========================= */
 
 .container {
     width: min(90%, 600px);
+
     padding: 50px 30px;
+
     text-align: center;
+
     background: rgba(255, 255, 255, 0.75);
+
     border-radius: 25px;
-    box-shadow: 0 15px 40px rgba(100, 50, 70, 0.15);
+
+    box-shadow:
+        0 15px 40px rgba(100, 50, 70, 0.15);
+
     animation: appear 1s ease;
 }
 
+
 h1 {
     font-size: clamp(2.5rem, 8vw, 4rem);
+
     margin-bottom: 15px;
 }
 
+
 p {
     font-size: clamp(1rem, 3vw, 1.25rem);
+
     margin-bottom: 30px;
 }
 
+
 button {
     padding: 14px 30px;
+
     border: none;
+
     border-radius: 999px;
+
     background: #ff8fab;
+
     color: white;
+
     font-size: 1rem;
+
     cursor: pointer;
+
     transition: 0.25s ease;
 }
 
+
 button:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(255, 100, 140, 0.3);
+
+    box-shadow:
+        0 8px 20px rgba(255, 100, 140, 0.3);
 }
 
+
 /* =========================
-   INTRO ANIMATION
+   ANIMATIONS
 ========================= */
 
 @keyframes appear {
+
     from {
         opacity: 0;
         transform: translateY(20px);
@@ -68,17 +102,22 @@ button:hover {
         opacity: 1;
         transform: translateY(0);
     }
+
 }
+
 
 .fade-out {
     animation: fadeOut 0.5s ease forwards;
 }
 
+
 .fade-in {
     animation: fadeIn 0.8s ease;
 }
 
+
 @keyframes fadeOut {
+
     from {
         opacity: 1;
         transform: translateY(0);
@@ -88,9 +127,12 @@ button:hover {
         opacity: 0;
         transform: translateY(-20px);
     }
+
 }
 
+
 @keyframes fadeIn {
+
     from {
         opacity: 0;
         transform: translateY(20px);
@@ -100,7 +142,9 @@ button:hover {
         opacity: 1;
         transform: translateY(0);
     }
+
 }
+
 
 /* =========================
    LETTER SCREEN
@@ -108,29 +152,44 @@ button:hover {
 
 .letter {
     width: 100%;
+
     min-height: 100vh;
+
     display: flex;
+
     align-items: center;
+
     justify-content: space-between;
+
     gap: 80px;
+
     padding: 60px 10%;
 }
 
-/* =========================
-   LEFT MESSAGE
-========================= */
 
 .message {
     max-width: 400px;
+
     text-align: left;
+
     flex: 1;
-    transition: 0.5s ease;
+
+    transition:
+        opacity 0.5s ease,
+        transform 0.5s ease;
 }
 
+
 .message p {
-    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-size: clamp(
+        1.5rem,
+        4vw,
+        2.5rem
+    );
+
     line-height: 1.3;
 }
+
 
 /* =========================
    ENVELOPE
@@ -138,59 +197,105 @@ button:hover {
 
 .envelope {
     width: 280px;
+
     height: 190px;
+
     position: relative;
+
     cursor: pointer;
+
     flex-shrink: 0;
-    filter: drop-shadow(0 15px 20px rgba(100, 50, 70, 0.2));
-    transition: transform 0.3s ease;
+
+    filter:
+        drop-shadow(
+            0 15px 20px rgba(100, 50, 70, 0.2)
+        );
+
+    transition:
+        transform 0.3s ease;
 }
 
+
 .envelope:hover {
-    transform: translateY(-8px) rotate(1deg);
+    transform:
+        translateY(-8px)
+        rotate(1deg);
 }
+
+
+/* Envelope body */
 
 .envelope-body {
     width: 100%;
+
     height: 100%;
+
     background: white;
+
     border-radius: 12px;
+
     display: flex;
+
     flex-direction: column;
+
     align-items: center;
+
     justify-content: center;
+
     position: relative;
+
     z-index: 2;
-    transition: opacity 0.6s ease 0.5s;
+
+    transition:
+        opacity 0.6s ease 0.5s;
 }
+
 
 .envelope-body span {
     font-size: 3rem;
 }
 
+
 .envelope-body p {
     margin-top: 8px;
+
     margin-bottom: 0;
+
     font-size: 1rem;
 }
 
-/* =========================
-   ENVELOPE FLAP
-========================= */
+
+/* Envelope flap */
 
 .envelope-top {
     position: absolute;
+
     width: 0;
+
     height: 0;
-    border-left: 140px solid transparent;
-    border-right: 140px solid transparent;
-    border-top: 100px solid #ffd1dc;
+
+    border-left:
+        140px solid transparent;
+
+    border-right:
+        140px solid transparent;
+
+    border-top:
+        100px solid #ffd1dc;
+
     top: 0;
+
     left: 0;
+
     z-index: 3;
-    transform-origin: top center;
-    transition: transform 0.8s ease;
+
+    transform-origin:
+        top center;
+
+    transition:
+        transform 0.8s ease;
 }
+
 
 /* =========================
    PAPER
@@ -198,20 +303,31 @@ button:hover {
 
 .paper {
     position: absolute;
+
     width: 245px;
+
     height: 155px;
+
     left: 50%;
+
     bottom: 20px;
-    transform: translateX(-50%);
+
+    transform:
+        translateX(-50%);
 
     background: #fffdf9;
+
     border-radius: 5px;
+
     padding: 30px;
 
-    box-shadow: 0 8px 25px rgba(80, 40, 50, 0.15);
+    box-shadow:
+        0 8px 25px rgba(80, 40, 50, 0.15);
 
     z-index: 1;
+
     opacity: 0;
+
     overflow: hidden;
 
     transition:
@@ -224,135 +340,93 @@ button:hover {
         transform 1.2s ease;
 }
 
+
 .paper h2 {
     font-family: Georgia, serif;
+
     font-size: 2rem;
+
     margin-bottom: 25px;
+
     opacity: 0;
-    transition: opacity 0.7s ease 1.1s;
+
+    transition:
+        opacity 0.7s ease 1.1s;
 }
+
 
 .paper p {
     font-family: Georgia, serif;
+
     font-size: 1.05rem;
+
     line-height: 1.7;
+
     margin-bottom: 20px;
+
     opacity: 0;
-    transition: opacity 0.7s ease 1.2s;
+
+    transition:
+        opacity 0.7s ease 1.2s;
 }
+
 
 /* =========================
    OPEN ENVELOPE
 ========================= */
 
 .envelope.open .envelope-top {
-    transform: rotateX(180deg);
+    transform:
+        rotateX(180deg);
+
     z-index: 0;
 }
+
 
 .envelope.open .paper {
     opacity: 1;
 
     width: min(700px, 55vw);
+
     height: min(680px, 82vh);
+
     padding: 55px;
 
     position: fixed;
 
     right: 3%;
+
     left: auto;
 
     top: 50%;
 
-    transform: translateY(-50%);
+    transform:
+        translateY(-50%);
 
     z-index: 5;
 }
+
 
 .envelope.open .paper h2,
 .envelope.open .paper p {
     opacity: 1;
 }
 
+
 .envelope.open .envelope-body {
     opacity: 0;
 }
+
 
 /* Keep left message visible */
 
 .letter.opened .message {
     opacity: 1;
-    transform: translateX(0);
+
+    transform:
+        translateX(0);
 }
 
-/* =========================
-   CONTINUE BUTTON
-========================= */
-
-.continue-button {
-    position: fixed;
-    right: 40px;
-    bottom: 35px;
-
-    padding: 14px 25px;
-    border: none;
-    border-radius: 999px;
-
-    background: #ff8fab;
-    color: white;
-
-    font-size: 1rem;
-    font-weight: 600;
-
-    cursor: pointer;
-
-    box-shadow: 0 8px 20px rgba(255, 100, 140, 0.2);
-
-    transition: all 0.25s ease;
-}
-
-.continue-button:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 25px rgba(255, 100, 140, 0.3);
-}
-
-/* =========================
-   QUESTION SCREEN
-========================= */
-
-.question {
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 30px;
-}
-
-.question-box {
-    text-align: center;
-    background: rgba(255, 255, 255, 0.75);
-    padding: 50px 40px;
-    border-radius: 25px;
-    box-shadow: 0 15px 40px rgba(100, 50, 70, 0.15);
-    max-width: 600px;
-    width: 100%;
-}
-
-.question-box h1 {
-    font-size: clamp(2rem, 6vw, 3.5rem);
-}
-
-.answer-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 30px;
-}
-
-.answer-buttons button {
-    min-width: 120px;
-}
 
 /* =========================
    HIDDEN
@@ -362,6 +436,225 @@ button:hover {
     display: none;
 }
 
+
+/* =========================
+   CONTINUE BUTTON
+========================= */
+
+.continue-button {
+    position: fixed;
+
+    right: 40px;
+
+    bottom: 35px;
+
+    padding: 14px 25px;
+
+    border: none;
+
+    border-radius: 999px;
+
+    background: #ff8fab;
+
+    color: white;
+
+    font-size: 1rem;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 20px rgba(255, 100, 140, 0.2);
+
+    /* HIDDEN UNTIL ENVELOPE OPENS */
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.4s ease,
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        visibility 0.4s ease;
+}
+
+
+/* Show Continue after envelope opens */
+
+.letter.opened .continue-button {
+    opacity: 1;
+
+    visibility: visible;
+
+    pointer-events: auto;
+}
+
+
+.continue-button:hover {
+    transform:
+        translateY(-4px);
+
+    box-shadow:
+        0 12px 25px rgba(255, 100, 140, 0.3);
+}
+
+
+/* =========================
+   QUESTION
+========================= */
+
+.question {
+    width: 100%;
+
+    min-height: 100vh;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 30px;
+}
+
+
+.question-box {
+    text-align: center;
+
+    background:
+        rgba(255, 255, 255, 0.75);
+
+    padding: 50px 40px;
+
+    border-radius: 25px;
+
+    box-shadow:
+        0 15px 40px rgba(100, 50, 70, 0.15);
+
+    max-width: 600px;
+
+    width: 100%;
+}
+
+
+.question-box h1 {
+    font-size:
+        clamp(2rem, 6vw, 3.5rem);
+}
+
+
+.answer-buttons {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 20px;
+
+    margin-top: 30px;
+}
+
+
+.answer-buttons button {
+    min-width: 120px;
+}
+
+
+/* =========================
+   YES / NO RESPONSE
+========================= */
+
+.response {
+    width: 100%;
+
+    min-height: 100vh;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 30px;
+}
+
+
+.response-box {
+    width: min(90%, 650px);
+
+    text-align: center;
+
+    background:
+        rgba(255, 255, 255, 0.78);
+
+    padding: 55px 40px;
+
+    border-radius: 28px;
+
+    box-shadow:
+        0 15px 40px rgba(100, 50, 70, 0.15);
+}
+
+
+.response-box h1 {
+    font-size:
+        clamp(2.5rem, 7vw, 4rem);
+
+    margin-bottom: 20px;
+}
+
+
+.response-box p {
+    font-size:
+        clamp(1rem, 3vw, 1.3rem);
+
+    line-height: 1.5;
+
+    margin-bottom: 25px;
+}
+
+
+.response-box textarea {
+    width: 100%;
+
+    min-height: 150px;
+
+    resize: vertical;
+
+    padding: 18px;
+
+    border:
+        2px solid #ffd1dc;
+
+    border-radius: 18px;
+
+    background: #fffdf9;
+
+    color: #3b2630;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 1rem;
+
+    outline: none;
+
+    margin-bottom: 20px;
+}
+
+
+.response-box textarea:focus {
+    border-color: #ff8fab;
+}
+
+
+.response-box button {
+    padding: 14px 30px;
+}
+
+
 /* =========================
    MOBILE
 ========================= */
@@ -370,57 +663,107 @@ button:hover {
 
     .letter {
         flex-direction: column;
+
         justify-content: center;
+
         text-align: center;
+
         gap: 50px;
+
         padding: 40px 25px;
     }
 
+
     .message {
         max-width: 500px;
+
         text-align: center;
     }
 
+
     .message p {
-        font-size: clamp(1.5rem, 7vw, 2.2rem);
+        font-size:
+            clamp(1.5rem, 7vw, 2.2rem);
     }
+
 
     .envelope {
         width: 250px;
+
         height: 170px;
     }
 
+
     .envelope-top {
         border-left-width: 125px;
+
         border-right-width: 125px;
+
         border-top-width: 90px;
     }
 
+
+    /* Mobile paper */
+
     .envelope.open .paper {
         width: 88vw;
-        height: 78vh;
-        padding: 35px;
+
+        height: 72vh;
+
+        padding: 30px;
 
         position: fixed;
+
         left: 50%;
+
         right: auto;
+
         top: 50%;
 
-        transform: translate(-50%, -50%);
+        transform:
+            translate(-50%, -50%);
     }
+
+
+    /* Mobile Continue */
 
     .continue-button {
         right: 20px;
-        bottom: 20px;
-        padding: 13px 22px;
+
+        bottom: 15px;
+
+        padding: 12px 20px;
     }
+
+
+    /* Mobile question */
 
     .answer-buttons {
         flex-direction: column;
+
         align-items: center;
     }
+
 
     .answer-buttons button {
         width: 160px;
     }
+
+
+    /* Mobile response */
+
+    .response {
+        padding: 20px;
+    }
+
+
+    .response-box {
+        padding: 40px 25px;
+    }
+
+
+    .response-box textarea {
+        min-height: 130px;
+    }
+
 }
