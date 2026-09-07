@@ -29,6 +29,8 @@ body {
     );
 
     color: #3b2630;
+
+    overflow: hidden;
 }
 
 
@@ -119,7 +121,9 @@ button:hover {
 }
 
 
-/* LEFT MESSAGE */
+/* =========================
+   LEFT MESSAGE
+========================= */
 
 .message {
     max-width: 400px;
@@ -127,6 +131,10 @@ button:hover {
     text-align: left;
 
     flex: 1;
+
+    transition:
+        opacity 0.7s ease,
+        transform 0.7s ease;
 }
 
 
@@ -156,7 +164,9 @@ button:hover {
             0 15px 20px rgba(100, 50, 70, 0.2)
         );
 
-    transition: transform 0.3s ease;
+    transition:
+        transform 0.3s ease,
+        opacity 0.8s ease;
 }
 
 
@@ -167,7 +177,9 @@ button:hover {
 }
 
 
-/* Envelope body */
+/* =========================
+   ENVELOPE BODY
+========================= */
 
 .envelope-body {
     width: 100%;
@@ -205,7 +217,9 @@ button:hover {
 }
 
 
-/* Envelope flap */
+/* =========================
+   ENVELOPE FLAP
+========================= */
 
 .envelope-top {
     position: absolute;
@@ -223,6 +237,143 @@ button:hover {
     z-index: 3;
 
     transform-origin: top center;
+
+    transition:
+        transform 0.7s ease;
+
+    backface-visibility: hidden;
+}
+
+
+/* =========================
+   PAPER
+========================= */
+
+.paper {
+    position: absolute;
+
+    width: 245px;
+    height: 155px;
+
+    left: 50%;
+
+    bottom: 20px;
+
+    transform:
+        translateX(-50%)
+        translateY(0);
+
+    background: #fffdf9;
+
+    border-radius: 5px;
+
+    padding: 30px;
+
+    box-shadow:
+        0 8px 25px rgba(80, 40, 50, 0.15);
+
+    z-index: 1;
+
+    opacity: 0;
+
+    overflow: hidden;
+
+    transition:
+        width 1.2s ease,
+        height 1.2s ease,
+        transform 1.2s ease,
+        opacity 0.5s ease,
+        padding 1.2s ease;
+}
+
+
+.paper h2 {
+    font-family: Georgia, serif;
+
+    font-size: 2rem;
+
+    margin-bottom: 25px;
+
+    opacity: 0;
+
+    transition:
+        opacity 0.7s ease 1.1s;
+}
+
+
+.paper p {
+    font-family: Georgia, serif;
+
+    font-size: 1.05rem;
+
+    line-height: 1.7;
+
+    margin-bottom: 20px;
+
+    opacity: 0;
+
+    transition:
+        opacity 0.7s ease 1.2s;
+}
+
+
+/* =========================
+   OPEN ANIMATION
+========================= */
+
+
+/* Flap opens */
+
+.envelope.open .envelope-top {
+    transform: rotateX(180deg);
+
+    z-index: 1;
+}
+
+
+/* Paper appears */
+
+.envelope.open .paper {
+    opacity: 1;
+
+    width: min(520px, 80vw);
+
+    height: min(680px, 82vh);
+
+    padding: 55px;
+
+    transform:
+        translateX(-50%)
+        translateY(-260px);
+
+    z-index: 5;
+}
+
+
+/* Show writing */
+
+.envelope.open .paper h2,
+.envelope.open .paper p {
+    opacity: 1;
+}
+
+
+/* Hide envelope body after paper grows */
+
+.envelope.open .envelope-body {
+    transition:
+        opacity 0.6s ease 0.5s;
+
+    opacity: 0;
+}
+
+
+/* Fade left message */
+
+.letter.opened .message {
+    opacity: 0;
+
+    transform: translateX(-40px);
 }
 
 
@@ -240,12 +391,14 @@ button:hover {
 ========================= */
 
 .fade-out {
-    animation: fadeOut 0.5s ease forwards;
+    animation:
+        fadeOut 0.5s ease forwards;
 }
 
 
 .fade-in {
-    animation: fadeIn 0.8s ease;
+    animation:
+        fadeIn 0.8s ease;
 }
 
 
@@ -284,10 +437,6 @@ button:hover {
     }
 }
 
-
-/* =========================
-   FIRST SCREEN ANIMATION
-========================= */
 
 @keyframes appear {
 
@@ -334,7 +483,8 @@ button:hover {
 
 
     .message p {
-        font-size: clamp(1.5rem, 7vw, 2.2rem);
+        font-size:
+            clamp(1.5rem, 7vw, 2.2rem);
     }
 
 
@@ -346,7 +496,44 @@ button:hover {
 
     .envelope-top {
         border-left-width: 125px;
+
         border-right-width: 125px;
+
         border-top-width: 90px;
     }
+
+
+    .paper {
+        width: 220px;
+
+        height: 140px;
+
+        padding: 25px;
+    }
+
+
+    .envelope.open .paper {
+        width: 88vw;
+
+        height: 78vh;
+
+        padding: 35px;
+
+        transform:
+            translateX(-50%)
+            translateY(-230px);
+    }
+
+
+    .paper h2 {
+        font-size: 1.7rem;
+    }
+
+
+    .paper p {
+        font-size: 1rem;
+
+        line-height: 1.6;
+    }
+
 }
