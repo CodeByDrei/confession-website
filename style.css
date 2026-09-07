@@ -14,6 +14,7 @@ body {
     color: #3b2630;
 }
 
+
 /* =========================
    INTRO SCREEN
 ========================= */
@@ -266,8 +267,6 @@ button:hover {
 
     position: fixed;
 
-    /* ONLY CHANGE:
-       paper is slightly farther right */
     right: 3%;
     left: auto;
 
@@ -293,6 +292,86 @@ button:hover {
 .letter.opened .message {
     opacity: 1;
     transform: translateX(0);
+}
+
+
+/* =========================
+   CONTINUE BUTTON
+========================= */
+
+.continue-button {
+    position: fixed !important;
+    right: 40px;
+    bottom: 35px;
+
+    padding: 14px 25px;
+    border: none;
+    border-radius: 999px;
+
+    background: #ff8fab;
+    color: white;
+
+    font-size: 1rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    box-shadow: 0 8px 20px rgba(255, 100, 140, 0.2);
+
+    transition: all 0.25s ease;
+
+    z-index: 20;
+}
+
+.continue-button:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 25px rgba(255, 100, 140, 0.3);
+}
+
+
+/* =========================
+   QUESTION SCREEN
+========================= */
+
+.question {
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 30px;
+}
+
+.question-box {
+    text-align: center;
+
+    background: rgba(255, 255, 255, 0.75);
+
+    padding: 50px 40px;
+
+    border-radius: 25px;
+
+    box-shadow: 0 15px 40px rgba(100, 50, 70, 0.15);
+
+    max-width: 600px;
+    width: 100%;
+}
+
+.question-box h1 {
+    font-size: clamp(2rem, 6vw, 3.5rem);
+}
+
+.answer-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.answer-buttons button {
+    min-width: 120px;
 }
 
 
@@ -351,39 +430,19 @@ button:hover {
 
         transform: translate(-50%, -50%);
     }
-}
 
-.continue-button {
-    position: fixed;
-    right: 40px;
-    bottom: 35px;
-
-    padding: 14px 25px;
-    border: none;
-    border-radius: 999px;
-
-    background: #ff8fab;
-    color: white;
-
-    font-size: 1rem;
-    font-weight: 600;
-
-    cursor: pointer;
-
-    box-shadow: 0 8px 20px rgba(255, 100, 140, 0.2);
-
-    transition: all 0.25s ease;
-}
-
-.continue-button:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 25px rgba(255, 100, 140, 0.3);
-}
-
-@media (max-width: 700px) {
     .continue-button {
         right: 20px;
         bottom: 20px;
         padding: 13px 22px;
+    }
+
+    .answer-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .answer-buttons button {
+        width: 160px;
     }
 }
