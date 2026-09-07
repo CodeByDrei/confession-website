@@ -331,7 +331,8 @@ button:hover {
 .envelope.open .paper {
     opacity: 1;
 
-    width: min(520px, 80vw);
+    /* BIGGER + WIDER PAPER */
+    width: min(700px, 55vw);
 
     height: min(680px, 82vh);
 
@@ -538,8 +539,6 @@ button:hover {
         line-height: 1.6;
     }
 
-
-    /* Keep the message visible on phones too */
 
     .letter.opened .message {
         opacity: 1;
