@@ -1,7 +1,3 @@
-// =========================
-// ELEMENTS
-// =========================
-
 const openButton = document.querySelector("#openButton");
 
 const intro = document.querySelector("#intro");
@@ -30,74 +26,12 @@ const noStatus = document.querySelector("#noStatus");
 
 
 // =========================
-// YOUTUBE MUSIC
-// =========================
-
-let musicPlayer = null;
-
-let musicRequested = false;
-
-
-// YouTube automatically calls this function
-// when the API has finished loading.
-
-function onYouTubeIframeAPIReady() {
-
-    musicPlayer = new YT.Player("musicPlayer", {
-
-        events: {
-
-            onReady: function () {
-
-                console.log("YouTube player ready.");
-
-                // If the user already clicked Open,
-                // start the music now.
-
-                if (musicRequested) {
-
-                    musicPlayer.playVideo();
-
-                }
-
-            }
-
-        }
-
-    });
-
-}
-
-
-// =========================
 // INTRO → LETTER
 // =========================
 
 openButton.addEventListener("click", function () {
 
-    // Tell the music player that music
-    // should start.
-
-    musicRequested = true;
-
-
-    // If YouTube is already ready,
-    // play immediately.
-
-    if (
-        musicPlayer &&
-        typeof musicPlayer.playVideo === "function"
-    ) {
-
-        musicPlayer.playVideo();
-
-    }
-
-
-    // Fade out intro.
-
     intro.classList.add("fade-out");
-
 
     setTimeout(function () {
 
@@ -118,14 +52,9 @@ openButton.addEventListener("click", function () {
 
 envelope.addEventListener("click", function () {
 
-    // Prevent opening it multiple times.
-
     if (envelope.classList.contains("open")) {
-
         return;
-
     }
-
 
     envelope.classList.add("open");
 
@@ -141,7 +70,6 @@ envelope.addEventListener("click", function () {
 continueButton.addEventListener("click", function () {
 
     letter.classList.add("fade-out");
-
 
     setTimeout(function () {
 
@@ -164,7 +92,6 @@ yesButton.addEventListener("click", function () {
 
     question.classList.add("fade-out");
 
-
     setTimeout(function () {
 
         question.classList.add("hidden");
@@ -185,7 +112,6 @@ yesButton.addEventListener("click", function () {
 noButton.addEventListener("click", function () {
 
     question.classList.add("fade-out");
-
 
     setTimeout(function () {
 
@@ -208,9 +134,7 @@ yesForm.addEventListener("submit", async function (event) {
 
     event.preventDefault();
 
-
     yesSubmit.disabled = true;
-
     yesSubmit.textContent = "Sending... 💌";
 
     yesStatus.textContent = "";
@@ -222,19 +146,14 @@ yesForm.addEventListener("submit", async function (event) {
     try {
 
         const response = await fetch(
-
             yesForm.action,
-
             {
                 method: "POST",
-
                 body: formData,
-
                 headers: {
                     "Accept": "application/json"
                 }
             }
-
         );
 
 
@@ -245,34 +164,25 @@ yesForm.addEventListener("submit", async function (event) {
 
             yesForm.reset();
 
-            yesSubmit.textContent =
-                "Sent 💌";
+            yesSubmit.textContent = "Sent 💌";
 
-        }
-
-        else {
+        } else {
 
             yesStatus.textContent =
                 "Something went wrong. Try again 😭";
 
             yesSubmit.disabled = false;
-
-            yesSubmit.textContent =
-                "Send 💌";
+            yesSubmit.textContent = "Send 💌";
 
         }
 
-    }
-
-    catch (error) {
+    } catch (error) {
 
         yesStatus.textContent =
             "Couldn't send it. Check your internet connection.";
 
         yesSubmit.disabled = false;
-
-        yesSubmit.textContent =
-            "Send 💌";
+        yesSubmit.textContent = "Send 💌";
 
     }
 
@@ -287,9 +197,7 @@ noForm.addEventListener("submit", async function (event) {
 
     event.preventDefault();
 
-
     noSubmit.disabled = true;
-
     noSubmit.textContent = "Sending... 💌";
 
     noStatus.textContent = "";
@@ -301,19 +209,14 @@ noForm.addEventListener("submit", async function (event) {
     try {
 
         const response = await fetch(
-
             noForm.action,
-
             {
                 method: "POST",
-
                 body: formData,
-
                 headers: {
                     "Accept": "application/json"
                 }
             }
-
         );
 
 
@@ -324,34 +227,25 @@ noForm.addEventListener("submit", async function (event) {
 
             noForm.reset();
 
-            noSubmit.textContent =
-                "Sent 💌";
+            noSubmit.textContent = "Sent 💌";
 
-        }
-
-        else {
+        } else {
 
             noStatus.textContent =
                 "Something went wrong. Try again 😭";
 
             noSubmit.disabled = false;
-
-            noSubmit.textContent =
-                "Send 💌";
+            noSubmit.textContent = "Send 💌";
 
         }
 
-    }
-
-    catch (error) {
+    } catch (error) {
 
         noStatus.textContent =
             "Couldn't send it. Check your internet connection.";
 
         noSubmit.disabled = false;
-
-        noSubmit.textContent =
-            "Send 💌";
+        noSubmit.textContent = "Send 💌";
 
     }
 
