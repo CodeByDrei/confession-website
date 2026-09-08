@@ -1,6 +1,8 @@
 let musicPlayer = null;
 let musicRequested = false;
 
+let userName = "";
+
 
 // =========================
 // YOUTUBE MUSIC PLAYER
@@ -37,6 +39,11 @@ const letter = document.querySelector("#letter");
 const envelope = document.querySelector("#envelope");
 
 const continueButton = document.querySelector("#continueButton");
+
+const nameScreen = document.querySelector("#nameScreen");
+const nameInput = document.querySelector("#nameInput");
+const nameContinueButton = document.querySelector("#nameContinueButton");
+const nameStatus = document.querySelector("#nameStatus");
 
 const question = document.querySelector("#question");
 
@@ -105,7 +112,7 @@ envelope.addEventListener("click", function () {
 
 
 // =========================
-// LETTER → QUESTION
+// LETTER → NAME
 // =========================
 
 continueButton.addEventListener("click", function () {
@@ -116,11 +123,67 @@ continueButton.addEventListener("click", function () {
 
         letter.classList.add("hidden");
 
+        nameScreen.classList.remove("hidden");
+
+        nameScreen.classList.add("fade-in");
+
+        nameInput.focus();
+
+    }, 500);
+
+});
+
+
+// =========================
+// NAME → QUESTION
+// =========================
+
+nameContinueButton.addEventListener("click", function () {
+
+    const enteredName = nameInput.value.trim();
+
+
+    if (enteredName === "") {
+
+        nameStatus.textContent =
+            "You gotta tell me your name first 😭";
+
+        nameInput.focus();
+
+        return;
+    }
+
+
+    userName = enteredName;
+
+    nameScreen.classList.add("fade-out");
+
+    setTimeout(function () {
+
+        nameScreen.classList.add("hidden");
+
         question.classList.remove("hidden");
 
         question.classList.add("fade-in");
 
     }, 500);
+
+});
+
+
+// =========================
+// ALLOW ENTER ON NAME
+// =========================
+
+nameInput.addEventListener("keydown", function (event) {
+
+    if (event.key === "Enter") {
+
+        event.preventDefault();
+
+        nameContinueButton.click();
+
+    }
 
 });
 
@@ -168,6 +231,35 @@ noButton.addEventListener("click", function () {
 
 
 // =========================
+// ADD NAME TO FORM
+// =========================
+
+function addNameToForm(form) {
+
+    let existingName = form.querySelector(
+        'input[name="name"]'
+    );
+
+
+    if (!existingName) {
+
+        existingName = document.createElement("input");
+
+        existingName.type = "hidden";
+
+        existingName.name = "name";
+
+        form.appendChild(existingName);
+
+    }
+
+
+    existingName.value = userName;
+
+}
+
+
+// =========================
 // YES FORM
 // =========================
 
@@ -179,6 +271,9 @@ yesForm.addEventListener("submit", async function (event) {
     yesSubmit.textContent = "Sending... 💌";
 
     yesStatus.textContent = "";
+
+
+    addNameToForm(yesForm);
 
 
     const formData = new FormData(yesForm);
@@ -242,6 +337,9 @@ noForm.addEventListener("submit", async function (event) {
     noSubmit.textContent = "Sending... 💌";
 
     noStatus.textContent = "";
+
+
+    addNameToForm(noForm);
 
 
     const formData = new FormData(noForm);
