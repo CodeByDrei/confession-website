@@ -1,22 +1,8 @@
 // =========================
-// MUSIC
-// =========================
-
-let musicPlayer = null;
-let musicRequested = false;
-let musicStarted = false;
-
-
-// =========================
-// SOUND EFFECT SYSTEM
+// AUDIO SYSTEM
 // =========================
 
 let audioContext = null;
-
-
-// Create the audio system only after the user interacts
-// with the page. This keeps it compatible with browser
-// autoplay restrictions.
 
 function initAudio() {
 
@@ -31,8 +17,8 @@ function initAudio() {
         }
 
         audioContext = new AudioContext();
-    }
 
+    }
 
     if (audioContext.state === "suspended") {
         audioContext.resume();
@@ -47,19 +33,10 @@ function initAudio() {
 
 function playClickSound() {
 
-    initAudio();
+    if (!audioContext) return;
 
-    if (!audioContext) {
-        return;
-    }
-
-
-    const oscillator =
-        audioContext.createOscillator();
-
-    const gain =
-        audioContext.createGain();
-
+    const oscillator = audioContext.createOscillator();
+    const gain = audioContext.createGain();
 
     oscillator.type = "sine";
 
@@ -73,31 +50,23 @@ function playClickSound() {
         audioContext.currentTime + 0.07
     );
 
-
     gain.gain.setValueAtTime(
-        0.0001,
+        0.08,
         audioContext.currentTime
     );
 
     gain.gain.exponentialRampToValueAtTime(
-        0.08,
-        audioContext.currentTime + 0.008
-    );
-
-    gain.gain.exponentialRampToValueAtTime(
-        0.0001,
+        0.001,
         audioContext.currentTime + 0.07
     );
-
 
     oscillator.connect(gain);
     gain.connect(audioContext.destination);
 
-
     oscillator.start();
 
     oscillator.stop(
-        audioContext.currentTime + 0.08
+        audioContext.currentTime + 0.07
     );
 
 }
@@ -109,19 +78,10 @@ function playClickSound() {
 
 function playTypewriterSound() {
 
-    initAudio();
+    if (!audioContext) return;
 
-    if (!audioContext) {
-        return;
-    }
-
-
-    const oscillator =
-        audioContext.createOscillator();
-
-    const gain =
-        audioContext.createGain();
-
+    const oscillator = audioContext.createOscillator();
+    const gain = audioContext.createGain();
 
     oscillator.type = "square";
 
@@ -130,26 +90,18 @@ function playTypewriterSound() {
         audioContext.currentTime
     );
 
-
     gain.gain.setValueAtTime(
-        0.0001,
+        0.025,
         audioContext.currentTime
     );
 
     gain.gain.exponentialRampToValueAtTime(
-        0.025,
-        audioContext.currentTime + 0.003
+        0.001,
+        audioContext.currentTime + 0.04
     );
-
-    gain.gain.exponentialRampToValueAtTime(
-        0.0001,
-        audioContext.currentTime + 0.035
-    );
-
 
     oscillator.connect(gain);
     gain.connect(audioContext.destination);
-
 
     oscillator.start();
 
@@ -161,24 +113,15 @@ function playTypewriterSound() {
 
 
 // =========================
-// ENVELOPE / PAPER SOUND
+// PAPER / ENVELOPE SOUND
 // =========================
 
 function playPaperSound() {
 
-    initAudio();
+    if (!audioContext) return;
 
-    if (!audioContext) {
-        return;
-    }
-
-
-    const oscillator =
-        audioContext.createOscillator();
-
-    const gain =
-        audioContext.createGain();
-
+    const oscillator = audioContext.createOscillator();
+    const gain = audioContext.createGain();
 
     oscillator.type = "triangle";
 
@@ -189,34 +132,26 @@ function playPaperSound() {
 
     oscillator.frequency.exponentialRampToValueAtTime(
         70,
-        audioContext.currentTime + 0.35
+        audioContext.currentTime + 0.4
     );
 
-
     gain.gain.setValueAtTime(
-        0.0001,
+        0.035,
         audioContext.currentTime
     );
 
     gain.gain.exponentialRampToValueAtTime(
-        0.035,
-        audioContext.currentTime + 0.02
-    );
-
-    gain.gain.exponentialRampToValueAtTime(
-        0.0001,
+        0.001,
         audioContext.currentTime + 0.4
     );
-
 
     oscillator.connect(gain);
     gain.connect(audioContext.destination);
 
-
     oscillator.start();
 
     oscillator.stop(
-        audioContext.currentTime + 0.42
+        audioContext.currentTime + 0.4
     );
 
 }
@@ -228,65 +163,45 @@ function playPaperSound() {
 
 function playSendSound() {
 
-    initAudio();
+    if (!audioContext) return;
 
-    if (!audioContext) {
-        return;
-    }
-
-
-    const now = audioContext.currentTime;
-
-
-    const oscillator =
-        audioContext.createOscillator();
-
-    const gain =
-        audioContext.createGain();
-
+    const oscillator = audioContext.createOscillator();
+    const gain = audioContext.createGain();
 
     oscillator.type = "sine";
 
     oscillator.frequency.setValueAtTime(
         500,
-        now
+        audioContext.currentTime
     );
 
     oscillator.frequency.exponentialRampToValueAtTime(
         900,
-        now + 0.15
+        audioContext.currentTime + 0.15
     );
 
     oscillator.frequency.exponentialRampToValueAtTime(
         1200,
-        now + 0.3
+        audioContext.currentTime + 0.35
     );
-
 
     gain.gain.setValueAtTime(
-        0.0001,
-        now
-    );
-
-    gain.gain.exponentialRampToValueAtTime(
         0.06,
-        now + 0.02
+        audioContext.currentTime
     );
 
     gain.gain.exponentialRampToValueAtTime(
-        0.0001,
-        now + 0.35
+        0.001,
+        audioContext.currentTime + 0.35
     );
-
 
     oscillator.connect(gain);
     gain.connect(audioContext.destination);
 
-
     oscillator.start();
 
     oscillator.stop(
-        now + 0.4
+        audioContext.currentTime + 0.35
     );
 
 }
@@ -298,17 +213,15 @@ function playSendSound() {
 
 function playFinishSound() {
 
-    initAudio();
+    if (!audioContext) return;
 
-    if (!audioContext) {
-        return;
-    }
+    const notes = [
+        523.25,
+        659.25,
+        783.99
+    ];
 
-
-    const now = audioContext.currentTime;
-
-
-    function playNote(frequency, delay) {
+    notes.forEach(function (frequency, index) {
 
         const oscillator =
             audioContext.createOscillator();
@@ -316,55 +229,54 @@ function playFinishSound() {
         const gain =
             audioContext.createGain();
 
+        const startTime =
+            audioContext.currentTime +
+            index * 0.12;
 
         oscillator.type = "sine";
 
         oscillator.frequency.setValueAtTime(
             frequency,
-            now + delay
+            startTime
         );
-
 
         gain.gain.setValueAtTime(
-            0.0001,
-            now + delay
+            0,
+            startTime
+        );
+
+        gain.gain.linearRampToValueAtTime(
+            0.06,
+            startTime + 0.03
         );
 
         gain.gain.exponentialRampToValueAtTime(
-            0.05,
-            now + delay + 0.02
+            0.001,
+            startTime + 0.5
         );
-
-        gain.gain.exponentialRampToValueAtTime(
-            0.0001,
-            now + delay + 0.5
-        );
-
 
         oscillator.connect(gain);
         gain.connect(audioContext.destination);
 
-
-        oscillator.start(
-            now + delay
-        );
+        oscillator.start(startTime);
 
         oscillator.stop(
-            now + delay + 0.55
+            startTime + 0.5
         );
-    }
 
-
-    playNote(523.25, 0);
-    playNote(659.25, 0.12);
-    playNote(783.99, 0.24);
+    });
 
 }
 
 
 // =========================
-// YOUTUBE MUSIC PLAYER
+// YOUTUBE MUSIC
 // =========================
+
+let musicPlayer = null;
+let musicRequested = false;
+let musicStarted = false;
+
 
 function onYouTubeIframeAPIReady() {
 
@@ -382,7 +294,6 @@ function onYouTubeIframeAPIReady() {
                 onReady: function () {
 
                     musicPlayer.setVolume(25);
-
 
                     if (musicRequested) {
 
@@ -403,7 +314,7 @@ function onYouTubeIframeAPIReady() {
 
 
 // =========================
-// DOM ELEMENTS
+// ELEMENTS
 // =========================
 
 const openButton =
@@ -482,15 +393,8 @@ openButton.addEventListener(
 
         playClickSound();
 
-
-        // Tell the music system that the user
-        // has intentionally requested the music.
-
         musicRequested = true;
 
-
-        // If YouTube is already ready,
-        // start immediately.
 
         if (
             musicPlayer &&
@@ -531,21 +435,19 @@ envelope.addEventListener(
     "click",
     function () {
 
+        initAudio();
+
         if (
             envelope.classList.contains("open")
         ) {
             return;
         }
 
-
-        initAudio();
-
-        playPaperSound();
-
-
         envelope.classList.add("open");
 
         letter.classList.add("opened");
+
+        playPaperSound();
 
     }
 );
@@ -562,7 +464,6 @@ continueButton.addEventListener(
         initAudio();
 
         playClickSound();
-
 
         letter.classList.add("fade-out");
 
@@ -593,7 +494,6 @@ yesButton.addEventListener(
 
         playClickSound();
 
-
         question.classList.add("fade-out");
 
 
@@ -605,7 +505,10 @@ yesButton.addEventListener(
 
             yesResponse.classList.add("fade-in");
 
-            yesReason.focus();
+            updateSubmitButton(
+                yesReason,
+                yesSubmit
+            );
 
         }, 500);
 
@@ -625,7 +528,6 @@ noButton.addEventListener(
 
         playClickSound();
 
-
         question.classList.add("fade-out");
 
 
@@ -637,7 +539,10 @@ noButton.addEventListener(
 
             noResponse.classList.add("fade-in");
 
-            noReason.focus();
+            updateSubmitButton(
+                noReason,
+                noSubmit
+            );
 
         }, 500);
 
@@ -646,81 +551,23 @@ noButton.addEventListener(
 
 
 // =========================
-// TYPEWRITER EFFECT
-// =========================
-
-let lastTypeSoundTime = 0;
-
-
-function handleTyping(event) {
-
-    const now = Date.now();
-
-
-    // Prevent the sound from becoming
-    // ridiculously fast and annoying.
-
-    if (now - lastTypeSoundTime < 35) {
-        return;
-    }
-
-
-    if (
-        event.inputType &&
-        event.inputType.startsWith("delete")
-    ) {
-        return;
-    }
-
-
-    if (event.data) {
-
-        lastTypeSoundTime = now;
-
-        playTypewriterSound();
-
-    }
-
-}
-
-
-yesReason.addEventListener(
-    "input",
-    handleTyping
-);
-
-noReason.addEventListener(
-    "input",
-    handleTyping
-);
-
-
-// =========================
-// FINISH SCREEN
+// SHOW FINISH SCREEN
 // =========================
 
 function showFinishScreen() {
 
     yesResponse.classList.add("fade-out");
-
     noResponse.classList.add("fade-out");
 
 
     setTimeout(function () {
 
         yesResponse.classList.add("hidden");
-
         noResponse.classList.add("hidden");
-
-        yesResponse.classList.remove("fade-out");
-
-        noResponse.classList.remove("fade-out");
-
 
         finish.classList.remove("hidden");
 
         finish.classList.add("fade-in");
-
 
         playFinishSound();
 
@@ -730,7 +577,7 @@ function showFinishScreen() {
 
 
 // =========================
-// YES FORM
+// YES FORM SUBMIT
 // =========================
 
 yesForm.addEventListener(
@@ -739,18 +586,15 @@ yesForm.addEventListener(
 
         event.preventDefault();
 
-
         initAudio();
 
         playSendSound();
 
-
         yesSubmit.disabled = true;
+        yesSkip.disabled = true;
 
         yesSubmit.textContent =
             "Sending... 💌";
-
-        yesSkip.disabled = true;
 
         yesStatus.textContent = "";
 
@@ -766,9 +610,7 @@ yesForm.addEventListener(
                     yesForm.action,
                     {
                         method: "POST",
-
                         body: formData,
-
                         headers: {
                             "Accept":
                                 "application/json"
@@ -782,8 +624,9 @@ yesForm.addEventListener(
                 yesStatus.textContent =
                     "Sent! 💗 Thank you for being honest.";
 
-
                 yesForm.reset();
+
+                yesSubmit.disabled = true;
 
                 yesSubmit.textContent =
                     "Sent 💌";
@@ -794,18 +637,18 @@ yesForm.addEventListener(
                     1000
                 );
 
-
             } else {
 
                 yesStatus.textContent =
                     "Something went wrong. Try again 😭";
 
                 yesSubmit.disabled = false;
-
                 yesSkip.disabled = false;
 
-                yesSubmit.textContent =
-                    "Send 💌";
+                updateSubmitButton(
+                    yesReason,
+                    yesSubmit
+                );
 
             }
 
@@ -815,11 +658,12 @@ yesForm.addEventListener(
                 "Couldn't send it. Check your internet connection.";
 
             yesSubmit.disabled = false;
-
             yesSkip.disabled = false;
 
-            yesSubmit.textContent =
-                "Send 💌";
+            updateSubmitButton(
+                yesReason,
+                yesSubmit
+            );
 
         }
 
@@ -828,7 +672,7 @@ yesForm.addEventListener(
 
 
 // =========================
-// NO FORM
+// NO FORM SUBMIT
 // =========================
 
 noForm.addEventListener(
@@ -837,18 +681,15 @@ noForm.addEventListener(
 
         event.preventDefault();
 
-
         initAudio();
 
         playSendSound();
 
-
         noSubmit.disabled = true;
+        noSkip.disabled = true;
 
         noSubmit.textContent =
             "Sending... 💌";
-
-        noSkip.disabled = true;
 
         noStatus.textContent = "";
 
@@ -864,9 +705,7 @@ noForm.addEventListener(
                     noForm.action,
                     {
                         method: "POST",
-
                         body: formData,
-
                         headers: {
                             "Accept":
                                 "application/json"
@@ -880,8 +719,9 @@ noForm.addEventListener(
                 noStatus.textContent =
                     "Sent. Thank you for being honest. 💗";
 
-
                 noForm.reset();
+
+                noSubmit.disabled = true;
 
                 noSubmit.textContent =
                     "Sent 💌";
@@ -892,18 +732,18 @@ noForm.addEventListener(
                     1000
                 );
 
-
             } else {
 
                 noStatus.textContent =
                     "Something went wrong. Try again 😭";
 
                 noSubmit.disabled = false;
-
                 noSkip.disabled = false;
 
-                noSubmit.textContent =
-                    "Send 💌";
+                updateSubmitButton(
+                    noReason,
+                    noSubmit
+                );
 
             }
 
@@ -913,11 +753,12 @@ noForm.addEventListener(
                 "Couldn't send it. Check your internet connection.";
 
             noSubmit.disabled = false;
-
             noSkip.disabled = false;
 
-            noSubmit.textContent =
-                "Send 💌";
+            updateSubmitButton(
+                noReason,
+                noSubmit
+            );
 
         }
 
@@ -926,61 +767,294 @@ noForm.addEventListener(
 
 
 // =========================
-// SKIP YES REASON
+// SKIP YES
 // =========================
 
 yesSkip.addEventListener(
     "click",
-    function () {
+    async function () {
 
         initAudio();
 
         playClickSound();
 
-        showFinishScreen();
+        yesSkip.disabled = true;
+        yesSubmit.disabled = true;
+
+        yesSkip.textContent =
+            "Saving...";
+
+
+        const formData =
+            new FormData();
+
+        formData.append(
+            "response",
+            "YES 💕"
+        );
+
+        formData.append(
+            "reason",
+            ""
+        );
+
+
+        try {
+
+            const response =
+                await fetch(
+                    yesForm.action,
+                    {
+                        method: "POST",
+                        body: formData,
+                        headers: {
+                            "Accept":
+                                "application/json"
+                        }
+                    }
+                );
+
+
+            if (response.ok) {
+
+                showFinishScreen();
+
+            } else {
+
+                yesSkip.disabled = false;
+
+                updateSubmitButton(
+                    yesReason,
+                    yesSubmit
+                );
+
+                yesSkip.textContent =
+                    "Skip →";
+
+            }
+
+        } catch (error) {
+
+            yesSkip.disabled = false;
+
+            updateSubmitButton(
+                yesReason,
+                yesSubmit
+            );
+
+            yesSkip.textContent =
+                "Skip →";
+
+        }
 
     }
 );
 
 
 // =========================
-// SKIP NO REASON
+// SKIP NO
 // =========================
 
 noSkip.addEventListener(
     "click",
-    function () {
+    async function () {
 
         initAudio();
 
         playClickSound();
 
-        showFinishScreen();
+        noSkip.disabled = true;
+        noSubmit.disabled = true;
+
+        noSkip.textContent =
+            "Saving...";
+
+
+        const formData =
+            new FormData();
+
+        formData.append(
+            "response",
+            "NO 🥲"
+        );
+
+        formData.append(
+            "reason",
+            ""
+        );
+
+
+        try {
+
+            const response =
+                await fetch(
+                    noForm.action,
+                    {
+                        method: "POST",
+                        body: formData,
+                        headers: {
+                            "Accept":
+                                "application/json"
+                        }
+                    }
+                );
+
+
+            if (response.ok) {
+
+                showFinishScreen();
+
+            } else {
+
+                noSkip.disabled = false;
+
+                updateSubmitButton(
+                    noReason,
+                    noSubmit
+                );
+
+                noSkip.textContent =
+                    "Skip →";
+
+            }
+
+        } catch (error) {
+
+            noSkip.disabled = false;
+
+            updateSubmitButton(
+                noReason,
+                noSubmit
+            );
+
+            noSkip.textContent =
+                "Skip →";
+
+        }
 
     }
 );
 
 
 // =========================
-// ALL BUTTONS
+// SEND BUTTON STATE
 // =========================
 
-// This adds the little click sound to
-// buttons that aren't already handled above.
+function updateSubmitButton(
+    textarea,
+    submitButton
+) {
 
-const allButtons =
-    document.querySelectorAll("button");
+    const hasText =
+        textarea.value.trim().length > 0;
+
+    submitButton.disabled = !hasText;
+
+}
 
 
-allButtons.forEach(function (button) {
+// =========================
+// TYPEWRITER + TEXT CHECK
+// =========================
 
-    button.addEventListener(
-        "click",
-        function () {
+let lastTypeSoundTime = 0;
 
-            initAudio();
 
-        }
-    );
+function handleTyping(event) {
 
-});
+    const now = Date.now();
+
+
+    // Typewriter sound
+
+    if (
+        now - lastTypeSoundTime >= 35 &&
+        event.inputType &&
+        !event.inputType.startsWith("delete") &&
+        event.data
+    ) {
+
+        lastTypeSoundTime = now;
+
+        playTypewriterSound();
+
+    }
+
+
+    // Update Send button
+
+    if (
+        event.target === yesReason
+    ) {
+
+        updateSubmitButton(
+            yesReason,
+            yesSubmit
+        );
+
+    }
+
+
+    if (
+        event.target === noReason
+    ) {
+
+        updateSubmitButton(
+            noReason,
+            noSubmit
+        );
+
+    }
+
+}
+
+
+// =========================
+// TEXTAREA LISTENERS
+// =========================
+
+yesReason.addEventListener(
+    "input",
+    handleTyping
+);
+
+noReason.addEventListener(
+    "input",
+    handleTyping
+);
+
+
+// =========================
+// INITIAL BUTTON STATE
+// =========================
+
+updateSubmitButton(
+    yesReason,
+    yesSubmit
+);
+
+updateSubmitButton(
+    noReason,
+    noSubmit
+);
+
+
+// =========================
+// INITIALIZE AUDIO
+// ON BUTTON CLICK
+// =========================
+
+document.querySelectorAll("button").forEach(
+    function (button) {
+
+        button.addEventListener(
+            "click",
+            function () {
+
+                initAudio();
+
+            }
+        );
+
+    }
+);
