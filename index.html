@@ -161,16 +161,27 @@
                     id="yesReason"
                     name="reason"
                     placeholder="Tell me why... "
-                    required
                 ></textarea>
 
 
-                <button
-                    type="submit"
-                    id="yesSubmit"
-                >
-                    Send 💌
-                </button>
+                <div class="form-buttons">
+
+                    <button
+                        type="submit"
+                        id="yesSubmit"
+                    >
+                        Send 💌
+                    </button>
+
+                    <button
+                        type="button"
+                        class="skip-button"
+                        id="yesSkip"
+                    >
+                        Skip →
+                    </button>
+
+                </div>
 
             </form>
 
@@ -218,17 +229,27 @@
                     id="noReason"
                     name="reason"
                     placeholder="Be honest with me... 🥲"
-                    required
                 ></textarea>
 
 
-                <button
-                    type="submit"
-                    id="noSubmit"
-                >
-                    Send 💌
-                </button>
+                <div class="form-buttons">
 
+                    <button
+                        type="submit"
+                        id="noSubmit"
+                    >
+                        Send 💌
+                    </button>
+
+                    <button
+                        type="button"
+                        class="skip-button"
+                        id="noSkip"
+                    >
+                        Skip →
+                    </button>
+
+                </div>
 
             </form>
 
@@ -244,6 +265,31 @@
 
 
     <!-- =========================
+         FINISH SCREEN
+    ========================== -->
+
+    <section class="finish hidden" id="finish">
+
+        <div class="finish-box">
+
+            <h1>
+                Thank you 💌
+            </h1>
+
+            <p>
+                That's all I wanted to ask.
+            </p>
+
+            <p>
+                Take care ❤️
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
          HIDDEN MUSIC PLAYER
     ========================== -->
 
@@ -251,7 +297,7 @@
         id="musicPlayer"
         width="200"
         height="200"
-        src="https://www.youtube-nocookie.com/embed/Q49pnA4jsp8?enablejsapi=1&playsinline=1"
+        src="https://www.youtube-nocookie.com/embed/Q49pnA4jsp8?enablejsapi=1&playsinline=1&rel=0"
         frameborder="0"
         allow="autoplay; encrypted-media"
     ></iframe>
