@@ -12,66 +12,36 @@
 
 <body>
 
-
-    <!-- =========================
-         INTRO
-    ========================== -->
-
+    <!-- INTRO -->
     <main class="container" id="intro">
-
-        <h1>
-            Hey...
-        </h1>
-
-        <p>
-            I made something for you.
-        </p>
+        <h1>Hey...</h1>
+        <p>I made something for you.</p>
 
         <button id="openButton">
             Open 💌
         </button>
-
     </main>
 
 
-    <!-- =========================
-         LETTER
-    ========================== -->
-
+    <!-- LETTER -->
     <section class="letter hidden" id="letter">
 
         <div class="message">
-
-            <p>
-                I've been wanting to tell you something...
-            </p>
-
+            <p>I've been wanting to tell you something...</p>
         </div>
-
 
         <div class="envelope" id="envelope">
 
             <div class="envelope-top"></div>
 
-
             <div class="envelope-body">
-
-                <span>
-                    💌
-                </span>
-
-                <p>
-                    Click me
-                </p>
-
+                <span>💌</span>
+                <p>Click me</p>
             </div>
-
 
             <div class="paper">
 
-                <h2>
-                    For You
-                </h2>
+                <h2>For You</h2>
 
                 <p>
                     There's something I've been wanting to say...
@@ -85,9 +55,6 @@
 
         </div>
 
-
-        <!-- CONTINUE -->
-
         <button
             class="continue-button"
             id="continueButton"
@@ -98,18 +65,17 @@
     </section>
 
 
-    <!-- =========================
-         QUESTION
-    ========================== -->
-
-    <section class="question hidden" id="question">
+    <!-- QUESTION -->
+    <section
+        class="question hidden"
+        id="question"
+    >
 
         <div class="question-box">
 
             <h1>
                 Do you like me back? ❤️
             </h1>
-
 
             <div class="answer-buttons">
 
@@ -128,11 +94,11 @@
     </section>
 
 
-    <!-- =========================
-         YES RESPONSE
-    ========================== -->
-
-    <section class="response hidden" id="yesResponse">
+    <!-- YES RESPONSE -->
+    <section
+        class="response hidden"
+        id="yesResponse"
+    >
 
         <div class="response-box">
 
@@ -143,7 +109,6 @@
             <p>
                 Do you mind telling me why you like me back?
             </p>
-
 
             <form
                 id="yesForm"
@@ -162,7 +127,6 @@
                     name="reason"
                     placeholder="Tell me why... "
                 ></textarea>
-
 
                 <div class="form-buttons">
 
@@ -186,7 +150,6 @@
 
             </form>
 
-
             <p
                 class="form-status"
                 id="yesStatus"
@@ -197,11 +160,11 @@
     </section>
 
 
-    <!-- =========================
-         NO RESPONSE
-    ========================== -->
-
-    <section class="response hidden" id="noResponse">
+    <!-- NO RESPONSE -->
+    <section
+        class="response hidden"
+        id="noResponse"
+    >
 
         <div class="response-box">
 
@@ -212,7 +175,6 @@
             <p>
                 That's okay... but do you mind telling me why?
             </p>
-
 
             <form
                 id="noForm"
@@ -231,7 +193,6 @@
                     name="reason"
                     placeholder="Be honest with me... 🥲"
                 ></textarea>
-
 
                 <div class="form-buttons">
 
@@ -255,7 +216,6 @@
 
             </form>
 
-
             <p
                 class="form-status"
                 id="noStatus"
@@ -266,11 +226,11 @@
     </section>
 
 
-    <!-- =========================
-         FINISH
-    ========================== -->
-
-    <section class="finish hidden" id="finish">
+    <!-- FINISH -->
+    <section
+        class="finish hidden"
+        id="finish"
+    >
 
         <div class="finish-box">
 
@@ -291,10 +251,7 @@
     </section>
 
 
-    <!-- =========================
-         HIDDEN MUSIC PLAYER
-    ========================== -->
-
+    <!-- HIDDEN MUSIC PLAYER -->
     <iframe
         id="musicPlayer"
         width="200"
@@ -306,7 +263,6 @@
 
 
     <!-- YOUTUBE API -->
-
     <script src="https://www.youtube.com/iframe_api"></script>
 
     <script src="script.js"></script>
