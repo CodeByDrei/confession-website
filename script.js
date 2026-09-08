@@ -1,3 +1,32 @@
+let musicPlayer = null;
+let musicRequested = false;
+
+
+// =========================
+// YOUTUBE MUSIC PLAYER
+// =========================
+
+function onYouTubeIframeAPIReady() {
+
+    musicPlayer = new YT.Player("musicPlayer", {
+
+        events: {
+
+            onReady: function () {
+
+                if (musicRequested) {
+                    musicPlayer.playVideo();
+                }
+
+            }
+
+        }
+
+    });
+
+}
+
+
 const openButton = document.querySelector("#openButton");
 
 const intro = document.querySelector("#intro");
@@ -26,10 +55,20 @@ const noStatus = document.querySelector("#noStatus");
 
 
 // =========================
-// INTRO → LETTER
+// INTRO → LETTER + MUSIC
 // =========================
 
 openButton.addEventListener("click", function () {
+
+    musicRequested = true;
+
+    if (
+        musicPlayer &&
+        typeof musicPlayer.playVideo === "function"
+    ) {
+        musicPlayer.playVideo();
+    }
+
 
     intro.classList.add("fade-out");
 
