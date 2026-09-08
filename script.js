@@ -35,8 +35,11 @@ function playClickSound() {
 
     if (!audioContext) return;
 
-    const oscillator = audioContext.createOscillator();
-    const gain = audioContext.createGain();
+    const oscillator =
+        audioContext.createOscillator();
+
+    const gain =
+        audioContext.createGain();
 
     oscillator.type = "sine";
 
@@ -61,7 +64,10 @@ function playClickSound() {
     );
 
     oscillator.connect(gain);
-    gain.connect(audioContext.destination);
+
+    gain.connect(
+        audioContext.destination
+    );
 
     oscillator.start();
 
@@ -80,8 +86,11 @@ function playTypewriterSound() {
 
     if (!audioContext) return;
 
-    const oscillator = audioContext.createOscillator();
-    const gain = audioContext.createGain();
+    const oscillator =
+        audioContext.createOscillator();
+
+    const gain =
+        audioContext.createGain();
 
     oscillator.type = "square";
 
@@ -101,12 +110,67 @@ function playTypewriterSound() {
     );
 
     oscillator.connect(gain);
-    gain.connect(audioContext.destination);
+
+    gain.connect(
+        audioContext.destination
+    );
 
     oscillator.start();
 
     oscillator.stop(
         audioContext.currentTime + 0.04
+    );
+
+}
+
+
+// =========================
+// DEEP BACKSPACE / DELETE SOUND
+// =========================
+
+function playDeleteSound() {
+
+    if (!audioContext) return;
+
+    const oscillator =
+        audioContext.createOscillator();
+
+    const gain =
+        audioContext.createGain();
+
+    oscillator.type = "square";
+
+    // Lower/deeper than the normal typing sound
+    oscillator.frequency.setValueAtTime(
+        320,
+        audioContext.currentTime
+    );
+
+    oscillator.frequency.exponentialRampToValueAtTime(
+        150,
+        audioContext.currentTime + 0.055
+    );
+
+    gain.gain.setValueAtTime(
+        0.035,
+        audioContext.currentTime
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+        0.001,
+        audioContext.currentTime + 0.055
+    );
+
+    oscillator.connect(gain);
+
+    gain.connect(
+        audioContext.destination
+    );
+
+    oscillator.start();
+
+    oscillator.stop(
+        audioContext.currentTime + 0.055
     );
 
 }
@@ -120,8 +184,11 @@ function playPaperSound() {
 
     if (!audioContext) return;
 
-    const oscillator = audioContext.createOscillator();
-    const gain = audioContext.createGain();
+    const oscillator =
+        audioContext.createOscillator();
+
+    const gain =
+        audioContext.createGain();
 
     oscillator.type = "triangle";
 
@@ -146,7 +213,10 @@ function playPaperSound() {
     );
 
     oscillator.connect(gain);
-    gain.connect(audioContext.destination);
+
+    gain.connect(
+        audioContext.destination
+    );
 
     oscillator.start();
 
@@ -165,8 +235,11 @@ function playSendSound() {
 
     if (!audioContext) return;
 
-    const oscillator = audioContext.createOscillator();
-    const gain = audioContext.createGain();
+    const oscillator =
+        audioContext.createOscillator();
+
+    const gain =
+        audioContext.createGain();
 
     oscillator.type = "sine";
 
@@ -196,7 +269,10 @@ function playSendSound() {
     );
 
     oscillator.connect(gain);
-    gain.connect(audioContext.destination);
+
+    gain.connect(
+        audioContext.destination
+    );
 
     oscillator.start();
 
@@ -221,50 +297,55 @@ function playFinishSound() {
         783.99
     ];
 
-    notes.forEach(function (frequency, index) {
+    notes.forEach(
+        function (frequency, index) {
 
-        const oscillator =
-            audioContext.createOscillator();
+            const oscillator =
+                audioContext.createOscillator();
 
-        const gain =
-            audioContext.createGain();
+            const gain =
+                audioContext.createGain();
 
-        const startTime =
-            audioContext.currentTime +
-            index * 0.12;
+            const startTime =
+                audioContext.currentTime +
+                index * 0.12;
 
-        oscillator.type = "sine";
+            oscillator.type = "sine";
 
-        oscillator.frequency.setValueAtTime(
-            frequency,
-            startTime
-        );
+            oscillator.frequency.setValueAtTime(
+                frequency,
+                startTime
+            );
 
-        gain.gain.setValueAtTime(
-            0,
-            startTime
-        );
+            gain.gain.setValueAtTime(
+                0,
+                startTime
+            );
 
-        gain.gain.linearRampToValueAtTime(
-            0.06,
-            startTime + 0.03
-        );
+            gain.gain.linearRampToValueAtTime(
+                0.06,
+                startTime + 0.03
+            );
 
-        gain.gain.exponentialRampToValueAtTime(
-            0.001,
-            startTime + 0.5
-        );
+            gain.gain.exponentialRampToValueAtTime(
+                0.001,
+                startTime + 0.5
+            );
 
-        oscillator.connect(gain);
-        gain.connect(audioContext.destination);
+            oscillator.connect(gain);
 
-        oscillator.start(startTime);
+            gain.connect(
+                audioContext.destination
+            );
 
-        oscillator.stop(
-            startTime + 0.5
-        );
+            oscillator.start(startTime);
 
-    });
+            oscillator.stop(
+                startTime + 0.5
+            );
+
+        }
+    );
 
 }
 
@@ -395,7 +476,6 @@ openButton.addEventListener(
 
         musicRequested = true;
 
-
         if (
             musicPlayer &&
             typeof musicPlayer.playVideo === "function"
@@ -409,19 +489,20 @@ openButton.addEventListener(
 
         }
 
-
         intro.classList.add("fade-out");
 
+        setTimeout(
+            function () {
 
-        setTimeout(function () {
+                intro.classList.add("hidden");
 
-            intro.classList.add("hidden");
+                letter.classList.remove("hidden");
 
-            letter.classList.remove("hidden");
+                letter.classList.add("fade-in");
 
-            letter.classList.add("fade-in");
-
-        }, 500);
+            },
+            500
+        );
 
     }
 );
@@ -467,16 +548,18 @@ continueButton.addEventListener(
 
         letter.classList.add("fade-out");
 
+        setTimeout(
+            function () {
 
-        setTimeout(function () {
+                letter.classList.add("hidden");
 
-            letter.classList.add("hidden");
+                question.classList.remove("hidden");
 
-            question.classList.remove("hidden");
+                question.classList.add("fade-in");
 
-            question.classList.add("fade-in");
-
-        }, 500);
+            },
+            500
+        );
 
     }
 );
@@ -496,21 +579,24 @@ yesButton.addEventListener(
 
         question.classList.add("fade-out");
 
+        setTimeout(
+            function () {
 
-        setTimeout(function () {
+                question.classList.add("hidden");
 
-            question.classList.add("hidden");
+                yesResponse.classList.remove("hidden");
 
-            yesResponse.classList.remove("hidden");
+                yesResponse.classList.add("fade-in");
 
-            yesResponse.classList.add("fade-in");
+                updateSubmitButton(
+                    yesReason,
+                    yesSubmit,
+                    yesSkip
+                );
 
-            updateSubmitButton(
-                yesReason,
-                yesSubmit
-            );
-
-        }, 500);
+            },
+            500
+        );
 
     }
 );
@@ -530,21 +616,24 @@ noButton.addEventListener(
 
         question.classList.add("fade-out");
 
+        setTimeout(
+            function () {
 
-        setTimeout(function () {
+                question.classList.add("hidden");
 
-            question.classList.add("hidden");
+                noResponse.classList.remove("hidden");
 
-            noResponse.classList.remove("hidden");
+                noResponse.classList.add("fade-in");
 
-            noResponse.classList.add("fade-in");
+                updateSubmitButton(
+                    noReason,
+                    noSubmit,
+                    noSkip
+                );
 
-            updateSubmitButton(
-                noReason,
-                noSubmit
-            );
-
-        }, 500);
+            },
+            500
+        );
 
     }
 );
@@ -557,21 +646,25 @@ noButton.addEventListener(
 function showFinishScreen() {
 
     yesResponse.classList.add("fade-out");
+
     noResponse.classList.add("fade-out");
 
+    setTimeout(
+        function () {
 
-    setTimeout(function () {
+            yesResponse.classList.add("hidden");
 
-        yesResponse.classList.add("hidden");
-        noResponse.classList.add("hidden");
+            noResponse.classList.add("hidden");
 
-        finish.classList.remove("hidden");
+            finish.classList.remove("hidden");
 
-        finish.classList.add("fade-in");
+            finish.classList.add("fade-in");
 
-        playFinishSound();
+            playFinishSound();
 
-    }, 500);
+        },
+        500
+    );
 
 }
 
@@ -591,6 +684,7 @@ yesForm.addEventListener(
         playSendSound();
 
         yesSubmit.disabled = true;
+
         yesSkip.disabled = true;
 
         yesSubmit.textContent =
@@ -598,10 +692,8 @@ yesForm.addEventListener(
 
         yesStatus.textContent = "";
 
-
         const formData =
             new FormData(yesForm);
-
 
         try {
 
@@ -610,14 +702,15 @@ yesForm.addEventListener(
                     yesForm.action,
                     {
                         method: "POST",
+
                         body: formData,
+
                         headers: {
                             "Accept":
                                 "application/json"
                         }
                     }
                 );
-
 
             if (response.ok) {
 
@@ -628,9 +721,10 @@ yesForm.addEventListener(
 
                 yesSubmit.disabled = true;
 
+                yesSkip.disabled = true;
+
                 yesSubmit.textContent =
                     "Sent 💌";
-
 
                 setTimeout(
                     showFinishScreen,
@@ -642,12 +736,10 @@ yesForm.addEventListener(
                 yesStatus.textContent =
                     "Something went wrong. Try again 😭";
 
-                yesSubmit.disabled = false;
-                yesSkip.disabled = false;
-
                 updateSubmitButton(
                     yesReason,
-                    yesSubmit
+                    yesSubmit,
+                    yesSkip
                 );
 
             }
@@ -657,12 +749,10 @@ yesForm.addEventListener(
             yesStatus.textContent =
                 "Couldn't send it. Check your internet connection.";
 
-            yesSubmit.disabled = false;
-            yesSkip.disabled = false;
-
             updateSubmitButton(
                 yesReason,
-                yesSubmit
+                yesSubmit,
+                yesSkip
             );
 
         }
@@ -686,6 +776,7 @@ noForm.addEventListener(
         playSendSound();
 
         noSubmit.disabled = true;
+
         noSkip.disabled = true;
 
         noSubmit.textContent =
@@ -693,10 +784,8 @@ noForm.addEventListener(
 
         noStatus.textContent = "";
 
-
         const formData =
             new FormData(noForm);
-
 
         try {
 
@@ -705,14 +794,15 @@ noForm.addEventListener(
                     noForm.action,
                     {
                         method: "POST",
+
                         body: formData,
+
                         headers: {
                             "Accept":
                                 "application/json"
                         }
                     }
                 );
-
 
             if (response.ok) {
 
@@ -723,9 +813,10 @@ noForm.addEventListener(
 
                 noSubmit.disabled = true;
 
+                noSkip.disabled = true;
+
                 noSubmit.textContent =
                     "Sent 💌";
-
 
                 setTimeout(
                     showFinishScreen,
@@ -737,12 +828,10 @@ noForm.addEventListener(
                 noStatus.textContent =
                     "Something went wrong. Try again 😭";
 
-                noSubmit.disabled = false;
-                noSkip.disabled = false;
-
                 updateSubmitButton(
                     noReason,
-                    noSubmit
+                    noSubmit,
+                    noSkip
                 );
 
             }
@@ -752,12 +841,10 @@ noForm.addEventListener(
             noStatus.textContent =
                 "Couldn't send it. Check your internet connection.";
 
-            noSubmit.disabled = false;
-            noSkip.disabled = false;
-
             updateSubmitButton(
                 noReason,
-                noSubmit
+                noSubmit,
+                noSkip
             );
 
         }
@@ -779,11 +866,11 @@ yesSkip.addEventListener(
         playClickSound();
 
         yesSkip.disabled = true;
+
         yesSubmit.disabled = true;
 
         yesSkip.textContent =
             "Saving...";
-
 
         const formData =
             new FormData();
@@ -798,7 +885,6 @@ yesSkip.addEventListener(
             ""
         );
 
-
         try {
 
             const response =
@@ -806,14 +892,15 @@ yesSkip.addEventListener(
                     yesForm.action,
                     {
                         method: "POST",
+
                         body: formData,
+
                         headers: {
                             "Accept":
                                 "application/json"
                         }
                     }
                 );
-
 
             if (response.ok) {
 
@@ -825,7 +912,8 @@ yesSkip.addEventListener(
 
                 updateSubmitButton(
                     yesReason,
-                    yesSubmit
+                    yesSubmit,
+                    yesSkip
                 );
 
                 yesSkip.textContent =
@@ -839,7 +927,8 @@ yesSkip.addEventListener(
 
             updateSubmitButton(
                 yesReason,
-                yesSubmit
+                yesSubmit,
+                yesSkip
             );
 
             yesSkip.textContent =
@@ -864,11 +953,11 @@ noSkip.addEventListener(
         playClickSound();
 
         noSkip.disabled = true;
+
         noSubmit.disabled = true;
 
         noSkip.textContent =
             "Saving...";
-
 
         const formData =
             new FormData();
@@ -883,7 +972,6 @@ noSkip.addEventListener(
             ""
         );
 
-
         try {
 
             const response =
@@ -891,14 +979,15 @@ noSkip.addEventListener(
                     noForm.action,
                     {
                         method: "POST",
+
                         body: formData,
+
                         headers: {
                             "Accept":
                                 "application/json"
                         }
                     }
                 );
-
 
             if (response.ok) {
 
@@ -910,7 +999,8 @@ noSkip.addEventListener(
 
                 updateSubmitButton(
                     noReason,
-                    noSubmit
+                    noSubmit,
+                    noSkip
                 );
 
                 noSkip.textContent =
@@ -924,7 +1014,8 @@ noSkip.addEventListener(
 
             updateSubmitButton(
                 noReason,
-                noSubmit
+                noSubmit,
+                noSkip
             );
 
             noSkip.textContent =
@@ -937,24 +1028,31 @@ noSkip.addEventListener(
 
 
 // =========================
-// SEND BUTTON STATE
+// SEND + SKIP BUTTON STATE
 // =========================
 
 function updateSubmitButton(
     textarea,
-    submitButton
+    submitButton,
+    skipButton
 ) {
 
     const hasText =
         textarea.value.trim().length > 0;
 
-    submitButton.disabled = !hasText;
+    // Send ONLY works when there is actual text
+    submitButton.disabled =
+        !hasText;
+
+    // Skip ONLY works when there is no text
+    skipButton.disabled =
+        hasText;
 
 }
 
 
 // =========================
-// TYPEWRITER + TEXT CHECK
+// TYPEWRITER + DELETE SOUND
 // =========================
 
 let lastTypeSoundTime = 0;
@@ -964,13 +1062,34 @@ function handleTyping(event) {
 
     const now = Date.now();
 
-
-    // Typewriter sound
+    // =========================
+    // DELETE / BACKSPACE
+    // =========================
 
     if (
-        now - lastTypeSoundTime >= 35 &&
         event.inputType &&
-        !event.inputType.startsWith("delete") &&
+        event.inputType.startsWith("delete")
+    ) {
+
+        if (
+            now - lastTypeSoundTime >= 35
+        ) {
+
+            lastTypeSoundTime = now;
+
+            playDeleteSound();
+
+        }
+
+    }
+
+
+    // =========================
+    // NORMAL TYPING
+    // =========================
+
+    else if (
+        now - lastTypeSoundTime >= 35 &&
         event.data
     ) {
 
@@ -981,7 +1100,9 @@ function handleTyping(event) {
     }
 
 
-    // Update Send button
+    // =========================
+    // YES TEXTAREA
+    // =========================
 
     if (
         event.target === yesReason
@@ -989,11 +1110,16 @@ function handleTyping(event) {
 
         updateSubmitButton(
             yesReason,
-            yesSubmit
+            yesSubmit,
+            yesSkip
         );
 
     }
 
+
+    // =========================
+    // NO TEXTAREA
+    // =========================
 
     if (
         event.target === noReason
@@ -1001,7 +1127,8 @@ function handleTyping(event) {
 
         updateSubmitButton(
             noReason,
-            noSubmit
+            noSubmit,
+            noSkip
         );
 
     }
@@ -1030,12 +1157,14 @@ noReason.addEventListener(
 
 updateSubmitButton(
     yesReason,
-    yesSubmit
+    yesSubmit,
+    yesSkip
 );
 
 updateSubmitButton(
     noReason,
-    noSubmit
+    noSubmit,
+    noSkip
 );
 
 
