@@ -14,6 +14,8 @@ function onYouTubeIframeAPIReady() {
 
             onReady: function () {
 
+                musicPlayer.setVolume(25);
+
                 if (musicRequested) {
                     musicPlayer.playVideo();
                 }
