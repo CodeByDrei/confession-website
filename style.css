@@ -360,7 +360,9 @@ button:disabled {
 
     opacity: 0;
 
-    overflow: hidden;
+    /* UPDATED: paper stays fixed while its contents can scroll */
+    overflow-y: auto;
+    overflow-x: hidden;
 
     transition:
         width 1.2s ease,
@@ -370,6 +372,32 @@ button:disabled {
         top 1.2s ease,
         left 1.2s ease,
         transform 1.2s ease;
+}
+
+
+/* =========================
+   PAPER SCROLLBAR
+========================= */
+
+.paper::-webkit-scrollbar {
+    width: 6px;
+}
+
+
+.paper::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+
+.paper::-webkit-scrollbar-thumb {
+    background: #ffd1dc;
+
+    border-radius: 999px;
+}
+
+
+.paper::-webkit-scrollbar-thumb:hover {
+    background: #ffb6c7;
 }
 
 
