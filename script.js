@@ -26,12 +26,44 @@ const noStatus = document.querySelector("#noStatus");
 
 
 // =========================
+// MUSIC
+// =========================
+
+let musicPlayer;
+
+function onYouTubeIframeAPIReady() {
+
+    musicPlayer = new YT.Player("musicPlayer", {
+
+        events: {
+
+            onReady: function () {
+
+                console.log("Music player ready.");
+
+            }
+
+        }
+
+    });
+
+}
+
+
+// =========================
 // INTRO → LETTER
 // =========================
 
 openButton.addEventListener("click", function () {
 
+    // Start music when the user clicks Open
+    if (musicPlayer) {
+        musicPlayer.playVideo();
+    }
+
+
     intro.classList.add("fade-out");
+
 
     setTimeout(function () {
 
@@ -71,6 +103,7 @@ continueButton.addEventListener("click", function () {
 
     letter.classList.add("fade-out");
 
+
     setTimeout(function () {
 
         letter.classList.add("hidden");
@@ -92,6 +125,7 @@ yesButton.addEventListener("click", function () {
 
     question.classList.add("fade-out");
 
+
     setTimeout(function () {
 
         question.classList.add("hidden");
@@ -112,6 +146,7 @@ yesButton.addEventListener("click", function () {
 noButton.addEventListener("click", function () {
 
     question.classList.add("fade-out");
+
 
     setTimeout(function () {
 
