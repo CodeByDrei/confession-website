@@ -678,6 +678,48 @@ button:disabled {
 
 
 /* =========================
+   FORM BUTTONS
+========================= */
+
+/* NEW */
+
+.form-buttons {
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 15px;
+
+    flex-wrap: wrap;
+}
+
+
+.skip-button {
+    background: transparent;
+
+    color: #a66a7d;
+
+    border:
+        2px solid #ffd1dc;
+
+    box-shadow: none;
+}
+
+
+.skip-button:hover {
+    background: #fff5f8;
+
+    color: #8f5367;
+
+    box-shadow:
+        0 6px 15px
+        rgba(100, 50, 70, 0.08);
+}
+
+
+/* =========================
    FORM STATUS
 ========================= */
 
@@ -689,6 +731,62 @@ button:disabled {
     margin-bottom: 0 !important;
 
     font-size: 0.95rem !important;
+}
+
+
+/* =========================
+   FINISH SCREEN
+========================= */
+
+/* NEW */
+
+.finish {
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 30px;
+}
+
+
+.finish-box {
+    width: min(90%, 600px);
+
+    text-align: center;
+
+    background:
+        rgba(255, 255, 255, 0.78);
+
+    padding: 60px 40px;
+
+    border-radius: 28px;
+
+    box-shadow:
+        0 15px 40px
+        rgba(100, 50, 70, 0.15);
+}
+
+
+.finish-box h1 {
+    font-size:
+        clamp(2.5rem, 7vw, 4rem);
+
+    margin-bottom: 20px;
+}
+
+
+.finish-box p {
+    font-size:
+        clamp(1rem, 3vw, 1.3rem);
+
+    line-height: 1.5;
+
+    margin-bottom: 15px;
 }
 
 
@@ -827,6 +925,36 @@ button:disabled {
 
     .response-box textarea {
         min-height: 130px;
+    }
+
+
+    /* MOBILE FORM BUTTONS */
+
+    /* NEW */
+
+    .form-buttons {
+        flex-direction: column;
+
+        width: 100%;
+    }
+
+
+    .form-buttons button {
+        width: 100%;
+    }
+
+
+    /* MOBILE FINISH */
+
+    /* NEW */
+
+    .finish {
+        padding: 20px;
+    }
+
+
+    .finish-box {
+        padding: 45px 25px;
     }
 
 }
