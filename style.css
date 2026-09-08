@@ -702,6 +702,24 @@ button:disabled {
 
 
 /* =========================
+   HIDDEN MUSIC PLAYER
+========================= */
+
+#musicPlayer {
+    position: fixed;
+
+    width: 200px;
+    height: 200px;
+
+    left: -1000px;
+    top: -1000px;
+
+    opacity: 0;
+    pointer-events: none;
+}
+
+
+/* =========================
    MOBILE
 ========================= */
 
