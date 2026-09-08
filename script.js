@@ -1,293 +1,832 @@
-let musicPlayer = null;
-let musicRequested = false;
+/* =========================
+   RESET
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 
-// =========================
-// YOUTUBE MUSIC PLAYER
-// =========================
+/* =========================
+   BODY
+========================= */
 
-function onYouTubeIframeAPIReady() {
+body {
+    min-height: 100vh;
 
-    musicPlayer = new YT.Player("musicPlayer", {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-        events: {
+    font-family: Arial, sans-serif;
 
-            onReady: function () {
+    background:
+        linear-gradient(
+            135deg,
+            #ffe6ee,
+            #fff5f8
+        );
 
-                musicPlayer.setVolume(25);
+    color: #3b2630;
 
-                if (musicRequested) {
-                    musicPlayer.playVideo();
-                }
+    overflow-x: hidden;
+}
 
-            }
 
-        }
+/* =========================
+   INTRO
+========================= */
 
-    });
+.container {
+    width: min(90%, 600px);
+
+    padding: 50px 30px;
+
+    text-align: center;
+
+    background: rgba(255, 255, 255, 0.75);
+
+    border-radius: 25px;
+
+    box-shadow:
+        0 15px 40px rgba(100, 50, 70, 0.15);
+
+    animation: appear 1s ease;
+}
+
+
+.container h1 {
+    font-size:
+        clamp(2.5rem, 8vw, 4rem);
+
+    margin-bottom: 15px;
+}
+
+
+.container p {
+    font-size:
+        clamp(1rem, 3vw, 1.25rem);
+
+    margin-bottom: 30px;
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
+
+button {
+    padding: 14px 30px;
+
+    border: none;
+
+    border-radius: 999px;
+
+    background: #ff8fab;
+
+    color: white;
+
+    font-size: 1rem;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        opacity 0.4s ease;
+}
+
+
+button:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 8px 20px rgba(255, 100, 140, 0.3);
+}
+
+
+button:disabled {
+    cursor: default;
+    opacity: 0.7;
+}
+
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes appear {
+
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 
 }
 
 
-const openButton = document.querySelector("#openButton");
-
-const intro = document.querySelector("#intro");
-const letter = document.querySelector("#letter");
-
-const envelope = document.querySelector("#envelope");
-
-const continueButton = document.querySelector("#continueButton");
-
-const question = document.querySelector("#question");
-
-const yesButton = document.querySelector("#yesButton");
-const noButton = document.querySelector("#noButton");
-
-const yesResponse = document.querySelector("#yesResponse");
-const noResponse = document.querySelector("#noResponse");
-
-const yesForm = document.querySelector("#yesForm");
-const noForm = document.querySelector("#noForm");
-
-const yesSubmit = document.querySelector("#yesSubmit");
-const noSubmit = document.querySelector("#noSubmit");
-
-const yesStatus = document.querySelector("#yesStatus");
-const noStatus = document.querySelector("#noStatus");
+.fade-out {
+    animation:
+        fadeOut 0.5s ease forwards;
+}
 
 
-// =========================
-// INTRO → LETTER + MUSIC
-// =========================
+.fade-in {
+    animation:
+        fadeIn 0.8s ease;
+}
 
-openButton.addEventListener("click", function () {
 
-    musicRequested = true;
+@keyframes fadeOut {
 
-    if (
-        musicPlayer &&
-        typeof musicPlayer.playVideo === "function"
-    ) {
-        musicPlayer.playVideo();
+    from {
+        opacity: 1;
+        transform: translateY(0);
     }
 
-
-    intro.classList.add("fade-out");
-
-    setTimeout(function () {
-
-        intro.classList.add("hidden");
-
-        letter.classList.remove("hidden");
-
-        letter.classList.add("fade-in");
-
-    }, 500);
-
-});
-
-
-// =========================
-// OPEN ENVELOPE
-// =========================
-
-envelope.addEventListener("click", function () {
-
-    if (envelope.classList.contains("open")) {
-        return;
+    to {
+        opacity: 0;
+        transform: translateY(-20px);
     }
 
-    envelope.classList.add("open");
-
-    letter.classList.add("opened");
-
-});
+}
 
 
-// =========================
-// LETTER → QUESTION
-// =========================
+@keyframes fadeIn {
 
-continueButton.addEventListener("click", function () {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
 
-    letter.classList.add("fade-out");
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 
-    setTimeout(function () {
-
-        letter.classList.add("hidden");
-
-        question.classList.remove("hidden");
-
-        question.classList.add("fade-in");
-
-    }, 500);
-
-});
+}
 
 
-// =========================
-// YES
-// =========================
+/* =========================
+   LETTER SCREEN
+========================= */
 
-yesButton.addEventListener("click", function () {
+.letter {
+    width: 100%;
+    min-height: 100vh;
 
-    question.classList.add("fade-out");
+    display: flex;
 
-    setTimeout(function () {
+    align-items: center;
 
-        question.classList.add("hidden");
+    justify-content: space-between;
 
-        yesResponse.classList.remove("hidden");
+    gap: 80px;
 
-        yesResponse.classList.add("fade-in");
-
-    }, 500);
-
-});
-
-
-// =========================
-// NO
-// =========================
-
-noButton.addEventListener("click", function () {
-
-    question.classList.add("fade-out");
-
-    setTimeout(function () {
-
-        question.classList.add("hidden");
-
-        noResponse.classList.remove("hidden");
-
-        noResponse.classList.add("fade-in");
-
-    }, 500);
-
-});
+    padding: 60px 10%;
+}
 
 
-// =========================
-// YES FORM
-// =========================
+.message {
+    max-width: 400px;
 
-yesForm.addEventListener("submit", async function (event) {
+    text-align: left;
 
-    event.preventDefault();
+    flex: 1;
 
-    yesSubmit.disabled = true;
-    yesSubmit.textContent = "Sending... 💌";
-
-    yesStatus.textContent = "";
-
-
-    const formData = new FormData(yesForm);
+    transition:
+        opacity 0.5s ease,
+        transform 0.5s ease;
+}
 
 
-    try {
+.message p {
+    font-size:
+        clamp(1.5rem, 4vw, 2.5rem);
 
-        const response = await fetch(
-            yesForm.action,
-            {
-                method: "POST",
-                body: formData,
-                headers: {
-                    "Accept": "application/json"
-                }
-            }
+    line-height: 1.3;
+}
+
+
+/* =========================
+   ENVELOPE
+========================= */
+
+.envelope {
+    width: 280px;
+    height: 190px;
+
+    position: relative;
+
+    cursor: pointer;
+
+    flex-shrink: 0;
+
+    filter:
+        drop-shadow(
+            0 15px 20px
+            rgba(100, 50, 70, 0.2)
         );
 
+    transition:
+        transform 0.3s ease;
+}
 
-        if (response.ok) {
 
-            yesStatus.textContent =
-                "Sent! 💗 Thank you for being honest.";
+.envelope:hover {
+    transform:
+        translateY(-8px)
+        rotate(1deg);
+}
 
-            yesForm.reset();
 
-            yesSubmit.textContent = "Sent 💌";
+/* =========================
+   ENVELOPE BODY
+========================= */
 
-        } else {
+.envelope-body {
+    width: 100%;
+    height: 100%;
 
-            yesStatus.textContent =
-                "Something went wrong. Try again 😭";
+    background: white;
 
-            yesSubmit.disabled = false;
-            yesSubmit.textContent = "Send 💌";
+    border-radius: 12px;
 
-        }
+    display: flex;
 
-    } catch (error) {
+    flex-direction: column;
 
-        yesStatus.textContent =
-            "Couldn't send it. Check your internet connection.";
+    align-items: center;
 
-        yesSubmit.disabled = false;
-        yesSubmit.textContent = "Send 💌";
+    justify-content: center;
 
+    position: relative;
+
+    z-index: 2;
+
+    transition:
+        opacity 0.6s ease 0.5s;
+}
+
+
+.envelope-body span {
+    font-size: 3rem;
+}
+
+
+.envelope-body p {
+    margin-top: 8px;
+
+    margin-bottom: 0;
+
+    font-size: 1rem;
+}
+
+
+/* =========================
+   ENVELOPE FLAP
+========================= */
+
+.envelope-top {
+    position: absolute;
+
+    width: 0;
+    height: 0;
+
+    border-left:
+        140px solid transparent;
+
+    border-right:
+        140px solid transparent;
+
+    border-top:
+        100px solid #ffd1dc;
+
+    top: 0;
+    left: 0;
+
+    z-index: 3;
+
+    transform-origin:
+        top center;
+
+    transition:
+        transform 0.8s ease;
+}
+
+
+.envelope.open .envelope-top {
+    transform:
+        rotateX(180deg);
+
+    z-index: 0;
+}
+
+
+/* =========================
+   PAPER
+========================= */
+
+.paper {
+    position: absolute;
+
+    width: 245px;
+    height: 155px;
+
+    left: 50%;
+    bottom: 20px;
+
+    transform:
+        translateX(-50%);
+
+    background: #fffdf9;
+
+    border-radius: 5px;
+
+    padding: 30px;
+
+    box-shadow:
+        0 8px 25px
+        rgba(80, 40, 50, 0.15);
+
+    z-index: 1;
+
+    opacity: 0;
+
+    overflow: hidden;
+
+    transition:
+        width 1.2s ease,
+        height 1.2s ease,
+        padding 1.2s ease,
+        opacity 0.5s ease,
+        top 1.2s ease,
+        left 1.2s ease,
+        transform 1.2s ease;
+}
+
+
+.paper h2 {
+    font-family: Georgia, serif;
+
+    font-size: 2rem;
+
+    margin-bottom: 25px;
+
+    opacity: 0;
+
+    transition:
+        opacity 0.7s ease 1.1s;
+}
+
+
+.paper p {
+    font-family: Georgia, serif;
+
+    font-size: 1.05rem;
+
+    line-height: 1.7;
+
+    margin-bottom: 20px;
+
+    opacity: 0;
+
+    transition:
+        opacity 0.7s ease 1.2s;
+}
+
+
+/* =========================
+   OPEN PAPER
+========================= */
+
+.envelope.open .paper {
+    opacity: 1;
+
+    width:
+        min(700px, 55vw);
+
+    height:
+        min(680px, 82vh);
+
+    padding: 55px;
+
+    position: fixed;
+
+    right: 3%;
+
+    left: auto;
+
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    z-index: 5;
+}
+
+
+.envelope.open .paper h2,
+.envelope.open .paper p {
+    opacity: 1;
+}
+
+
+.envelope.open .envelope-body {
+    opacity: 0;
+}
+
+
+/* =========================
+   OPENED LETTER
+========================= */
+
+.letter.opened .message {
+    opacity: 1;
+
+    transform:
+        translateX(0);
+}
+
+
+/* =========================
+   CONTINUE BUTTON
+========================= */
+
+.continue-button {
+    position: fixed;
+
+    right: 40px;
+    bottom: 35px;
+
+    padding: 14px 25px;
+
+    border: none;
+
+    border-radius: 999px;
+
+    background: #ff8fab;
+
+    color: white;
+
+    font-size: 1rem;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 20px
+        rgba(255, 100, 140, 0.2);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.4s ease,
+        visibility 0.4s ease,
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+.letter.opened .continue-button {
+    opacity: 1;
+
+    visibility: visible;
+
+    pointer-events: auto;
+}
+
+
+.continue-button:hover {
+    transform:
+        translateY(-4px);
+
+    box-shadow:
+        0 12px 25px
+        rgba(255, 100, 140, 0.3);
+}
+
+
+/* =========================
+   QUESTION SCREEN
+========================= */
+
+.question {
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 30px;
+}
+
+
+.question-box {
+    text-align: center;
+
+    background:
+        rgba(255, 255, 255, 0.75);
+
+    padding: 50px 40px;
+
+    border-radius: 25px;
+
+    box-shadow:
+        0 15px 40px
+        rgba(100, 50, 70, 0.15);
+
+    max-width: 600px;
+
+    width: 100%;
+}
+
+
+.question-box h1 {
+    font-size:
+        clamp(2rem, 6vw, 3.5rem);
+}
+
+
+.answer-buttons {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 20px;
+
+    margin-top: 30px;
+}
+
+
+.answer-buttons button {
+    min-width: 120px;
+}
+
+
+/* =========================
+   YES / NO RESPONSE
+========================= */
+
+.response {
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 30px;
+}
+
+
+.response-box {
+    width:
+        min(90%, 650px);
+
+    text-align: center;
+
+    background:
+        rgba(255, 255, 255, 0.78);
+
+    padding: 55px 40px;
+
+    border-radius: 28px;
+
+    box-shadow:
+        0 15px 40px
+        rgba(100, 50, 70, 0.15);
+}
+
+
+.response-box h1 {
+    font-size:
+        clamp(2.5rem, 7vw, 4rem);
+
+    margin-bottom: 20px;
+}
+
+
+.response-box p {
+    font-size:
+        clamp(1rem, 3vw, 1.3rem);
+
+    line-height: 1.5;
+
+    margin-bottom: 25px;
+}
+
+
+/* =========================
+   TEXTAREA
+========================= */
+
+.response-box textarea {
+    width: 100%;
+
+    min-height: 150px;
+
+    resize: vertical;
+
+    padding: 18px;
+
+    border:
+        2px solid #ffd1dc;
+
+    border-radius: 18px;
+
+    background: #fffdf9;
+
+    color: #3b2630;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 1rem;
+
+    outline: none;
+
+    margin-bottom: 20px;
+}
+
+
+.response-box textarea:focus {
+    border-color:
+        #ff8fab;
+}
+
+
+.response-box form {
+    width: 100%;
+}
+
+
+/* =========================
+   FORM STATUS
+========================= */
+
+.form-status {
+    min-height: 24px;
+
+    margin-top: 18px;
+
+    margin-bottom: 0 !important;
+
+    font-size: 0.95rem !important;
+}
+
+
+/* =========================
+   HIDDEN
+========================= */
+
+.hidden {
+    display: none !important;
+}
+
+
+/* =========================
+   HIDDEN MUSIC PLAYER
+========================= */
+
+#musicPlayer {
+    position: fixed;
+
+    width: 200px;
+    height: 200px;
+
+    left: -1000px;
+    top: -1000px;
+
+    opacity: 0;
+    pointer-events: none;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+
+    .letter {
+        flex-direction: column;
+
+        justify-content: center;
+
+        text-align: center;
+
+        gap: 50px;
+
+        padding: 40px 25px;
     }
 
-});
 
+    .message {
+        max-width: 500px;
 
-// =========================
-// NO FORM
-// =========================
-
-noForm.addEventListener("submit", async function (event) {
-
-    event.preventDefault();
-
-    noSubmit.disabled = true;
-    noSubmit.textContent = "Sending... 💌";
-
-    noStatus.textContent = "";
-
-
-    const formData = new FormData(noForm);
-
-
-    try {
-
-        const response = await fetch(
-            noForm.action,
-            {
-                method: "POST",
-                body: formData,
-                headers: {
-                    "Accept": "application/json"
-                }
-            }
-        );
-
-
-        if (response.ok) {
-
-            noStatus.textContent =
-                "Sent. Thank you for being honest. 💗";
-
-            noForm.reset();
-
-            noSubmit.textContent = "Sent 💌";
-
-        } else {
-
-            noStatus.textContent =
-                "Something went wrong. Try again 😭";
-
-            noSubmit.disabled = false;
-            noSubmit.textContent = "Send 💌";
-
-        }
-
-    } catch (error) {
-
-        noStatus.textContent =
-            "Couldn't send it. Check your internet connection.";
-
-        noSubmit.disabled = false;
-        noSubmit.textContent = "Send 💌";
-
+        text-align: center;
     }
 
-});
+
+    .message p {
+        font-size:
+            clamp(1.5rem, 7vw, 2.2rem);
+    }
+
+
+    .envelope {
+        width: 250px;
+        height: 170px;
+    }
+
+
+    .envelope-top {
+        border-left-width: 125px;
+
+        border-right-width: 125px;
+
+        border-top-width: 90px;
+    }
+
+
+    /* MOBILE PAPER */
+
+    .envelope.open .paper {
+        width: 88vw;
+
+        height: 72vh;
+
+        padding: 30px;
+
+        position: fixed;
+
+        left: 50%;
+
+        right: auto;
+
+        top: 50%;
+
+        transform:
+            translate(-50%, -50%);
+    }
+
+
+    /* MOBILE CONTINUE */
+
+    .continue-button {
+        right: 20px;
+
+        bottom: 15px;
+
+        padding: 12px 20px;
+    }
+
+
+    /* MOBILE QUESTION */
+
+    .answer-buttons {
+        flex-direction: column;
+
+        align-items: center;
+    }
+
+
+    .answer-buttons button {
+        width: 160px;
+    }
+
+
+    /* MOBILE RESPONSE */
+
+    .response {
+        padding: 20px;
+    }
+
+
+    .response-box {
+        padding: 40px 25px;
+    }
+
+
+    .response-box textarea {
+        min-height: 130px;
+    }
+
+}
