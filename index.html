@@ -12,112 +12,122 @@
 
 <body>
 
-
     <!-- =========================
-         INTRO
+         INTRO SCREEN
     ========================== -->
 
-    <main class="container" id="intro">
+    <section id="intro" class="screen intro">
 
-        <h1>
-            Hey...
-        </h1>
+        <div class="intro-content">
 
-        <p>
-            I made something for you.
-        </p>
+            <p class="small-text">Hey...</p>
 
-        <button id="openButton">
-            Open 💌
-        </button>
+            <h1>I made something<br>for you.</h1>
 
-    </main>
-
-
-    <!-- =========================
-         LETTER
-    ========================== -->
-
-    <section class="letter hidden" id="letter">
-
-        <div class="message">
-
-            <p>
-                I've been wanting to tell you something...
-            </p>
+            <button id="openButton" class="main-button">
+                Open 💌
+            </button>
 
         </div>
-
-
-        <div class="envelope" id="envelope">
-
-            <div class="envelope-top"></div>
-
-
-            <div class="envelope-body">
-
-                <span>
-                    💌
-                </span>
-
-                <p>
-                    Click me
-                </p>
-
-            </div>
-
-
-            <div class="paper">
-
-                <h2>
-                    For You ❤️
-                </h2>
-
-                <p>
-                    There's something I've been wanting to say...
-                </p>
-
-                <p>
-                    --your message/confession here--
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <!-- CONTINUE -->
-
-        <button
-            class="continue-button"
-            id="continueButton"
-        >
-            Continue →
-        </button>
 
     </section>
 
 
     <!-- =========================
-         QUESTION
+         LETTER SCREEN
     ========================== -->
 
-    <section class="question hidden" id="question">
+    <section id="letter" class="screen letter hidden">
 
-        <div class="question-box">
+        <div class="letter-content">
+
+            <div class="letter-message">
+
+                <p class="small-text">
+                    I've been wanting to tell you something...
+                </p>
+
+                <h2>
+                    I finally found<br>
+                    the courage to say it.
+                </h2>
+
+            </div>
+
+
+            <!-- ENVELOPE -->
+
+            <div id="envelope" class="envelope">
+
+                <div class="envelope-back"></div>
+
+                <div class="envelope-paper">
+
+                    <div class="paper">
+
+                        <p>
+                            There's something I've been
+                            meaning to tell you for a while.
+                        </p>
+
+                        <p>
+                            I don't really know the perfect
+                            way to say it...
+                        </p>
+
+                        <p>
+                            So I'll just be honest.
+                        </p>
+
+                        <p>
+                            I like you. 💗
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="envelope-front"></div>
+
+                <div class="envelope-top"></div>
+
+            </div>
+
+
+            <!-- CONTINUE BUTTON -->
+
+            <button id="continueButton" class="continue-button">
+                Continue →
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         QUESTION SCREEN
+    ========================== -->
+
+    <section id="question" class="screen question hidden">
+
+        <div class="question-card">
+
+            <p class="small-text">
+                So...
+            </p>
 
             <h1>
-                Do you like me back..?
+                Do you like me back? 💗
             </h1>
 
+            <div class="choice-buttons">
 
-            <div class="answer-buttons">
-
-                <button id="yesButton">
-                    Yes ❤️
+                <button id="yesButton" class="choice yes">
+                    Yes 💕
                 </button>
 
-                <button id="noButton">
+                <button id="noButton" class="choice no">
                     No 🥲
                 </button>
 
@@ -132,16 +142,21 @@
          YES RESPONSE
     ========================== -->
 
-    <section class="response hidden" id="yesResponse">
+    <section id="yesResponse" class="screen response hidden">
 
-        <div class="response-box">
+        <div class="response-card">
+
+            <p class="small-text">
+                WAIT...
+            </p>
 
             <h1>
-                YAYY!! 🥹❤️
+                YAYY!! 🥹💗
             </h1>
 
             <p>
-                Do you mind telling me why you like me back?
+                Do you mind telling me why
+                you like me back?
             </p>
 
 
@@ -153,32 +168,27 @@
 
                 <input
                     type="hidden"
-                    name="response"
-                    value="YES ❤️"
+                    name="answer"
+                    value="YES"
                 >
 
                 <textarea
-                    id="yesReason"
                     name="reason"
-                    placeholder="Tell me why..."
+                    placeholder="Tell me why... 💌"
                     required
                 ></textarea>
 
-
                 <button
-                    type="submit"
                     id="yesSubmit"
+                    type="submit"
+                    class="main-button"
                 >
                     Send 💌
                 </button>
 
+                <p id="yesStatus" class="status"></p>
+
             </form>
-
-
-            <p
-                class="form-status"
-                id="yesStatus"
-            ></p>
 
         </div>
 
@@ -189,16 +199,20 @@
          NO RESPONSE
     ========================== -->
 
-    <section class="response hidden" id="noResponse">
+    <section id="noResponse" class="screen response hidden">
 
-        <div class="response-box">
+        <div class="response-card">
+
+            <p class="small-text">
+                AWWW MAN 😭
+            </p>
 
             <h1>
-                Awww man 😭
+                That's okay...
             </h1>
 
             <p>
-                That's okay... but do you mind telling me why?
+                But do you mind telling me why?
             </p>
 
 
@@ -210,46 +224,53 @@
 
                 <input
                     type="hidden"
-                    name="response"
-                    value="NO 🥲"
+                    name="answer"
+                    value="NO"
                 >
 
                 <textarea
-                    id="noReason"
                     name="reason"
-                    placeholder="Be honest with me... 🥲"
+                    placeholder="Tell me why... 💌"
                     required
                 ></textarea>
 
-
                 <button
-                    type="submit"
                     id="noSubmit"
+                    type="submit"
+                    class="main-button"
                 >
                     Send 💌
                 </button>
 
+                <p id="noStatus" class="status"></p>
+
             </form>
-
-
-            <p
-                class="form-status"
-                id="noStatus"
-            ></p>
 
         </div>
 
     </section>
 
-<iframe
-    id="musicPlayer"
-    width="0"
-    height="0"
-    src="https://www.youtube.com/embed/Q49pnA4jsp8?enablejsapi=1"
-    frameborder="0"
-    allow="autoplay"
-></iframe>
-    
+
+    <!-- =========================
+         HIDDEN YOUTUBE PLAYER
+    ========================== -->
+
+    <iframe
+        id="musicPlayer"
+        width="200"
+        height="200"
+        src="https://www.youtube-nocookie.com/embed/Q49pnA4jsp8?enablejsapi=1&playsinline=1"
+        frameborder="0"
+        allow="autoplay; encrypted-media"
+    ></iframe>
+
+
+    <!-- YOUTUBE API -->
+
+    <script src="https://www.youtube.com/iframe_api"></script>
+
+    <!-- OUR JAVASCRIPT -->
+
     <script src="script.js"></script>
 
 </body>
