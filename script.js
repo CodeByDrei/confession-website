@@ -416,6 +416,9 @@ const continueButton =
 const question =
     document.querySelector("#question");
 
+const previousButton =
+    document.querySelector("#previousButton");
+
 const yesButton =
     document.querySelector("#yesButton");
 
@@ -556,6 +559,41 @@ continueButton.addEventListener(
                 question.classList.remove("hidden");
 
                 question.classList.add("fade-in");
+
+            },
+            500
+        );
+
+    }
+);
+
+
+// =========================
+// QUESTION → LETTER
+// =========================
+
+previousButton.addEventListener(
+    "click",
+    function () {
+
+        initAudio();
+
+        playClickSound();
+
+        question.classList.add("fade-out");
+
+        setTimeout(
+            function () {
+
+                question.classList.add("hidden");
+
+                question.classList.remove("fade-out");
+
+                letter.classList.remove("hidden");
+
+                letter.classList.remove("fade-out");
+
+                letter.classList.add("fade-in");
 
             },
             500
