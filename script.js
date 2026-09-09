@@ -1,795 +1,753 @@
-/* =========================
-AUDIO SYSTEM
-========================= */
+// =========================
+// AUDIO SYSTEM
+// =========================
 
 let audioContext = null;
 
 function initAudio() {
 
-```
-if (!audioContext) {
+    if (!audioContext) {
 
-    const AudioContext =
-        window.AudioContext ||
-        window.webkitAudioContext;
+        const AudioContext =
+            window.AudioContext ||
+            window.webkitAudioContext;
 
-    if (!AudioContext) {
-        return;
+        if (!AudioContext) {
+            return;
+        }
+
+        audioContext = new AudioContext();
+
     }
 
-    audioContext = new AudioContext();
+    if (audioContext.state === "suspended") {
+        audioContext.resume();
+    }
 
 }
 
-if (audioContext.state === "suspended") {
-    audioContext.resume();
-}
-```
 
-}
-
-/* =========================
-BUTTON CLICK SOUND
-========================= */
+// =========================
+// BUTTON CLICK SOUND
+// =========================
 
 function playClickSound() {
 
-```
-if (!audioContext) return;
+    if (!audioContext) return;
 
-const oscillator =
-    audioContext.createOscillator();
+    const oscillator =
+        audioContext.createOscillator();
 
-const gain =
-    audioContext.createGain();
+    const gain =
+        audioContext.createGain();
 
-oscillator.type = "sine";
+    oscillator.type = "sine";
 
-oscillator.frequency.setValueAtTime(
-    700,
-    audioContext.currentTime
-);
+    oscillator.frequency.setValueAtTime(
+        700,
+        audioContext.currentTime
+    );
 
-oscillator.frequency.exponentialRampToValueAtTime(
-    420,
-    audioContext.currentTime + 0.07
-);
+    oscillator.frequency.exponentialRampToValueAtTime(
+        420,
+        audioContext.currentTime + 0.07
+    );
 
-gain.gain.setValueAtTime(
-    0.08,
-    audioContext.currentTime
-);
+    gain.gain.setValueAtTime(
+        0.08,
+        audioContext.currentTime
+    );
 
-gain.gain.exponentialRampToValueAtTime(
-    0.001,
-    audioContext.currentTime + 0.07
-);
+    gain.gain.exponentialRampToValueAtTime(
+        0.001,
+        audioContext.currentTime + 0.07
+    );
 
-oscillator.connect(gain);
+    oscillator.connect(gain);
 
-gain.connect(
-    audioContext.destination
-);
+    gain.connect(
+        audioContext.destination
+    );
 
-oscillator.start();
+    oscillator.start();
 
-oscillator.stop(
-    audioContext.currentTime + 0.07
-);
-```
+    oscillator.stop(
+        audioContext.currentTime + 0.07
+    );
 
 }
 
-/* =========================
-TYPEWRITER SOUND
-========================= */
+
+// =========================
+// TYPEWRITER SOUND
+// =========================
 
 function playTypewriterSound() {
 
-```
-if (!audioContext) return;
+    if (!audioContext) return;
 
-const oscillator =
-    audioContext.createOscillator();
+    const oscillator =
+        audioContext.createOscillator();
 
-const gain =
-    audioContext.createGain();
+    const gain =
+        audioContext.createGain();
 
-oscillator.type = "square";
+    oscillator.type = "square";
 
-oscillator.frequency.setValueAtTime(
-    900 + Math.random() * 250,
-    audioContext.currentTime
-);
+    oscillator.frequency.setValueAtTime(
+        900 + Math.random() * 250,
+        audioContext.currentTime
+    );
 
-gain.gain.setValueAtTime(
-    0.025,
-    audioContext.currentTime
-);
+    gain.gain.setValueAtTime(
+        0.025,
+        audioContext.currentTime
+    );
 
-gain.gain.exponentialRampToValueAtTime(
-    0.001,
-    audioContext.currentTime + 0.04
-);
+    gain.gain.exponentialRampToValueAtTime(
+        0.001,
+        audioContext.currentTime + 0.04
+    );
 
-oscillator.connect(gain);
+    oscillator.connect(gain);
 
-gain.connect(
-    audioContext.destination
-);
+    gain.connect(
+        audioContext.destination
+    );
 
-oscillator.start();
+    oscillator.start();
 
-oscillator.stop(
-    audioContext.currentTime + 0.04
-);
-```
+    oscillator.stop(
+        audioContext.currentTime + 0.04
+    );
 
 }
 
-/* =========================
-DEEP BACKSPACE / DELETE SOUND
-========================= */
+
+// =========================
+// DEEP BACKSPACE / DELETE SOUND
+// =========================
 
 function playDeleteSound() {
 
-```
-if (!audioContext) return;
+    if (!audioContext) return;
 
-const oscillator =
-    audioContext.createOscillator();
+    const oscillator =
+        audioContext.createOscillator();
 
-const gain =
-    audioContext.createGain();
+    const gain =
+        audioContext.createGain();
 
-oscillator.type = "square";
+    oscillator.type = "square";
 
-oscillator.frequency.setValueAtTime(
-    320,
-    audioContext.currentTime
-);
+    // Lower/deeper than the normal typing sound
+    oscillator.frequency.setValueAtTime(
+        320,
+        audioContext.currentTime
+    );
 
-oscillator.frequency.exponentialRampToValueAtTime(
-    150,
-    audioContext.currentTime + 0.055
-);
+    oscillator.frequency.exponentialRampToValueAtTime(
+        150,
+        audioContext.currentTime + 0.055
+    );
 
-gain.gain.setValueAtTime(
-    0.035,
-    audioContext.currentTime
-);
+    gain.gain.setValueAtTime(
+        0.035,
+        audioContext.currentTime
+    );
 
-gain.gain.exponentialRampToValueAtTime(
-    0.001,
-    audioContext.currentTime + 0.055
-);
+    gain.gain.exponentialRampToValueAtTime(
+        0.001,
+        audioContext.currentTime + 0.055
+    );
 
-oscillator.connect(gain);
+    oscillator.connect(gain);
 
-gain.connect(
-    audioContext.destination
-);
+    gain.connect(
+        audioContext.destination
+    );
 
-oscillator.start();
+    oscillator.start();
 
-oscillator.stop(
-    audioContext.currentTime + 0.055
-);
-```
+    oscillator.stop(
+        audioContext.currentTime + 0.055
+    );
 
 }
 
-/* =========================
-PAPER / ENVELOPE SOUND
-========================= */
+
+// =========================
+// PAPER / ENVELOPE SOUND
+// =========================
 
 function playPaperSound() {
 
-```
-if (!audioContext) return;
+    if (!audioContext) return;
 
-const oscillator =
-    audioContext.createOscillator();
+    const oscillator =
+        audioContext.createOscillator();
 
-const gain =
-    audioContext.createGain();
+    const gain =
+        audioContext.createGain();
 
-oscillator.type = "triangle";
+    oscillator.type = "triangle";
 
-oscillator.frequency.setValueAtTime(
-    180,
-    audioContext.currentTime
-);
+    oscillator.frequency.setValueAtTime(
+        180,
+        audioContext.currentTime
+    );
 
-oscillator.frequency.exponentialRampToValueAtTime(
-    70,
-    audioContext.currentTime + 0.4
-);
+    oscillator.frequency.exponentialRampToValueAtTime(
+        70,
+        audioContext.currentTime + 0.4
+    );
 
-gain.gain.setValueAtTime(
-    0.035,
-    audioContext.currentTime
-);
+    gain.gain.setValueAtTime(
+        0.035,
+        audioContext.currentTime
+    );
 
-gain.gain.exponentialRampToValueAtTime(
-    0.001,
-    audioContext.currentTime + 0.4
-);
+    gain.gain.exponentialRampToValueAtTime(
+        0.001,
+        audioContext.currentTime + 0.4
+    );
 
-oscillator.connect(gain);
+    oscillator.connect(gain);
 
-gain.connect(
-    audioContext.destination
-);
+    gain.connect(
+        audioContext.destination
+    );
 
-oscillator.start();
+    oscillator.start();
 
-oscillator.stop(
-    audioContext.currentTime + 0.4
-);
-```
+    oscillator.stop(
+        audioContext.currentTime + 0.4
+    );
 
 }
 
-/* =========================
-SEND SOUND
-========================= */
+
+// =========================
+// SEND SOUND
+// =========================
 
 function playSendSound() {
 
-```
-if (!audioContext) return;
+    if (!audioContext) return;
 
-const oscillator =
-    audioContext.createOscillator();
+    const oscillator =
+        audioContext.createOscillator();
 
-const gain =
-    audioContext.createGain();
+    const gain =
+        audioContext.createGain();
 
-oscillator.type = "sine";
+    oscillator.type = "sine";
 
-oscillator.frequency.setValueAtTime(
-    500,
-    audioContext.currentTime
-);
+    oscillator.frequency.setValueAtTime(
+        500,
+        audioContext.currentTime
+    );
 
-oscillator.frequency.exponentialRampToValueAtTime(
-    900,
-    audioContext.currentTime + 0.15
-);
+    oscillator.frequency.exponentialRampToValueAtTime(
+        900,
+        audioContext.currentTime + 0.15
+    );
 
-oscillator.frequency.exponentialRampToValueAtTime(
-    1200,
-    audioContext.currentTime + 0.35
-);
+    oscillator.frequency.exponentialRampToValueAtTime(
+        1200,
+        audioContext.currentTime + 0.35
+    );
 
-gain.gain.setValueAtTime(
-    0.06,
-    audioContext.currentTime
-);
+    gain.gain.setValueAtTime(
+        0.06,
+        audioContext.currentTime
+    );
 
-gain.gain.exponentialRampToValueAtTime(
-    0.001,
-    audioContext.currentTime + 0.35
-);
+    gain.gain.exponentialRampToValueAtTime(
+        0.001,
+        audioContext.currentTime + 0.35
+    );
 
-oscillator.connect(gain);
+    oscillator.connect(gain);
 
-gain.connect(
-    audioContext.destination
-);
+    gain.connect(
+        audioContext.destination
+    );
 
-oscillator.start();
+    oscillator.start();
 
-oscillator.stop(
-    audioContext.currentTime + 0.35
-);
-```
+    oscillator.stop(
+        audioContext.currentTime + 0.35
+    );
 
 }
 
-/* =========================
-FINISH SOUND
-========================= */
+
+// =========================
+// FINISH SOUND
+// =========================
 
 function playFinishSound() {
 
-```
-if (!audioContext) return;
+    if (!audioContext) return;
 
-const notes = [
-    523.25,
-    659.25,
-    783.99
-];
+    const notes = [
+        523.25,
+        659.25,
+        783.99
+    ];
 
-notes.forEach(
-    function (frequency, index) {
+    notes.forEach(
+        function (frequency, index) {
 
-        const oscillator =
-            audioContext.createOscillator();
+            const oscillator =
+                audioContext.createOscillator();
 
-        const gain =
-            audioContext.createGain();
+            const gain =
+                audioContext.createGain();
 
-        const startTime =
-            audioContext.currentTime +
-            index * 0.12;
+            const startTime =
+                audioContext.currentTime +
+                index * 0.12;
 
-        oscillator.type = "sine";
+            oscillator.type = "sine";
 
-        oscillator.frequency.setValueAtTime(
-            frequency,
-            startTime
-        );
+            oscillator.frequency.setValueAtTime(
+                frequency,
+                startTime
+            );
 
-        gain.gain.setValueAtTime(
-            0,
-            startTime
-        );
+            gain.gain.setValueAtTime(
+                0,
+                startTime
+            );
 
-        gain.gain.linearRampToValueAtTime(
-            0.06,
-            startTime + 0.03
-        );
+            gain.gain.linearRampToValueAtTime(
+                0.06,
+                startTime + 0.03
+            );
 
-        gain.gain.exponentialRampToValueAtTime(
-            0.001,
-            startTime + 0.5
-        );
+            gain.gain.exponentialRampToValueAtTime(
+                0.001,
+                startTime + 0.5
+            );
 
-        oscillator.connect(gain);
+            oscillator.connect(gain);
 
-        gain.connect(
-            audioContext.destination
-        );
+            gain.connect(
+                audioContext.destination
+            );
 
-        oscillator.start(startTime);
+            oscillator.start(startTime);
 
-        oscillator.stop(
-            startTime + 0.5
-        );
+            oscillator.stop(
+                startTime + 0.5
+            );
 
-    }
-);
-```
+        }
+    );
 
 }
 
-/* =========================
-YOUTUBE MUSIC
-========================= */
+
+// =========================
+// YOUTUBE MUSIC
+// =========================
 
 let musicPlayer = null;
 let musicRequested = false;
 let musicStarted = false;
 
+
 function onYouTubeIframeAPIReady() {
 
-```
-musicPlayer = new YT.Player(
-    "musicPlayer",
-    {
+    musicPlayer = new YT.Player(
+        "musicPlayer",
+        {
 
-        playerVars: {
-            playsinline: 1,
-            rel: 0
-        },
+            playerVars: {
+                playsinline: 1,
+                rel: 0
+            },
 
-        events: {
+            events: {
 
-            onReady: function () {
+                onReady: function () {
 
-                musicPlayer.setVolume(25);
+                    musicPlayer.setVolume(25);
 
-                if (musicRequested) {
+                    if (musicRequested) {
 
-                    musicPlayer.playVideo();
+                        musicPlayer.playVideo();
 
-                    musicStarted = true;
+                        musicStarted = true;
+
+                    }
 
                 }
 
             }
 
         }
-
-    }
-);
-```
+    );
 
 }
 
-/* =========================
-ELEMENTS
-========================= */
+
+// =========================
+// ELEMENTS
+// =========================
 
 const openButton =
-document.querySelector("#openButton");
+    document.querySelector("#openButton");
 
 const intro =
-document.querySelector("#intro");
+    document.querySelector("#intro");
 
 const letter =
-document.querySelector("#letter");
+    document.querySelector("#letter");
 
 const envelope =
-document.querySelector("#envelope");
+    document.querySelector("#envelope");
 
 const continueButton =
-document.querySelector("#continueButton");
+    document.querySelector("#continueButton");
 
 const question =
-document.querySelector("#question");
-
-const previousQuestionButton =
-document.querySelector("#previousQuestionButton");
+    document.querySelector("#question");
 
 const yesButton =
-document.querySelector("#yesButton");
+    document.querySelector("#yesButton");
 
 const noButton =
-document.querySelector("#noButton");
+    document.querySelector("#noButton");
 
 const yesResponse =
-document.querySelector("#yesResponse");
+    document.querySelector("#yesResponse");
 
 const noResponse =
-document.querySelector("#noResponse");
+    document.querySelector("#noResponse");
 
 const yesForm =
-document.querySelector("#yesForm");
+    document.querySelector("#yesForm");
 
 const noForm =
-document.querySelector("#noForm");
+    document.querySelector("#noForm");
 
 const yesSubmit =
-document.querySelector("#yesSubmit");
+    document.querySelector("#yesSubmit");
 
 const noSubmit =
-document.querySelector("#noSubmit");
+    document.querySelector("#noSubmit");
 
 const yesSkip =
-document.querySelector("#yesSkip");
+    document.querySelector("#yesSkip");
 
 const noSkip =
-document.querySelector("#noSkip");
+    document.querySelector("#noSkip");
 
 const yesReason =
-document.querySelector("#yesReason");
+    document.querySelector("#yesReason");
 
 const noReason =
-document.querySelector("#noReason");
+    document.querySelector("#noReason");
 
 const yesStatus =
-document.querySelector("#yesStatus");
+    document.querySelector("#yesStatus");
 
 const noStatus =
-document.querySelector("#noStatus");
+    document.querySelector("#noStatus");
 
 const finish =
-document.querySelector("#finish");
+    document.querySelector("#finish");
 
-/* =========================
-INTRO → LETTER + MUSIC
-========================= */
+
+// =========================
+// INTRO → LETTER + MUSIC
+// =========================
 
 openButton.addEventListener(
-"click",
-function () {
+    "click",
+    function () {
 
-```
-    initAudio();
+        initAudio();
 
-    playClickSound();
+        playClickSound();
 
-    musicRequested = true;
+        musicRequested = true;
 
-    if (
-        musicPlayer &&
-        typeof musicPlayer.playVideo === "function"
-    ) {
+        if (
+            musicPlayer &&
+            typeof musicPlayer.playVideo === "function"
+        ) {
 
-        musicPlayer.setVolume(25);
+            musicPlayer.setVolume(25);
 
-        musicPlayer.playVideo();
+            musicPlayer.playVideo();
 
-        musicStarted = true;
+            musicStarted = true;
+
+        }
+
+        intro.classList.add("fade-out");
+
+        setTimeout(
+            function () {
+
+                intro.classList.add("hidden");
+
+                letter.classList.remove("hidden");
+
+                letter.classList.add("fade-in");
+
+            },
+            500
+        );
 
     }
-
-    intro.classList.add("fade-out");
-
-    setTimeout(
-        function () {
-
-            intro.classList.add("hidden");
-
-            letter.classList.remove("hidden");
-
-            letter.classList.add("fade-in");
-
-        },
-        500
-    );
-
-}
-```
-
 );
 
-/* =========================
-OPEN ENVELOPE
-========================= */
+
+// =========================
+// OPEN ENVELOPE
+// =========================
 
 envelope.addEventListener(
-"click",
-function () {
+    "click",
+    function () {
 
-```
-    initAudio();
+        initAudio();
 
-    if (
-        envelope.classList.contains("open")
-    ) {
-        return;
+        if (
+            envelope.classList.contains("open")
+        ) {
+            return;
+        }
+
+        envelope.classList.add("open");
+
+        letter.classList.add("opened");
+
+        playPaperSound();
+
     }
-
-    envelope.classList.add("open");
-
-    letter.classList.add("opened");
-
-    playPaperSound();
-
-}
-```
-
 );
 
-/* =========================
-LETTER → QUESTION
-========================= */
+
+// =========================
+// LETTER → QUESTION
+// =========================
 
 continueButton.addEventListener(
-"click",
-function () {
+    "click",
+    function () {
 
-```
-    initAudio();
+        initAudio();
 
-    playClickSound();
+        playClickSound();
 
-    letter.classList.add("fade-out");
+        letter.classList.add("fade-out");
 
-    setTimeout(
-        function () {
+        setTimeout(
+            function () {
 
-            letter.classList.add("hidden");
+                letter.classList.add("hidden");
 
-            question.classList.remove("hidden");
+                question.classList.remove("hidden");
 
-            question.classList.add("fade-in");
+                question.classList.add("fade-in");
 
-        },
-        500
-    );
+            },
+            500
+        );
 
-}
-```
-
+    }
 );
 
-/* =========================
-QUESTION → PREVIOUS
-========================= */
 
-previousQuestionButton.addEventListener(
-"click",
-function () {
-
-```
-    initAudio();
-
-    playClickSound();
-
-    question.classList.add("fade-out");
-
-    setTimeout(
-        function () {
-
-            question.classList.add("hidden");
-
-            letter.classList.remove("hidden");
-
-            letter.classList.remove("fade-out");
-
-            letter.classList.add("fade-in");
-
-        },
-        500
-    );
-
-}
-```
-
-);
-
-/* =========================
-YES
-========================= */
+// =========================
+// YES
+// =========================
 
 yesButton.addEventListener(
-"click",
-function () {
+    "click",
+    function () {
 
-```
-    initAudio();
+        initAudio();
 
-    playClickSound();
+        playClickSound();
 
-    question.classList.add("fade-out");
+        question.classList.add("fade-out");
 
-    setTimeout(
-        function () {
+        setTimeout(
+            function () {
 
-            question.classList.add("hidden");
+                question.classList.add("hidden");
 
-            yesResponse.classList.remove("hidden");
+                yesResponse.classList.remove("hidden");
 
-            yesResponse.classList.add("fade-in");
+                yesResponse.classList.add("fade-in");
 
-            updateSubmitButton(
-                yesReason,
-                yesSubmit,
-                yesSkip
-            );
+                updateSubmitButton(
+                    yesReason,
+                    yesSubmit,
+                    yesSkip
+                );
 
-        },
-        500
-    );
+            },
+            500
+        );
 
-}
-```
-
+    }
 );
 
-/* =========================
-NO
-========================= */
+
+// =========================
+// NO
+// =========================
 
 noButton.addEventListener(
-"click",
-function () {
+    "click",
+    function () {
 
-```
-    initAudio();
+        initAudio();
 
-    playClickSound();
+        playClickSound();
 
-    question.classList.add("fade-out");
+        question.classList.add("fade-out");
 
-    setTimeout(
-        function () {
+        setTimeout(
+            function () {
 
-            question.classList.add("hidden");
+                question.classList.add("hidden");
 
-            noResponse.classList.remove("hidden");
+                noResponse.classList.remove("hidden");
 
-            noResponse.classList.add("fade-in");
+                noResponse.classList.add("fade-in");
 
-            updateSubmitButton(
-                noReason,
-                noSubmit,
-                noSkip
-            );
+                updateSubmitButton(
+                    noReason,
+                    noSubmit,
+                    noSkip
+                );
 
-        },
-        500
-    );
+            },
+            500
+        );
 
-}
-```
-
+    }
 );
 
-/* =========================
-SHOW FINISH SCREEN
-========================= */
+
+// =========================
+// SHOW FINISH SCREEN
+// =========================
 
 function showFinishScreen() {
 
-```
-yesResponse.classList.add("fade-out");
+    yesResponse.classList.add("fade-out");
 
-noResponse.classList.add("fade-out");
+    noResponse.classList.add("fade-out");
 
-setTimeout(
-    function () {
+    setTimeout(
+        function () {
 
-        yesResponse.classList.add("hidden");
+            yesResponse.classList.add("hidden");
 
-        noResponse.classList.add("hidden");
+            noResponse.classList.add("hidden");
 
-        finish.classList.remove("hidden");
+            finish.classList.remove("hidden");
 
-        finish.classList.add("fade-in");
+            finish.classList.add("fade-in");
 
-        playFinishSound();
+            playFinishSound();
 
-    },
-    500
-);
-```
+        },
+        500
+    );
 
 }
 
-/* =========================
-YES FORM SUBMIT
-========================= */
+
+// =========================
+// YES FORM SUBMIT
+// =========================
 
 yesForm.addEventListener(
-"submit",
-async function (event) {
+    "submit",
+    async function (event) {
 
-```
-    event.preventDefault();
+        event.preventDefault();
 
-    initAudio();
+        initAudio();
 
-    playSendSound();
+        playSendSound();
 
-    yesSubmit.disabled = true;
+        yesSubmit.disabled = true;
 
-    yesSkip.disabled = true;
+        yesSkip.disabled = true;
 
-    yesSubmit.textContent =
-        "Sending... 💌";
+        yesSubmit.textContent =
+            "Sending... 💌";
 
-    yesStatus.textContent = "";
+        yesStatus.textContent = "";
 
-    const formData =
-        new FormData(yesForm);
+        const formData =
+            new FormData(yesForm);
 
-    try {
+        try {
 
-        const response =
-            await fetch(
-                yesForm.action,
-                {
-                    method: "POST",
+            const response =
+                await fetch(
+                    yesForm.action,
+                    {
+                        method: "POST",
 
-                    body: formData,
+                        body: formData,
 
-                    headers: {
-                        "Accept":
-                            "application/json"
+                        headers: {
+                            "Accept":
+                                "application/json"
+                        }
                     }
-                }
-            );
+                );
 
-        if (response.ok) {
+            if (response.ok) {
+
+                yesStatus.textContent =
+                    "Sent! 💗 Thank you for being honest.";
+
+                yesForm.reset();
+
+                yesSubmit.disabled = true;
+
+                yesSkip.disabled = true;
+
+                yesSubmit.textContent =
+                    "Sent 💌";
+
+                setTimeout(
+                    showFinishScreen,
+                    1000
+                );
+
+            } else {
+
+                yesStatus.textContent =
+                    "Something went wrong. Try again 😭";
+
+                updateSubmitButton(
+                    yesReason,
+                    yesSubmit,
+                    yesSkip
+                );
+
+            }
+
+        } catch (error) {
 
             yesStatus.textContent =
-                "Sent! 💗 Thank you for being honest.";
-
-            yesForm.reset();
-
-            yesSubmit.disabled = true;
-
-            yesSkip.disabled = true;
-
-            yesSubmit.textContent =
-                "Sent 💌";
-
-            setTimeout(
-                showFinishScreen,
-                1000
-            );
-
-        } else {
-
-            yesStatus.textContent =
-                "Something went wrong. Try again 😭";
+                "Couldn't send it. Check your internet connection.";
 
             updateSubmitButton(
                 yesReason,
@@ -799,91 +757,89 @@ async function (event) {
 
         }
 
-    } catch (error) {
-
-        yesStatus.textContent =
-            "Couldn't send it. Check your internet connection.";
-
-        updateSubmitButton(
-            yesReason,
-            yesSubmit,
-            yesSkip
-        );
-
     }
-
-}
-```
-
 );
 
-/* =========================
-NO FORM SUBMIT
-========================= */
+
+// =========================
+// NO FORM SUBMIT
+// =========================
 
 noForm.addEventListener(
-"submit",
-async function (event) {
+    "submit",
+    async function (event) {
 
-```
-    event.preventDefault();
+        event.preventDefault();
 
-    initAudio();
+        initAudio();
 
-    playSendSound();
+        playSendSound();
 
-    noSubmit.disabled = true;
+        noSubmit.disabled = true;
 
-    noSkip.disabled = true;
+        noSkip.disabled = true;
 
-    noSubmit.textContent =
-        "Sending... 💌";
+        noSubmit.textContent =
+            "Sending... 💌";
 
-    noStatus.textContent = "";
+        noStatus.textContent = "";
 
-    const formData =
-        new FormData(noForm);
+        const formData =
+            new FormData(noForm);
 
-    try {
+        try {
 
-        const response =
-            await fetch(
-                noForm.action,
-                {
-                    method: "POST",
+            const response =
+                await fetch(
+                    noForm.action,
+                    {
+                        method: "POST",
 
-                    body: formData,
+                        body: formData,
 
-                    headers: {
-                        "Accept":
-                            "application/json"
+                        headers: {
+                            "Accept":
+                                "application/json"
+                        }
                     }
-                }
-            );
+                );
 
-        if (response.ok) {
+            if (response.ok) {
+
+                noStatus.textContent =
+                    "Sent. Thank you for being honest. 💗";
+
+                noForm.reset();
+
+                noSubmit.disabled = true;
+
+                noSkip.disabled = true;
+
+                noSubmit.textContent =
+                    "Sent 💌";
+
+                setTimeout(
+                    showFinishScreen,
+                    1000
+                );
+
+            } else {
+
+                noStatus.textContent =
+                    "Something went wrong. Try again 😭";
+
+                updateSubmitButton(
+                    noReason,
+                    noSubmit,
+                    noSkip
+                );
+
+            }
+
+        } catch (error) {
 
             noStatus.textContent =
-                "Sent. Thank you for being honest. 💗";
-
-            noForm.reset();
-
-            noSubmit.disabled = true;
-
-            noSkip.disabled = true;
-
-            noSubmit.textContent =
-                "Sent 💌";
-
-            setTimeout(
-                showFinishScreen,
-                1000
-            );
-
-        } else {
-
-            noStatus.textContent =
-                "Something went wrong. Try again 😭";
+                "Couldn't send it. Check your internet connection.";
 
             updateSubmitButton(
                 noReason,
@@ -893,79 +849,79 @@ async function (event) {
 
         }
 
-    } catch (error) {
-
-        noStatus.textContent =
-            "Couldn't send it. Check your internet connection.";
-
-        updateSubmitButton(
-            noReason,
-            noSubmit,
-            noSkip
-        );
-
     }
-
-}
-```
-
 );
 
-/* =========================
-SKIP YES
-========================= */
+
+// =========================
+// SKIP YES
+// =========================
 
 yesSkip.addEventListener(
-"click",
-async function () {
+    "click",
+    async function () {
 
-```
-    initAudio();
+        initAudio();
 
-    playClickSound();
+        playClickSound();
 
-    yesSkip.disabled = true;
+        yesSkip.disabled = true;
 
-    yesSubmit.disabled = true;
+        yesSubmit.disabled = true;
 
-    yesSkip.textContent =
-        "Saving...";
+        yesSkip.textContent =
+            "Saving...";
 
-    const formData =
-        new FormData();
+        const formData =
+            new FormData();
 
-    formData.append(
-        "response",
-        "YES 💕"
-    );
+        formData.append(
+            "response",
+            "YES 💕"
+        );
 
-    formData.append(
-        "reason",
-        ""
-    );
+        formData.append(
+            "reason",
+            ""
+        );
 
-    try {
+        try {
 
-        const response =
-            await fetch(
-                yesForm.action,
-                {
-                    method: "POST",
+            const response =
+                await fetch(
+                    yesForm.action,
+                    {
+                        method: "POST",
 
-                    body: formData,
+                        body: formData,
 
-                    headers: {
-                        "Accept":
-                            "application/json"
+                        headers: {
+                            "Accept":
+                                "application/json"
+                        }
                     }
-                }
-            );
+                );
 
-        if (response.ok) {
+            if (response.ok) {
 
-            showFinishScreen();
+                showFinishScreen();
 
-        } else {
+            } else {
+
+                yesSkip.disabled = false;
+
+                updateSubmitButton(
+                    yesReason,
+                    yesSubmit,
+                    yesSkip
+                );
+
+                yesSkip.textContent =
+                    "Skip →";
+
+            }
+
+        } catch (error) {
 
             yesSkip.disabled = false;
 
@@ -980,81 +936,79 @@ async function () {
 
         }
 
-    } catch (error) {
-
-        yesSkip.disabled = false;
-
-        updateSubmitButton(
-            yesReason,
-            yesSubmit,
-            yesSkip
-        );
-
-        yesSkip.textContent =
-            "Skip →";
-
     }
-
-}
-```
-
 );
 
-/* =========================
-SKIP NO
-========================= */
+
+// =========================
+// SKIP NO
+// =========================
 
 noSkip.addEventListener(
-"click",
-async function () {
+    "click",
+    async function () {
 
-```
-    initAudio();
+        initAudio();
 
-    playClickSound();
+        playClickSound();
 
-    noSkip.disabled = true;
+        noSkip.disabled = true;
 
-    noSubmit.disabled = true;
+        noSubmit.disabled = true;
 
-    noSkip.textContent =
-        "Saving...";
+        noSkip.textContent =
+            "Saving...";
 
-    const formData =
-        new FormData();
+        const formData =
+            new FormData();
 
-    formData.append(
-        "response",
-        "NO 🥲"
-    );
+        formData.append(
+            "response",
+            "NO 🥲"
+        );
 
-    formData.append(
-        "reason",
-        ""
-    );
+        formData.append(
+            "reason",
+            ""
+        );
 
-    try {
+        try {
 
-        const response =
-            await fetch(
-                noForm.action,
-                {
-                    method: "POST",
+            const response =
+                await fetch(
+                    noForm.action,
+                    {
+                        method: "POST",
 
-                    body: formData,
+                        body: formData,
 
-                    headers: {
-                        "Accept":
-                            "application/json"
+                        headers: {
+                            "Accept":
+                                "application/json"
+                        }
                     }
-                }
-            );
+                );
 
-        if (response.ok) {
+            if (response.ok) {
 
-            showFinishScreen();
+                showFinishScreen();
 
-        } else {
+            } else {
+
+                noSkip.disabled = false;
+
+                updateSubmitButton(
+                    noReason,
+                    noSubmit,
+                    noSkip
+                );
+
+                noSkip.textContent =
+                    "Skip →";
+
+            }
+
+        } catch (error) {
 
             noSkip.disabled = false;
 
@@ -1069,9 +1023,107 @@ async function () {
 
         }
 
-    } catch (error) {
+    }
+);
 
-        noSkip.disabled = false;
+
+// =========================
+// SEND + SKIP BUTTON STATE
+// =========================
+
+function updateSubmitButton(
+    textarea,
+    submitButton,
+    skipButton
+) {
+
+    const hasText =
+        textarea.value.trim().length > 0;
+
+    // Send ONLY works when there is actual text
+    submitButton.disabled =
+        !hasText;
+
+    // Skip ONLY works when there is no text
+    skipButton.disabled =
+        hasText;
+
+}
+
+
+// =========================
+// TYPEWRITER + DELETE SOUND
+// =========================
+
+let lastTypeSoundTime = 0;
+
+
+function handleTyping(event) {
+
+    const now = Date.now();
+
+    // =========================
+    // DELETE / BACKSPACE
+    // =========================
+
+    if (
+        event.inputType &&
+        event.inputType.startsWith("delete")
+    ) {
+
+        if (
+            now - lastTypeSoundTime >= 35
+        ) {
+
+            lastTypeSoundTime = now;
+
+            playDeleteSound();
+
+        }
+
+    }
+
+
+    // =========================
+    // NORMAL TYPING
+    // =========================
+
+    else if (
+        now - lastTypeSoundTime >= 35 &&
+        event.data
+    ) {
+
+        lastTypeSoundTime = now;
+
+        playTypewriterSound();
+
+    }
+
+
+    // =========================
+    // YES TEXTAREA
+    // =========================
+
+    if (
+        event.target === yesReason
+    ) {
+
+        updateSubmitButton(
+            yesReason,
+            yesSubmit,
+            yesSkip
+        );
+
+    }
+
+
+    // =========================
+    // NO TEXTAREA
+    // =========================
+
+    if (
+        event.target === noReason
+    ) {
 
         updateSubmitButton(
             noReason,
@@ -1079,154 +1131,59 @@ async function () {
             noSkip
         );
 
-        noSkip.textContent =
-            "Skip →";
-
-    }
-
-}
-```
-
-);
-
-/* =========================
-SEND + SKIP BUTTON STATE
-========================= */
-
-function updateSubmitButton(
-textarea,
-submitButton,
-skipButton
-) {
-
-```
-const hasText =
-    textarea.value.trim().length > 0;
-
-submitButton.disabled =
-    !hasText;
-
-skipButton.disabled =
-    hasText;
-```
-
-}
-
-/* =========================
-TYPEWRITER + DELETE SOUND
-========================= */
-
-let lastTypeSoundTime = 0;
-
-function handleTyping(event) {
-
-```
-const now = Date.now();
-
-if (
-    event.inputType &&
-    event.inputType.startsWith("delete")
-) {
-
-    if (
-        now - lastTypeSoundTime >= 35
-    ) {
-
-        lastTypeSoundTime = now;
-
-        playDeleteSound();
-
     }
 
 }
 
-else if (
-    now - lastTypeSoundTime >= 35 &&
-    event.data
-) {
 
-    lastTypeSoundTime = now;
-
-    playTypewriterSound();
-
-}
-
-if (
-    event.target === yesReason
-) {
-
-    updateSubmitButton(
-        yesReason,
-        yesSubmit,
-        yesSkip
-    );
-
-}
-
-if (
-    event.target === noReason
-) {
-
-    updateSubmitButton(
-        noReason,
-        noSubmit,
-        noSkip
-    );
-
-}
-```
-
-}
-
-/* =========================
-TEXTAREA LISTENERS
-========================= */
+// =========================
+// TEXTAREA LISTENERS
+// =========================
 
 yesReason.addEventListener(
-"input",
-handleTyping
+    "input",
+    handleTyping
 );
 
 noReason.addEventListener(
-"input",
-handleTyping
+    "input",
+    handleTyping
 );
 
-/* =========================
-INITIAL BUTTON STATE
-========================= */
+
+// =========================
+// INITIAL BUTTON STATE
+// =========================
 
 updateSubmitButton(
-yesReason,
-yesSubmit,
-yesSkip
+    yesReason,
+    yesSubmit,
+    yesSkip
 );
 
 updateSubmitButton(
-noReason,
-noSubmit,
-noSkip
+    noReason,
+    noSubmit,
+    noSkip
 );
 
-/* =========================
-INITIALIZE AUDIO
-ON BUTTON CLICK
-========================= */
+
+// =========================
+// INITIALIZE AUDIO
+// ON BUTTON CLICK
+// =========================
 
 document.querySelectorAll("button").forEach(
-function (button) {
+    function (button) {
 
-```
-    button.addEventListener(
-        "click",
-        function () {
+        button.addEventListener(
+            "click",
+            function () {
 
-            initAudio();
+                initAudio();
 
-        }
-    );
+            }
+        );
 
-}
-```
-
+    }
 );
