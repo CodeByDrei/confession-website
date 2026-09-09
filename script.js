@@ -481,7 +481,7 @@ openButton.addEventListener(
             typeof musicPlayer.playVideo === "function"
         ) {
 
-            musicPlayer.setVolume(25);
+            musicPlayer.setVolume(5);
 
             musicPlayer.playVideo();
 
