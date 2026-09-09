@@ -2,94 +2,70 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>For You 💌</title>
 
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
-
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
     <!-- INTRO -->
+    <main class="container" id="intro">
+        <h1>Hey...</h1>
+        <p>I made something for you.</p>
 
-    <section
-        class="intro"
-        id="intro"
-    >
-
-        <div class="intro-content">
-
-            <p class="intro-small">
-                Hey...
-            </p>
-
-            <h1>
-                I made something for you.
-            </h1>
-
-            <button id="openButton">
-                Open 💌
-            </button>
-
-        </div>
-
-    </section>
+        <button id="openButton">
+            Open 💌
+        </button>
+    </main>
 
 
     <!-- LETTER -->
+    <section class="letter hidden" id="letter">
 
-    <section
-        class="letter hidden"
-        id="letter"
-    >
+        <div class="message">
+            <p>I've been wanting to tell you something...</p>
+        </div>
 
-        <div
-            class="envelope"
-            id="envelope"
-        >
+        <div class="envelope" id="envelope">
 
-            <div class="envelope-back"></div>
+            <div class="envelope-top"></div>
+
+            <div class="envelope-body">
+                <span>💌</span>
+                <p>Click me</p>
+            </div>
 
             <div class="paper">
 
-                <div class="letter-content">
+                <h2>For You</h2>
 
-                    <p>
-                        -- your confession/message here --
-                    </p>
+                <p>
+                    There's something I've been wanting to say...
+                </p>
 
-                </div>
+                <p>
+ --put your message here--
+                </p>
 
             </div>
 
-            <div class="envelope-front"></div>
-
         </div>
 
-
         <button
+            class="continue-button"
             id="continueButton"
-            class="continue-button hidden"
         >
-            Continue
+            Continue →
         </button>
 
     </section>
 
 
     <!-- QUESTION -->
-
     <section
         class="question hidden"
         id="question"
@@ -119,7 +95,6 @@
 
 
     <!-- YES RESPONSE -->
-
     <section
         class="response hidden"
         id="yesResponse"
@@ -128,18 +103,17 @@
         <div class="response-box">
 
             <h1>
-                You said yes ❤️
+                YAYY!! 🥹❤️
             </h1>
 
             <p>
-                I’m really glad you answered.
+                Do you mind telling me why you like me back?
             </p>
 
-
             <form
+                id="yesForm"
                 action="https://formspree.io/f/mljepglw"
                 method="POST"
-                id="yesForm"
             >
 
                 <input
@@ -151,25 +125,35 @@
                 <textarea
                     id="yesReason"
                     name="reason"
-                    placeholder="Why? (optional)"
+                    placeholder="Tell me why... "
                 ></textarea>
 
-                <button
-                    type="submit"
-                    id="yesSubmitButton"
-                    disabled
-                >
-                    Send 💌
-                </button>
+                <div class="form-buttons">
 
-                <button
-                    type="button"
-                    id="yesSkipButton"
-                >
-                    Skip
-                </button>
+                    <button
+                        type="submit"
+                        id="yesSubmit"
+                        disabled
+                    >
+                        Send 💌
+                    </button>
+
+                    <button
+                        type="button"
+                        class="skip-button"
+                        id="yesSkip"
+                    >
+                        Skip →
+                    </button>
+
+                </div>
 
             </form>
+
+            <p
+                class="form-status"
+                id="yesStatus"
+            ></p>
 
         </div>
 
@@ -177,7 +161,6 @@
 
 
     <!-- NO RESPONSE -->
-
     <section
         class="response hidden"
         id="noResponse"
@@ -186,18 +169,17 @@
         <div class="response-box">
 
             <h1>
-                You said no 🥲
+                Awww man 😭
             </h1>
 
             <p>
-                It’s okay. Thank you for being honest.
+                That's okay... but do you mind telling me why?
             </p>
 
-
             <form
+                id="noForm"
                 action="https://formspree.io/f/mljepglw"
                 method="POST"
-                id="noForm"
             >
 
                 <input
@@ -209,25 +191,35 @@
                 <textarea
                     id="noReason"
                     name="reason"
-                    placeholder="Anything you want to say? (optional)"
+                    placeholder="Be honest with me... 🥲"
                 ></textarea>
 
-                <button
-                    type="submit"
-                    id="noSubmitButton"
-                    disabled
-                >
-                    Send 💌
-                </button>
+                <div class="form-buttons">
 
-                <button
-                    type="button"
-                    id="noSkipButton"
-                >
-                    Skip
-                </button>
+                    <button
+                        type="submit"
+                        id="noSubmit"
+                        disabled
+                    >
+                        Send 💌
+                    </button>
+
+                    <button
+                        type="button"
+                        class="skip-button"
+                        id="noSkip"
+                    >
+                        Skip →
+                    </button>
+
+                </div>
 
             </form>
+
+            <p
+                class="form-status"
+                id="noStatus"
+            ></p>
 
         </div>
 
@@ -235,7 +227,6 @@
 
 
     <!-- FINISH -->
-
     <section
         class="finish hidden"
         id="finish"
@@ -260,22 +251,19 @@
     </section>
 
 
-    <!-- YOUTUBE MUSIC -->
-
+    <!-- HIDDEN MUSIC PLAYER -->
     <iframe
-        id="music"
-        width="0"
-        height="0"
+        id="musicPlayer"
+        width="200"
+        height="200"
         src="https://www.youtube-nocookie.com/embed/Q49pnA4jsp8?enablejsapi=1&playsinline=1&rel=0"
         frameborder="0"
-        allow="autoplay"
-    >
-    </iframe>
+        allow="autoplay; encrypted-media"
+    ></iframe>
 
 
-    <script
-        src="https://www.youtube.com/iframe_api"
-    ></script>
+    <!-- YOUTUBE API -->
+    <script src="https://www.youtube.com/iframe_api"></script>
 
     <script src="script.js"></script>
 
