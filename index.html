@@ -1,286 +1,283 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-```
-<title>For You 💌</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-<link rel="stylesheet" href="style.css">
-```
+    <title>For You 💌</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
 
 </head>
 
 <body>
 
-```
-<!-- INTRO -->
-<main class="container" id="intro">
-    <h1>Hey...</h1>
-    <p>I made something for you.</p>
+    <!-- INTRO -->
 
-    <button id="openButton">
-        Open 💌
-    </button>
-</main>
+    <section
+        class="intro"
+        id="intro"
+    >
 
+        <div class="intro-content">
 
-<!-- LETTER -->
-<section class="letter hidden" id="letter">
+            <p class="intro-small">
+                Hey...
+            </p>
 
-    <div class="message">
-        <p>I've been wanting to tell you something...</p>
-    </div>
+            <h1>
+                I made something for you.
+            </h1>
 
-    <div class="envelope" id="envelope">
+            <button id="openButton">
+                Open 💌
+            </button>
 
-        <div class="envelope-top"></div>
-
-        <div class="envelope-body">
-            <span>💌</span>
-            <p>Click me</p>
         </div>
 
-        <div class="paper">
+    </section>
 
-            <h2>For You</h2>
+
+    <!-- LETTER -->
+
+    <section
+        class="letter hidden"
+        id="letter"
+    >
+
+        <div
+            class="envelope"
+            id="envelope"
+        >
+
+            <div class="envelope-back"></div>
+
+            <div class="paper">
+
+                <div class="letter-content">
+
+                    <p>
+                        -- your confession/message here --
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="envelope-front"></div>
+
+        </div>
+
+
+        <button
+            id="continueButton"
+            class="continue-button hidden"
+        >
+            Continue
+        </button>
+
+    </section>
+
+
+    <!-- QUESTION -->
+
+    <section
+        class="question hidden"
+        id="question"
+    >
+
+        <div class="question-box">
+
+            <h1>
+                Do you like me back? ❤️
+            </h1>
+
+            <div class="answer-buttons">
+
+                <button id="yesButton">
+                    Yes ❤️
+                </button>
+
+                <button id="noButton">
+                    No 🥲
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- YES RESPONSE -->
+
+    <section
+        class="response hidden"
+        id="yesResponse"
+    >
+
+        <div class="response-box">
+
+            <h1>
+                You said yes ❤️
+            </h1>
 
             <p>
-                There's something I've been wanting to say...
+                I’m really glad you answered.
+            </p>
+
+
+            <form
+                action="https://formspree.io/f/mljepglw"
+                method="POST"
+                id="yesForm"
+            >
+
+                <input
+                    type="hidden"
+                    name="response"
+                    value="YES 💕"
+                >
+
+                <textarea
+                    id="yesReason"
+                    name="reason"
+                    placeholder="Why? (optional)"
+                ></textarea>
+
+                <button
+                    type="submit"
+                    id="yesSubmitButton"
+                    disabled
+                >
+                    Send 💌
+                </button>
+
+                <button
+                    type="button"
+                    id="yesSkipButton"
+                >
+                    Skip
+                </button>
+
+            </form>
+
+        </div>
+
+    </section>
+
+
+    <!-- NO RESPONSE -->
+
+    <section
+        class="response hidden"
+        id="noResponse"
+    >
+
+        <div class="response-box">
+
+            <h1>
+                You said no 🥲
+            </h1>
+
+            <p>
+                It’s okay. Thank you for being honest.
+            </p>
+
+
+            <form
+                action="https://formspree.io/f/mljepglw"
+                method="POST"
+                id="noForm"
+            >
+
+                <input
+                    type="hidden"
+                    name="response"
+                    value="NO 🥲"
+                >
+
+                <textarea
+                    id="noReason"
+                    name="reason"
+                    placeholder="Anything you want to say? (optional)"
+                ></textarea>
+
+                <button
+                    type="submit"
+                    id="noSubmitButton"
+                    disabled
+                >
+                    Send 💌
+                </button>
+
+                <button
+                    type="button"
+                    id="noSkipButton"
+                >
+                    Skip
+                </button>
+
+            </form>
+
+        </div>
+
+    </section>
+
+
+    <!-- FINISH -->
+
+    <section
+        class="finish hidden"
+        id="finish"
+    >
+
+        <div class="finish-box">
+
+            <h1>
+                Thank you 💌
+            </h1>
+
+            <p>
+                That's all I wanted to ask.
             </p>
 
             <p>
-```
+                Take care ❤️
+            </p>
 
--- your confession/message here -- </p>
-
-```
         </div>
 
-    </div>
+    </section>
 
-    <button
-        class="continue-button"
-        id="continueButton"
+
+    <!-- YOUTUBE MUSIC -->
+
+    <iframe
+        id="music"
+        width="0"
+        height="0"
+        src="https://www.youtube-nocookie.com/embed/Q49pnA4jsp8?enablejsapi=1&playsinline=1&rel=0"
+        frameborder="0"
+        allow="autoplay"
     >
-        Continue →
-    </button>
-
-</section>
+    </iframe>
 
 
-<!-- QUESTION -->
-<section
-    class="question hidden"
-    id="question"
->
+    <script
+        src="https://www.youtube.com/iframe_api"
+    ></script>
 
-    <div class="question-box">
-
-        <h1>
-            Do you like me back? ❤️
-        </h1>
-
-        <div class="answer-buttons">
-
-            <button id="yesButton">
-                Yes ❤️
-            </button>
-
-            <button id="noButton">
-                No 🥲
-            </button>
-
-        </div>
-
-        <button
-            class="previous-button"
-            id="previousQuestionButton"
-        >
-            ← Previous
-        </button>
-
-    </div>
-
-</section>
-
-
-<!-- YES RESPONSE -->
-<section
-    class="response hidden"
-    id="yesResponse"
->
-
-    <div class="response-box">
-
-        <h1>
-            YAYY!! 🥹❤️
-        </h1>
-
-        <p>
-            Do you mind telling me why you like me back?
-        </p>
-
-        <form
-            id="yesForm"
-            action="https://formspree.io/f/mljepglw"
-            method="POST"
-        >
-
-            <input
-                type="hidden"
-                name="response"
-                value="YES 💕"
-            >
-
-            <textarea
-                id="yesReason"
-                name="reason"
-                placeholder="Tell me why... "
-            ></textarea>
-
-            <div class="form-buttons">
-
-                <button
-                    type="submit"
-                    id="yesSubmit"
-                    disabled
-                >
-                    Send 💌
-                </button>
-
-                <button
-                    type="button"
-                    class="skip-button"
-                    id="yesSkip"
-                >
-                    Skip →
-                </button>
-
-            </div>
-
-        </form>
-
-        <p
-            class="form-status"
-            id="yesStatus"
-        ></p>
-
-    </div>
-
-</section>
-
-
-<!-- NO RESPONSE -->
-<section
-    class="response hidden"
-    id="noResponse"
->
-
-    <div class="response-box">
-
-        <h1>
-            Awww man 😭
-        </h1>
-
-        <p>
-            That's okay... but do you mind telling me why?
-        </p>
-
-        <form
-            id="noForm"
-            action="https://formspree.io/f/mljepglw"
-            method="POST"
-        >
-
-            <input
-                type="hidden"
-                name="response"
-                value="NO 🥲"
-            >
-
-            <textarea
-                id="noReason"
-                name="reason"
-                placeholder="Be honest with me... 🥲"
-            ></textarea>
-
-            <div class="form-buttons">
-
-                <button
-                    type="submit"
-                    id="noSubmit"
-                    disabled
-                >
-                    Send 💌
-                </button>
-
-                <button
-                    type="button"
-                    class="skip-button"
-                    id="noSkip"
-                >
-                    Skip →
-                </button>
-
-            </div>
-
-        </form>
-
-        <p
-            class="form-status"
-            id="noStatus"
-        ></p>
-
-    </div>
-
-</section>
-
-
-<!-- FINISH -->
-<section
-    class="finish hidden"
-    id="finish"
->
-
-    <div class="finish-box">
-
-        <h1>
-            Thank you 💌
-        </h1>
-
-        <p>
-            That's all I wanted to ask.
-        </p>
-
-        <p>
-            Take care ❤️
-        </p>
-
-    </div>
-
-</section>
-
-
-<!-- HIDDEN MUSIC PLAYER -->
-<iframe
-    id="musicPlayer"
-    width="200"
-    height="200"
-    src="https://www.youtube-nocookie.com/embed/Q49pnA4jsp8?enablejsapi=1&playsinline=1&rel=0"
-    frameborder="0"
-    allow="autoplay; encrypted-media"
-></iframe>
-
-
-<!-- YOUTUBE API -->
-<script src="https://www.youtube.com/iframe_api"></script>
-
-<script src="script.js"></script>
-```
+    <script src="script.js"></script>
 
 </body>
 
