@@ -360,7 +360,7 @@ button:disabled {
 
     opacity: 0;
 
-    overflow: hidden;
+    overflow-y: auto;
 
     transition:
         width 1.2s ease,
@@ -430,6 +430,8 @@ button:disabled {
         translateY(-50%);
 
     z-index: 5;
+
+    overflow-y: auto;
 }
 
 
@@ -988,6 +990,8 @@ button:disabled {
 
         transform:
             translate(-50%, -50%);
+
+        overflow-y: auto;
     }
 
 
