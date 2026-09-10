@@ -461,6 +461,12 @@ const yesStatus =
 const noStatus =
     document.querySelector("#noStatus");
 
+const yesBack =
+    document.querySelector("#yesBack");
+
+const noBack =
+    document.querySelector("#noBack");
+
 const finish =
     document.querySelector("#finish");
 
@@ -672,6 +678,56 @@ noButton.addEventListener(
             },
             500
         );
+
+    }
+);
+
+
+// =========================
+// RESPONSE → QUESTION
+// =========================
+
+function goBackToQuestion(responseScreen) {
+
+    initAudio();
+
+    playClickSound();
+
+    responseScreen.classList.add("fade-out");
+
+    setTimeout(
+        function () {
+
+            responseScreen.classList.add("hidden");
+
+            responseScreen.classList.remove("fade-out");
+
+            question.classList.remove("hidden");
+
+            question.classList.add("fade-in");
+
+        },
+        500
+    );
+
+}
+
+
+yesBack.addEventListener(
+    "click",
+    function () {
+
+        goBackToQuestion(yesResponse);
+
+    }
+);
+
+
+noBack.addEventListener(
+    "click",
+    function () {
+
+        goBackToQuestion(noResponse);
 
     }
 );
