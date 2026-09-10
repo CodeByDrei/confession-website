@@ -140,7 +140,6 @@ function playDeleteSound() {
 
     oscillator.type = "square";
 
-    // Lower/deeper than the normal typing sound
     oscillator.frequency.setValueAtTime(
         320,
         audioContext.currentTime
@@ -449,6 +448,12 @@ const yesSkip =
 const noSkip =
     document.querySelector("#noSkip");
 
+const yesName =
+    document.querySelector("#yesName");
+
+const noName =
+    document.querySelector("#noName");
+
 const yesReason =
     document.querySelector("#yesReason");
 
@@ -633,6 +638,7 @@ yesButton.addEventListener(
                 yesResponse.classList.add("fade-in");
 
                 updateSubmitButton(
+                    yesName,
                     yesReason,
                     yesSubmit,
                     yesSkip
@@ -670,6 +676,7 @@ noButton.addEventListener(
                 noResponse.classList.add("fade-in");
 
                 updateSubmitButton(
+                    noName,
                     noReason,
                     noSubmit,
                     noSkip
@@ -831,6 +838,7 @@ yesForm.addEventListener(
                     "Something went wrong. Try again 😭";
 
                 updateSubmitButton(
+                    yesName,
                     yesReason,
                     yesSubmit,
                     yesSkip
@@ -844,6 +852,7 @@ yesForm.addEventListener(
                 "Couldn't send it. Check your internet connection.";
 
             updateSubmitButton(
+                yesName,
                 yesReason,
                 yesSubmit,
                 yesSkip
@@ -923,6 +932,7 @@ noForm.addEventListener(
                     "Something went wrong. Try again 😭";
 
                 updateSubmitButton(
+                    noName,
                     noReason,
                     noSubmit,
                     noSkip
@@ -936,6 +946,7 @@ noForm.addEventListener(
                 "Couldn't send it. Check your internet connection.";
 
             updateSubmitButton(
+                noName,
                 noReason,
                 noSubmit,
                 noSkip
@@ -975,6 +986,11 @@ yesSkip.addEventListener(
         );
 
         formData.append(
+            "name",
+            ""
+        );
+
+        formData.append(
             "reason",
             ""
         );
@@ -1005,6 +1021,7 @@ yesSkip.addEventListener(
                 yesSkip.disabled = false;
 
                 updateSubmitButton(
+                    yesName,
                     yesReason,
                     yesSubmit,
                     yesSkip
@@ -1020,6 +1037,7 @@ yesSkip.addEventListener(
             yesSkip.disabled = false;
 
             updateSubmitButton(
+                yesName,
                 yesReason,
                 yesSubmit,
                 yesSkip
@@ -1062,6 +1080,11 @@ noSkip.addEventListener(
         );
 
         formData.append(
+            "name",
+            ""
+        );
+
+        formData.append(
             "reason",
             ""
         );
@@ -1092,6 +1115,7 @@ noSkip.addEventListener(
                 noSkip.disabled = false;
 
                 updateSubmitButton(
+                    noName,
                     noReason,
                     noSubmit,
                     noSkip
@@ -1107,6 +1131,7 @@ noSkip.addEventListener(
             noSkip.disabled = false;
 
             updateSubmitButton(
+                noName,
                 noReason,
                 noSubmit,
                 noSkip
@@ -1126,21 +1151,25 @@ noSkip.addEventListener(
 // =========================
 
 function updateSubmitButton(
+    nameInput,
     textarea,
     submitButton,
     skipButton
 ) {
 
+    const hasName =
+        nameInput.value.trim().length > 0;
+
     const hasText =
         textarea.value.trim().length > 0;
 
-    // Send ONLY works when there is actual text
+    // Send ONLY works when BOTH name and reason have text
     submitButton.disabled =
-        !hasText;
+        !(hasName && hasText);
 
-    // Skip ONLY works when there is no text
+    // Skip ONLY works when BOTH fields are empty
     skipButton.disabled =
-        hasText;
+        hasName || hasText;
 
 }
 
@@ -1195,6 +1224,24 @@ function handleTyping(event) {
 
 
     // =========================
+    // YES NAME
+    // =========================
+
+    if (
+        event.target === yesName
+    ) {
+
+        updateSubmitButton(
+            yesName,
+            yesReason,
+            yesSubmit,
+            yesSkip
+        );
+
+    }
+
+
+    // =========================
     // YES TEXTAREA
     // =========================
 
@@ -1203,9 +1250,28 @@ function handleTyping(event) {
     ) {
 
         updateSubmitButton(
+            yesName,
             yesReason,
             yesSubmit,
             yesSkip
+        );
+
+    }
+
+
+    // =========================
+    // NO NAME
+    // =========================
+
+    if (
+        event.target === noName
+    ) {
+
+        updateSubmitButton(
+            noName,
+            noReason,
+            noSubmit,
+            noSkip
         );
 
     }
@@ -1220,6 +1286,7 @@ function handleTyping(event) {
     ) {
 
         updateSubmitButton(
+            noName,
             noReason,
             noSubmit,
             noSkip
@@ -1231,10 +1298,20 @@ function handleTyping(event) {
 
 
 // =========================
-// TEXTAREA LISTENERS
+// TEXT INPUT LISTENERS
 // =========================
 
+yesName.addEventListener(
+    "input",
+    handleTyping
+);
+
 yesReason.addEventListener(
+    "input",
+    handleTyping
+);
+
+noName.addEventListener(
     "input",
     handleTyping
 );
@@ -1250,12 +1327,14 @@ noReason.addEventListener(
 // =========================
 
 updateSubmitButton(
+    yesName,
     yesReason,
     yesSubmit,
     yesSkip
 );
 
 updateSubmitButton(
+    noName,
     noReason,
     noSubmit,
     noSkip
