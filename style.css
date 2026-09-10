@@ -769,6 +769,32 @@ button:disabled {
 
 
 /* =========================
+   RESPONSE BACK BUTTON
+========================= */
+
+.response-back-button {
+    margin-top: 15px;
+
+    background: #8f8f8f;
+
+    color: white;
+
+    box-shadow:
+        0 8px 20px
+        rgba(80, 80, 80, 0.2);
+}
+
+
+.response-back-button:hover {
+    background: #777777;
+
+    box-shadow:
+        0 12px 25px
+        rgba(80, 80, 80, 0.3);
+}
+
+
+/* =========================
    FORM STATUS
 ========================= */
 
