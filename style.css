@@ -684,6 +684,40 @@ button:disabled {
 
 
 /* =========================
+   TEXT INPUT
+========================= */
+
+.response-box input[type="text"] {
+    width: 100%;
+
+    padding: 18px;
+
+    border:
+        2px solid #ffd1dc;
+
+    border-radius: 18px;
+
+    background: #fffdf9;
+
+    color: #3b2630;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 1rem;
+
+    outline: none;
+
+    margin-bottom: 15px;
+}
+
+
+.response-box input[type="text"]:focus {
+    border-color:
+        #ff8fab;
+}
+
+
+/* =========================
    TEXTAREA
 ========================= */
 
@@ -729,8 +763,6 @@ button:disabled {
 /* =========================
    FORM BUTTONS
 ========================= */
-
-/* NEW */
 
 .form-buttons {
     display: flex;
@@ -812,8 +844,6 @@ button:disabled {
 /* =========================
    FINISH SCREEN
 ========================= */
-
-/* NEW */
 
 .finish {
     width: 100%;
@@ -1016,8 +1046,6 @@ button:disabled {
 
     /* MOBILE FORM BUTTONS */
 
-    /* NEW */
-
     .form-buttons {
         flex-direction: column;
 
@@ -1031,8 +1059,6 @@ button:disabled {
 
 
     /* MOBILE FINISH */
-
-    /* NEW */
 
     .finish {
         padding: 20px;
