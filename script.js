@@ -8,11 +8,20 @@ const SUPABASE_URL =
 const SUPABASE_PUBLISHABLE_KEY =
     "sb_publishable_proRa69j5ixAYcqRjJOFOw_SzRjB15q";
 
-const supabase =
-    window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_PUBLISHABLE_KEY
-    );
+let supabaseClient = null;
+
+if (
+    window.supabase &&
+    typeof window.supabase.createClient === "function"
+) {
+
+    supabaseClient =
+        window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_PUBLISHABLE_KEY
+        );
+
+}
 
 
 // =========================
@@ -702,13 +711,28 @@ createAccountForm.addEventListener(
         const password =
             createPassword.value;
 
+        if (!supabaseClient) {
+
+            createAccountStatus.textContent =
+                "Supabase could not load. Please refresh the page.";
+
+            createAccountSubmit.disabled =
+                false;
+
+            createAccountSubmit.textContent =
+                "Create Account 💌";
+
+            return;
+
+        }
+
         try {
 
             const {
                 data,
                 error
             } =
-                await supabase.auth.signUp({
+                await supabaseClient.auth.signUp({
                     email: email,
                     password: password,
 
@@ -827,13 +851,28 @@ loginForm.addEventListener(
         const password =
             loginPassword.value;
 
+        if (!supabaseClient) {
+
+            loginStatus.textContent =
+                "Supabase could not load. Please refresh the page.";
+
+            loginSubmit.disabled =
+                false;
+
+            loginSubmit.textContent =
+                "Log In 💌";
+
+            return;
+
+        }
+
         try {
 
             const {
                 data,
                 error
             } =
-                await supabase.auth.signInWithPassword({
+                await supabaseClient.auth.signInWithPassword({
                     email: email,
                     password: password
                 });
