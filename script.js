@@ -350,50 +350,6 @@ function playFinishSound() {
 
 
 // =========================
-// YOUTUBE MUSIC
-// =========================
-
-let musicPlayer = null;
-let musicRequested = false;
-let musicStarted = false;
-
-
-function onYouTubeIframeAPIReady() {
-
-    musicPlayer = new YT.Player(
-        "musicPlayer",
-        {
-
-            playerVars: {
-                playsinline: 1,
-                rel: 0
-            },
-
-            events: {
-
-                onReady: function () {
-
-                    musicPlayer.setVolume(5);
-
-                    if (musicRequested) {
-
-                        musicPlayer.playVideo();
-
-                        musicStarted = true;
-
-                    }
-
-                }
-
-            }
-
-        }
-    );
-
-}
-
-
-// =========================
 // ELEMENTS
 // =========================
 
@@ -408,6 +364,51 @@ const loginButton =
 
 const guestButton =
     document.querySelector("#guestButton");
+
+const createAccountScreen =
+    document.querySelector("#createAccountScreen");
+
+const loginScreen =
+    document.querySelector("#loginScreen");
+
+const createAccountForm =
+    document.querySelector("#createAccountForm");
+
+const loginForm =
+    document.querySelector("#loginForm");
+
+const createAccountBack =
+    document.querySelector("#createAccountBack");
+
+const loginBack =
+    document.querySelector("#loginBack");
+
+const createAccountStatus =
+    document.querySelector("#createAccountStatus");
+
+const loginStatus =
+    document.querySelector("#loginStatus");
+
+const createAccountSubmit =
+    document.querySelector("#createAccountSubmit");
+
+const loginSubmit =
+    document.querySelector("#loginSubmit");
+
+const createUsername =
+    document.querySelector("#createUsername");
+
+const createEmail =
+    document.querySelector("#createEmail");
+
+const createPassword =
+    document.querySelector("#createPassword");
+
+const loginEmail =
+    document.querySelector("#loginEmail");
+
+const loginPassword =
+    document.querySelector("#loginPassword");
 
 const openButton =
     document.querySelector("#openButton");
@@ -507,6 +508,8 @@ guestButton.addEventListener(
 
                 accountHome.classList.add("hidden");
 
+                accountHome.classList.remove("fade-out");
+
                 intro.classList.remove("hidden");
 
                 intro.classList.add("fade-in");
@@ -520,7 +523,7 @@ guestButton.addEventListener(
 
 
 // =========================
-// CREATE ACCOUNT
+// ACCOUNT HOME → CREATE ACCOUNT
 // =========================
 
 createAccountButton.addEventListener(
@@ -531,8 +534,21 @@ createAccountButton.addEventListener(
 
         playClickSound();
 
-        alert(
-            "Account creation coming next! 🚀"
+        accountHome.classList.add("fade-out");
+
+        setTimeout(
+            function () {
+
+                accountHome.classList.add("hidden");
+
+                accountHome.classList.remove("fade-out");
+
+                createAccountScreen.classList.remove("hidden");
+
+                createAccountScreen.classList.add("fade-in");
+
+            },
+            500
         );
 
     }
@@ -540,7 +556,7 @@ createAccountButton.addEventListener(
 
 
 // =========================
-// LOG IN
+// ACCOUNT HOME → LOG IN
 // =========================
 
 loginButton.addEventListener(
@@ -551,8 +567,21 @@ loginButton.addEventListener(
 
         playClickSound();
 
-        alert(
-            "Login coming next! 🚀"
+        accountHome.classList.add("fade-out");
+
+        setTimeout(
+            function () {
+
+                accountHome.classList.add("hidden");
+
+                accountHome.classList.remove("fade-out");
+
+                loginScreen.classList.remove("hidden");
+
+                loginScreen.classList.add("fade-in");
+
+            },
+            500
         );
 
     }
@@ -560,7 +589,117 @@ loginButton.addEventListener(
 
 
 // =========================
-// INTRO → LETTER + MUSIC
+// CREATE ACCOUNT → BACK
+// =========================
+
+createAccountBack.addEventListener(
+    "click",
+    function () {
+
+        initAudio();
+
+        playClickSound();
+
+        createAccountScreen.classList.add("fade-out");
+
+        setTimeout(
+            function () {
+
+                createAccountScreen.classList.add("hidden");
+
+                createAccountScreen.classList.remove("fade-out");
+
+                accountHome.classList.remove("hidden");
+
+                accountHome.classList.add("fade-in");
+
+            },
+            500
+        );
+
+    }
+);
+
+
+// =========================
+// LOG IN → BACK
+// =========================
+
+loginBack.addEventListener(
+    "click",
+    function () {
+
+        initAudio();
+
+        playClickSound();
+
+        loginScreen.classList.add("fade-out");
+
+        setTimeout(
+            function () {
+
+                loginScreen.classList.add("hidden");
+
+                loginScreen.classList.remove("fade-out");
+
+                accountHome.classList.remove("hidden");
+
+                accountHome.classList.add("fade-in");
+
+            },
+            500
+        );
+
+    }
+);
+
+
+// =========================
+// CREATE ACCOUNT FORM
+// TEMPORARY
+// =========================
+
+createAccountForm.addEventListener(
+    "submit",
+    function (event) {
+
+        event.preventDefault();
+
+        initAudio();
+
+        playClickSound();
+
+        createAccountStatus.textContent =
+            "Account creation will be connected to Supabase next! 🚀";
+
+    }
+);
+
+
+// =========================
+// LOGIN FORM
+// TEMPORARY
+// =========================
+
+loginForm.addEventListener(
+    "submit",
+    function (event) {
+
+        event.preventDefault();
+
+        initAudio();
+
+        playClickSound();
+
+        loginStatus.textContent =
+            "Login will be connected to Supabase next! 🚀";
+
+    }
+);
+
+
+// =========================
+// INTRO → LETTER
 // =========================
 
 openButton.addEventListener(
@@ -571,27 +710,14 @@ openButton.addEventListener(
 
         playClickSound();
 
-        musicRequested = true;
-
-        if (
-            musicPlayer &&
-            typeof musicPlayer.playVideo === "function"
-        ) {
-
-            musicPlayer.setVolume(5);
-
-            musicPlayer.playVideo();
-
-            musicStarted = true;
-
-        }
-
         intro.classList.add("fade-out");
 
         setTimeout(
             function () {
 
                 intro.classList.add("hidden");
+
+                intro.classList.remove("fade-out");
 
                 letter.classList.remove("hidden");
 
@@ -649,6 +775,8 @@ continueButton.addEventListener(
             function () {
 
                 letter.classList.add("hidden");
+
+                letter.classList.remove("fade-out");
 
                 question.classList.remove("hidden");
 
@@ -1266,6 +1394,11 @@ function handleTyping(event) {
 
     const now = Date.now();
 
+
+    // =========================
+    // DELETE / BACKSPACE
+    // =========================
+
     if (
         event.inputType &&
         event.inputType.startsWith("delete")
@@ -1283,6 +1416,11 @@ function handleTyping(event) {
 
     }
 
+
+    // =========================
+    // NORMAL TYPING
+    // =========================
+
     else if (
         now - lastTypeSoundTime >= 35 &&
         event.data
@@ -1294,6 +1432,39 @@ function handleTyping(event) {
 
     }
 
+
+    // =========================
+    // CREATE ACCOUNT INPUTS
+    // =========================
+
+    if (
+        event.target === createUsername ||
+        event.target === createEmail ||
+        event.target === createPassword
+    ) {
+
+        return;
+
+    }
+
+
+    // =========================
+    // LOGIN INPUTS
+    // =========================
+
+    if (
+        event.target === loginEmail ||
+        event.target === loginPassword
+    ) {
+
+        return;
+
+    }
+
+
+    // =========================
+    // YES NAME
+    // =========================
 
     if (
         event.target === yesName
@@ -1309,6 +1480,10 @@ function handleTyping(event) {
     }
 
 
+    // =========================
+    // YES TEXTAREA
+    // =========================
+
     if (
         event.target === yesReason
     ) {
@@ -1323,6 +1498,10 @@ function handleTyping(event) {
     }
 
 
+    // =========================
+    // NO NAME
+    // =========================
+
     if (
         event.target === noName
     ) {
@@ -1336,6 +1515,10 @@ function handleTyping(event) {
 
     }
 
+
+    // =========================
+    // NO TEXTAREA
+    // =========================
 
     if (
         event.target === noReason
@@ -1356,6 +1539,31 @@ function handleTyping(event) {
 // =========================
 // TEXT INPUT LISTENERS
 // =========================
+
+createUsername.addEventListener(
+    "input",
+    handleTyping
+);
+
+createEmail.addEventListener(
+    "input",
+    handleTyping
+);
+
+createPassword.addEventListener(
+    "input",
+    handleTyping
+);
+
+loginEmail.addEventListener(
+    "input",
+    handleTyping
+);
+
+loginPassword.addEventListener(
+    "input",
+    handleTyping
+);
 
 yesName.addEventListener(
     "input",
