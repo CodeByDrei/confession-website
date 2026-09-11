@@ -397,6 +397,18 @@ function onYouTubeIframeAPIReady() {
 // ELEMENTS
 // =========================
 
+const accountHome =
+    document.querySelector("#accountHome");
+
+const createAccountButton =
+    document.querySelector("#createAccountButton");
+
+const loginButton =
+    document.querySelector("#loginButton");
+
+const guestButton =
+    document.querySelector("#guestButton");
+
 const openButton =
     document.querySelector("#openButton");
 
@@ -474,6 +486,77 @@ const noBack =
 
 const finish =
     document.querySelector("#finish");
+
+
+// =========================
+// ACCOUNT HOME → GUEST
+// =========================
+
+guestButton.addEventListener(
+    "click",
+    function () {
+
+        initAudio();
+
+        playClickSound();
+
+        accountHome.classList.add("fade-out");
+
+        setTimeout(
+            function () {
+
+                accountHome.classList.add("hidden");
+
+                intro.classList.remove("hidden");
+
+                intro.classList.add("fade-in");
+
+            },
+            500
+        );
+
+    }
+);
+
+
+// =========================
+// CREATE ACCOUNT
+// =========================
+
+createAccountButton.addEventListener(
+    "click",
+    function () {
+
+        initAudio();
+
+        playClickSound();
+
+        alert(
+            "Account creation coming next! 🚀"
+        );
+
+    }
+);
+
+
+// =========================
+// LOG IN
+// =========================
+
+loginButton.addEventListener(
+    "click",
+    function () {
+
+        initAudio();
+
+        playClickSound();
+
+        alert(
+            "Login coming next! 🚀"
+        );
+
+    }
+);
 
 
 // =========================
@@ -1163,11 +1246,9 @@ function updateSubmitButton(
     const hasText =
         textarea.value.trim().length > 0;
 
-    // Send ONLY works when BOTH name and reason have text
     submitButton.disabled =
         !(hasName && hasText);
 
-    // Skip ONLY works when BOTH fields are empty
     skipButton.disabled =
         hasName || hasText;
 
@@ -1184,10 +1265,6 @@ let lastTypeSoundTime = 0;
 function handleTyping(event) {
 
     const now = Date.now();
-
-    // =========================
-    // DELETE / BACKSPACE
-    // =========================
 
     if (
         event.inputType &&
@@ -1206,11 +1283,6 @@ function handleTyping(event) {
 
     }
 
-
-    // =========================
-    // NORMAL TYPING
-    // =========================
-
     else if (
         now - lastTypeSoundTime >= 35 &&
         event.data
@@ -1222,10 +1294,6 @@ function handleTyping(event) {
 
     }
 
-
-    // =========================
-    // YES NAME
-    // =========================
 
     if (
         event.target === yesName
@@ -1241,10 +1309,6 @@ function handleTyping(event) {
     }
 
 
-    // =========================
-    // YES TEXTAREA
-    // =========================
-
     if (
         event.target === yesReason
     ) {
@@ -1259,10 +1323,6 @@ function handleTyping(event) {
     }
 
 
-    // =========================
-    // NO NAME
-    // =========================
-
     if (
         event.target === noName
     ) {
@@ -1276,10 +1336,6 @@ function handleTyping(event) {
 
     }
 
-
-    // =========================
-    // NO TEXTAREA
-    // =========================
 
     if (
         event.target === noReason
