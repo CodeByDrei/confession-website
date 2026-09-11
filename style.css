@@ -1018,3 +1018,35 @@ button:disabled {
     }
 
 }
+
+
+/* =========================
+   ACCOUNT INPUTS
+========================= */
+
+#createAccountForm input,
+#loginForm input {
+    width: 100%;
+
+    padding: 14px 16px;
+
+    border: 2px solid #ffd1dc;
+
+    border-radius: 14px;
+
+    background: #fffdf9;
+
+    color: #3b2630;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 1rem;
+
+    outline: none;
+}
+
+
+#createAccountForm input:focus,
+#loginForm input:focus {
+    border-color: #ff8fab;
+}
