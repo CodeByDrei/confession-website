@@ -1,4 +1,21 @@
 // =========================
+// SUPABASE
+// =========================
+
+const SUPABASE_URL =
+    "https://fkcqiruudgrkvossdjtr.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_proRa69j5ixAYcqRjJOFOw_SzRjB15q";
+
+const supabase =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+    );
+
+
+// =========================
 // AUDIO SYSTEM
 // =========================
 
@@ -656,12 +673,12 @@ loginBack.addEventListener(
 
 // =========================
 // CREATE ACCOUNT FORM
-// TEMPORARY
+// SUPABASE
 // =========================
 
 createAccountForm.addEventListener(
     "submit",
-    function (event) {
+    async function (event) {
 
         event.preventDefault();
 
@@ -669,8 +686,114 @@ createAccountForm.addEventListener(
 
         playClickSound();
 
-        createAccountStatus.textContent =
-            "Account creation will be connected to Supabase next! 🚀";
+        createAccountSubmit.disabled = true;
+
+        createAccountSubmit.textContent =
+            "Creating Account...";
+
+        createAccountStatus.textContent = "";
+
+        const username =
+            createUsername.value.trim();
+
+        const email =
+            createEmail.value.trim();
+
+        const password =
+            createPassword.value;
+
+        try {
+
+            const {
+                data,
+                error
+            } =
+                await supabase.auth.signUp({
+                    email: email,
+                    password: password,
+
+                    options: {
+                        data: {
+                            username: username
+                        }
+                    }
+                });
+
+            if (error) {
+                throw error;
+            }
+
+            if (data.session) {
+
+                createAccountStatus.textContent =
+                    "Account created! Welcome to Confessions 💌";
+
+                createAccountForm.reset();
+
+                createAccountSubmit.textContent =
+                    "Account Created 💌";
+
+                setTimeout(
+                    function () {
+
+                        createAccountScreen.classList.add(
+                            "fade-out"
+                        );
+
+                        setTimeout(
+                            function () {
+
+                                createAccountScreen.classList.add(
+                                    "hidden"
+                                );
+
+                                createAccountScreen.classList.remove(
+                                    "fade-out"
+                                );
+
+                                intro.classList.remove(
+                                    "hidden"
+                                );
+
+                                intro.classList.add(
+                                    "fade-in"
+                                );
+
+                            },
+                            500
+                        );
+
+                    },
+                    1000
+                );
+
+            } else {
+
+                createAccountStatus.textContent =
+                    "Account created! Check your email to confirm your account 📧";
+
+                createAccountForm.reset();
+
+                createAccountSubmit.textContent =
+                    "Account Created 💌";
+
+            }
+
+        } catch (error) {
+
+            console.error(error);
+
+            createAccountStatus.textContent =
+                error.message ||
+                "Something went wrong. Try again 😭";
+
+            createAccountSubmit.disabled =
+                false;
+
+            createAccountSubmit.textContent =
+                "Create Account 💌";
+
+        }
 
     }
 );
@@ -678,12 +801,12 @@ createAccountForm.addEventListener(
 
 // =========================
 // LOGIN FORM
-// TEMPORARY
+// SUPABASE
 // =========================
 
 loginForm.addEventListener(
     "submit",
-    function (event) {
+    async function (event) {
 
         event.preventDefault();
 
@@ -691,8 +814,91 @@ loginForm.addEventListener(
 
         playClickSound();
 
-        loginStatus.textContent =
-            "Login will be connected to Supabase next! 🚀";
+        loginSubmit.disabled = true;
+
+        loginSubmit.textContent =
+            "Logging In...";
+
+        loginStatus.textContent = "";
+
+        const email =
+            loginEmail.value.trim();
+
+        const password =
+            loginPassword.value;
+
+        try {
+
+            const {
+                data,
+                error
+            } =
+                await supabase.auth.signInWithPassword({
+                    email: email,
+                    password: password
+                });
+
+            if (error) {
+                throw error;
+            }
+
+            loginStatus.textContent =
+                "Logged in! Welcome back 💌";
+
+            loginForm.reset();
+
+            loginSubmit.textContent =
+                "Logged In 💌";
+
+            setTimeout(
+                function () {
+
+                    loginScreen.classList.add(
+                        "fade-out"
+                    );
+
+                    setTimeout(
+                        function () {
+
+                            loginScreen.classList.add(
+                                "hidden"
+                            );
+
+                            loginScreen.classList.remove(
+                                "fade-out"
+                            );
+
+                            intro.classList.remove(
+                                "hidden"
+                            );
+
+                            intro.classList.add(
+                                "fade-in"
+                            );
+
+                        },
+                        500
+                    );
+
+                },
+                700
+            );
+
+        } catch (error) {
+
+            console.error(error);
+
+            loginStatus.textContent =
+                error.message ||
+                "Login failed. Check your email and password.";
+
+            loginSubmit.disabled =
+                false;
+
+            loginSubmit.textContent =
+                "Log In 💌";
+
+        }
 
     }
 );
