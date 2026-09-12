@@ -1869,3 +1869,37 @@ document.querySelectorAll("button").forEach(
 
     }
 );
+
+
+// =========================
+// REMEMBER LOGIN SESSION
+// =========================
+
+async function checkExistingSession() {
+
+    if (!supabaseClient) {
+        return;
+    }
+
+    const {
+        data: { session }
+    } =
+        await supabaseClient.auth.getSession();
+
+    if (
+        session &&
+        session.user
+    ) {
+
+        // For now, automatically continue
+        // to the intro when a saved session exists.
+
+        accountHome.classList.add("hidden");
+
+        intro.classList.remove("hidden");
+
+    }
+
+}
+
+checkExistingSession();
