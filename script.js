@@ -1,1905 +1,871 @@
-// =========================
-// SUPABASE
-// =========================
+<!DOCTYPE html>
+<html lang="en">
 
-const SUPABASE_URL =
-    "https://fkcqiruudgrkvossdjtr.supabase.co";
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-const SUPABASE_PUBLISHABLE_KEY =
-    "sb_publishable_proRa69j5ixAYcqRjJOFOw_SzRjB15q";
+    <title>Confessions 💌</title>
 
-let supabaseClient = null;
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         ACCOUNT HOME
+    ========================= -->
 
-if (
-    window.supabase &&
-    typeof window.supabase.createClient === "function"
-) {
+    <main class="container" id="accountHome">
 
-    supabaseClient =
-        window.supabase.createClient(
-            SUPABASE_URL,
-            SUPABASE_PUBLISHABLE_KEY
-        );
+        <h1>Confessions 💌</h1>
 
-}
+        <p>Send and receive letters in a whole new way.</p>
 
+        <div
+            style="
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+                margin-top: 25px;
+            "
+        >
 
-// =========================
-// AUDIO SYSTEM
-// =========================
+            <button id="createAccountButton">
+                Create Account
+            </button>
 
-let audioContext = null;
+            <button id="loginButton">
+                Log In
+            </button>
 
-function initAudio() {
+            <button id="guestButton">
+                Continue as Guest
+            </button>
 
-    if (!audioContext) {
+        </div>
+
+    </main>
+
+
+    <!-- =========================
+         CREATE ACCOUNT
+    ========================= -->
+
+    <main
+        class="container hidden"
+        id="createAccountScreen"
+    >
+
+        <h1>Create Account 💌</h1>
+
+        <p>
+            Create your account to start sending and receiving confessions.
+        </p>
+
+        <form id="createAccountForm">
+
+            <input
+                type="text"
+                id="createUsername"
+                placeholder="Username..."
+                autocomplete="username"
+                required
+            >
+
+            <input
+                type="email"
+                id="createEmail"
+                placeholder="Email..."
+                autocomplete="email"
+                required
+            >
+
+            <input
+                type="password"
+                id="createPassword"
+                placeholder="Password..."
+                autocomplete="new-password"
+                required
+            >
+
+            <button
+                type="submit"
+                id="createAccountSubmit"
+            >
+                Create Account 💌
+            </button>
+
+        </form>
+
+        <p
+            class="form-status"
+            id="createAccountStatus"
+        ></p>
+
+        <button
+            type="button"
+            class="response-back-button"
+            id="createAccountBack"
+        >
+            ← Back
+        </button>
+
+    </main>
+
+
+    <!-- =========================
+         LOGIN
+    ========================= -->
 
-        const AudioContext =
-            window.AudioContext ||
-            window.webkitAudioContext;
+    <main
+        class="container hidden"
+        id="loginScreen"
+    >
 
-        if (!AudioContext) {
-            return;
-        }
+        <h1>Welcome Back 💌</h1>
 
-        audioContext = new AudioContext();
+        <p>
+            Log in to continue to your account.
+        </p>
 
-    }
+        <form id="loginForm">
 
-    if (audioContext.state === "suspended") {
-        audioContext.resume();
-    }
+            <input
+                type="email"
+                id="loginEmail"
+                placeholder="Email..."
+                autocomplete="email"
+                required
+            >
 
-}
+            <input
+                type="password"
+                id="loginPassword"
+                placeholder="Password..."
+                autocomplete="current-password"
+                required
+            >
 
+            <button
+                type="submit"
+                id="loginSubmit"
+            >
+                Log In 💌
+            </button>
 
-// =========================
-// BUTTON CLICK SOUND
-// =========================
+        </form>
 
-function playClickSound() {
+        <p
+            class="form-status"
+            id="loginStatus"
+        ></p>
 
-    if (!audioContext) return;
+        <button
+            type="button"
+            class="response-back-button"
+            id="loginBack"
+        >
+            ← Back
+        </button>
 
-    const oscillator =
-        audioContext.createOscillator();
+    </main>
 
-    const gain =
-        audioContext.createGain();
 
-    oscillator.type = "sine";
+    <!-- =========================
+         MAIN HOME
+    ========================= -->
 
-    oscillator.frequency.setValueAtTime(
-        700,
-        audioContext.currentTime
-    );
+    <main
+        class="home-screen hidden"
+        id="homeScreen"
+    >
 
-    oscillator.frequency.exponentialRampToValueAtTime(
-        420,
-        audioContext.currentTime + 0.07
-    );
+        <!-- MENU BUTTON -->
 
-    gain.gain.setValueAtTime(
-        0.08,
-        audioContext.currentTime
-    );
+        <button
+            class="home-icon-button menu-button"
+            id="menuButton"
+            aria-label="Open menu"
+        >
+            ☰
+        </button>
 
-    gain.gain.exponentialRampToValueAtTime(
-        0.001,
-        audioContext.currentTime + 0.07
-    );
 
-    oscillator.connect(gain);
+        <!-- MAIL BUTTON -->
 
-    gain.connect(
-        audioContext.destination
-    );
+        <button
+            class="home-icon-button mail-button"
+            id="mailButton"
+            aria-label="Open inbox"
+        >
 
-    oscillator.start();
+            📬
 
-    oscillator.stop(
-        audioContext.currentTime + 0.07
-    );
+            <span
+                class="notification-badge hidden"
+                id="mailBadge"
+            >
+                0
+            </span>
 
-}
+        </button>
 
 
-// =========================
-// TYPEWRITER SOUND
-// =========================
+        <!-- HOME CONTENT -->
 
-function playTypewriterSound() {
+        <div class="home-content">
 
-    if (!audioContext) return;
+            <div class="home-logo">
+                💌
+            </div>
 
-    const oscillator =
-        audioContext.createOscillator();
+            <h1>
+                Confessions
+            </h1>
 
-    const gain =
-        audioContext.createGain();
+            <p id="homeWelcome">
+                Welcome back.
+            </p>
 
-    oscillator.type = "square";
+            <button
+                class="send-confession-button"
+                id="sendConfessionButton"
+            >
 
-    oscillator.frequency.setValueAtTime(
-        900 + Math.random() * 250,
-        audioContext.currentTime
-    );
+                <span>
+                    💌
+                </span>
 
-    gain.gain.setValueAtTime(
-        0.025,
-        audioContext.currentTime
-    );
+                <strong>
+                    Send a Confession
+                </strong>
 
-    gain.gain.exponentialRampToValueAtTime(
-        0.001,
-        audioContext.currentTime + 0.04
-    );
+                <small>
+                    Write something from the heart.
+                </small>
 
-    oscillator.connect(gain);
+            </button>
 
-    gain.connect(
-        audioContext.destination
-    );
+        </div>
 
-    oscillator.start();
+    </main>
 
-    oscillator.stop(
-        audioContext.currentTime + 0.04
-    );
 
-}
+    <!-- =========================
+         BACKGROUND OVERLAY
+    ========================= -->
 
+    <div
+        class="overlay hidden"
+        id="overlay"
+    ></div>
 
-// =========================
-// DEEP BACKSPACE / DELETE SOUND
-// =========================
 
-function playDeleteSound() {
+    <!-- =========================
+         LEFT MENU
+    ========================= -->
 
-    if (!audioContext) return;
+    <aside
+        class="side-menu"
+        id="sideMenu"
+    >
 
-    const oscillator =
-        audioContext.createOscillator();
+        <div class="side-menu-header">
 
-    const gain =
-        audioContext.createGain();
+            <h2>
+                Quick Access
+            </h2>
 
-    oscillator.type = "square";
+            <button
+                class="close-button"
+                id="closeMenuButton"
+            >
+                ×
+            </button>
 
-    oscillator.frequency.setValueAtTime(
-        320,
-        audioContext.currentTime
-    );
+        </div>
 
-    oscillator.frequency.exponentialRampToValueAtTime(
-        150,
-        audioContext.currentTime + 0.055
-    );
 
-    gain.gain.setValueAtTime(
-        0.035,
-        audioContext.currentTime
-    );
+        <div class="side-menu-user">
 
-    gain.gain.exponentialRampToValueAtTime(
-        0.001,
-        audioContext.currentTime + 0.055
-    );
+            <div class="side-user-icon">
+                👤
+            </div>
 
-    oscillator.connect(gain);
+            <div>
 
-    gain.connect(
-        audioContext.destination
-    );
+                <strong id="sideMenuUsername">
+                    @username
+                </strong>
 
-    oscillator.start();
+                <span>
+                    Your account
+                </span>
 
-    oscillator.stop(
-        audioContext.currentTime + 0.055
-    );
+            </div>
 
-}
+        </div>
 
 
-// =========================
-// PAPER / ENVELOPE SOUND
-// =========================
+        <button
+            class="side-menu-item"
+            id="accountInfoButton"
+        >
 
-function playPaperSound() {
+            <span>
+                👤
+            </span>
 
-    if (!audioContext) return;
+            <div>
 
-    const oscillator =
-        audioContext.createOscillator();
+                <strong>
+                    Account Information
+                </strong>
 
-    const gain =
-        audioContext.createGain();
+                <small>
+                    Username and email
+                </small>
 
-    oscillator.type = "triangle";
+            </div>
 
-    oscillator.frequency.setValueAtTime(
-        180,
-        audioContext.currentTime
-    );
+        </button>
 
-    oscillator.frequency.exponentialRampToValueAtTime(
-        70,
-        audioContext.currentTime + 0.4
-    );
 
-    gain.gain.setValueAtTime(
-        0.035,
-        audioContext.currentTime
-    );
+        <button
+            class="side-menu-item"
+            id="settingsButton"
+        >
 
-    gain.gain.exponentialRampToValueAtTime(
-        0.001,
-        audioContext.currentTime + 0.4
-    );
+            <span>
+                ⚙️
+            </span>
 
-    oscillator.connect(gain);
+            <div>
 
-    gain.connect(
-        audioContext.destination
-    );
+                <strong>
+                    Settings
+                </strong>
 
-    oscillator.start();
+                <small>
+                    Manage your account
+                </small>
 
-    oscillator.stop(
-        audioContext.currentTime + 0.4
-    );
+            </div>
 
-}
+        </button>
 
 
-// =========================
-// SEND SOUND
-// =========================
+        <div class="side-menu-spacer"></div>
 
-function playSendSound() {
 
-    if (!audioContext) return;
+        <button
+            class="side-menu-item logout-item"
+            id="logoutButton"
+        >
 
-    const oscillator =
-        audioContext.createOscillator();
+            <span>
+                🚪
+            </span>
 
-    const gain =
-        audioContext.createGain();
+            <div>
 
-    oscillator.type = "sine";
+                <strong>
+                    Log Out
+                </strong>
 
-    oscillator.frequency.setValueAtTime(
-        500,
-        audioContext.currentTime
-    );
+                <small>
+                    Sign out of your account
+                </small>
 
-    oscillator.frequency.exponentialRampToValueAtTime(
-        900,
-        audioContext.currentTime + 0.15
-    );
+            </div>
 
-    oscillator.frequency.exponentialRampToValueAtTime(
-        1200,
-        audioContext.currentTime + 0.35
-    );
+        </button>
 
-    gain.gain.setValueAtTime(
-        0.06,
-        audioContext.currentTime
-    );
+    </aside>
 
-    gain.gain.exponentialRampToValueAtTime(
-        0.001,
-        audioContext.currentTime + 0.35
-    );
 
-    oscillator.connect(gain);
+    <!-- =========================
+         ACCOUNT INFORMATION
+    ========================= -->
 
-    gain.connect(
-        audioContext.destination
-    );
+    <section
+        class="popup-panel hidden"
+        id="accountInfoPanel"
+    >
 
-    oscillator.start();
+        <div class="popup-header">
 
-    oscillator.stop(
-        audioContext.currentTime + 0.35
-    );
+            <h2>
+                Account Information
+            </h2>
 
-}
+            <button
+                class="close-button"
+                id="closeAccountInfo"
+            >
+                ×
+            </button>
 
+        </div>
 
-// =========================
-// FINISH SOUND
-// =========================
 
-function playFinishSound() {
+        <div class="account-details">
 
-    if (!audioContext) return;
+            <div class="account-detail">
 
-    const notes = [
-        523.25,
-        659.25,
-        783.99
-    ];
+                <span>
+                    Username
+                </span>
 
-    notes.forEach(
-        function (frequency, index) {
+                <strong id="accountInfoUsername">
+                    @username
+                </strong>
 
-            const oscillator =
-                audioContext.createOscillator();
+            </div>
 
-            const gain =
-                audioContext.createGain();
 
-            const startTime =
-                audioContext.currentTime +
-                index * 0.12;
+            <div class="account-detail">
 
-            oscillator.type = "sine";
+                <span>
+                    Email
+                </span>
 
-            oscillator.frequency.setValueAtTime(
-                frequency,
-                startTime
-            );
+                <strong id="accountInfoEmail">
+                    email@example.com
+                </strong>
 
-            gain.gain.setValueAtTime(
-                0,
-                startTime
-            );
+            </div>
 
-            gain.gain.linearRampToValueAtTime(
-                0.06,
-                startTime + 0.03
-            );
 
-            gain.gain.exponentialRampToValueAtTime(
-                0.001,
-                startTime + 0.5
-            );
+            <div class="account-detail">
 
-            oscillator.connect(gain);
+                <span>
+                    Password
+                </span>
 
-            gain.connect(
-                audioContext.destination
-            );
+                <strong>
+                    ••••••••••••
+                </strong>
 
-            oscillator.start(startTime);
+                <small>
+                    Your password is securely managed by your account provider.
+                </small>
 
-            oscillator.stop(
-                startTime + 0.5
-            );
+            </div>
 
-        }
-    );
+        </div>
 
-}
+    </section>
 
 
-// =========================
-// ELEMENTS
-// =========================
+    <!-- =========================
+         SETTINGS
+    ========================= -->
 
-const accountHome =
-    document.querySelector("#accountHome");
+    <section
+        class="popup-panel hidden"
+        id="settingsPanel"
+    >
 
-const createAccountButton =
-    document.querySelector("#createAccountButton");
+        <div class="popup-header">
 
-const loginButton =
-    document.querySelector("#loginButton");
+            <h2>
+                Settings ⚙️
+            </h2>
 
-const guestButton =
-    document.querySelector("#guestButton");
+            <button
+                class="close-button"
+                id="closeSettings"
+            >
+                ×
+            </button>
 
-const createAccountScreen =
-    document.querySelector("#createAccountScreen");
+        </div>
 
-const loginScreen =
-    document.querySelector("#loginScreen");
 
-const createAccountForm =
-    document.querySelector("#createAccountForm");
+        <div class="settings-list">
 
-const loginForm =
-    document.querySelector("#loginForm");
+            <div class="setting-row">
 
-const createAccountBack =
-    document.querySelector("#createAccountBack");
+                <div>
 
-const loginBack =
-    document.querySelector("#loginBack");
+                    <strong>
+                        Account
+                    </strong>
 
-const createAccountStatus =
-    document.querySelector("#createAccountStatus");
+                    <small>
+                        Manage your account information.
+                    </small>
 
-const loginStatus =
-    document.querySelector("#loginStatus");
+                </div>
 
-const createAccountSubmit =
-    document.querySelector("#createAccountSubmit");
+            </div>
 
-const loginSubmit =
-    document.querySelector("#loginSubmit");
 
-const createUsername =
-    document.querySelector("#createUsername");
+            <div class="setting-row">
 
-const createEmail =
-    document.querySelector("#createEmail");
+                <div>
 
-const createPassword =
-    document.querySelector("#createPassword");
+                    <strong>
+                        Notifications
+                    </strong>
 
-const loginEmail =
-    document.querySelector("#loginEmail");
+                    <small>
+                        Confession notifications will appear in your inbox.
+                    </small>
 
-const loginPassword =
-    document.querySelector("#loginPassword");
+                </div>
 
-const openButton =
-    document.querySelector("#openButton");
+            </div>
 
-const intro =
-    document.querySelector("#intro");
 
-const letter =
-    document.querySelector("#letter");
+            <div class="setting-row">
 
-const envelope =
-    document.querySelector("#envelope");
+                <div>
 
-const continueButton =
-    document.querySelector("#continueButton");
+                    <strong>
+                        Privacy
+                    </strong>
 
-const question =
-    document.querySelector("#question");
+                    <small>
+                        More privacy controls coming soon.
+                    </small>
 
-const previousButton =
-    document.querySelector("#previousButton");
+                </div>
 
-const yesButton =
-    document.querySelector("#yesButton");
+            </div>
 
-const noButton =
-    document.querySelector("#noButton");
+        </div>
 
-const yesResponse =
-    document.querySelector("#yesResponse");
+    </section>
 
-const noResponse =
-    document.querySelector("#noResponse");
 
-const yesForm =
-    document.querySelector("#yesForm");
+    <!-- =========================
+         INBOX POPUP
+    ========================= -->
 
-const noForm =
-    document.querySelector("#noForm");
+    <section
+        class="mail-popup hidden"
+        id="mailPopup"
+    >
 
-const yesSubmit =
-    document.querySelector("#yesSubmit");
+        <div class="mail-popup-header">
 
-const noSubmit =
-    document.querySelector("#noSubmit");
+            <div>
 
-const yesSkip =
-    document.querySelector("#yesSkip");
+                <h2>
+                    Your Confessions
+                </h2>
 
-const noSkip =
-    document.querySelector("#noSkip");
+                <p>
+                    Letters sent to you.
+                </p>
 
-const yesName =
-    document.querySelector("#yesName");
+            </div>
 
-const noName =
-    document.querySelector("#noName");
+            <button
+                class="close-button"
+                id="closeMailButton"
+            >
+                ×
+            </button>
 
-const yesReason =
-    document.querySelector("#yesReason");
+        </div>
 
-const noReason =
-    document.querySelector("#noReason");
 
-const yesStatus =
-    document.querySelector("#yesStatus");
+        <div
+            class="inbox-list"
+            id="inboxList"
+        >
 
-const noStatus =
-    document.querySelector("#noStatus");
+            <div
+                class="empty-inbox"
+                id="emptyInbox"
+            >
 
-const yesBack =
-    document.querySelector("#yesBack");
+                <div>
+                    📭
+                </div>
 
-const noBack =
-    document.querySelector("#noBack");
+                <h3>
+                    No confessions yet
+                </h3>
 
-const finish =
-    document.querySelector("#finish");
+                <p>
+                    When someone sends you a confession, it'll appear here.
+                </p>
 
+            </div>
 
-// =========================
-// ACCOUNT HOME → GUEST
-// =========================
+        </div>
 
-guestButton.addEventListener(
-    "click",
-    function () {
+    </section>
 
-        initAudio();
 
-        playClickSound();
+    <!-- =========================
+         LETTER VIEWER
+    ========================= -->
 
-        accountHome.classList.add("fade-out");
+    <section
+        class="letter-viewer hidden"
+        id="letterViewer"
+    >
 
-        setTimeout(
-            function () {
+        <div class="letter-viewer-paper">
 
-                accountHome.classList.add("hidden");
+            <button
+                class="letter-close-button"
+                id="closeLetterViewer"
+            >
+                ×
+            </button>
 
-                accountHome.classList.remove("fade-out");
+            <p class="letter-label">
+                SOMEONE SENT YOU A CONFESSION
+            </p>
 
-                intro.classList.remove("hidden");
+            <h1>
+                💌 A Letter For You
+            </h1>
 
-                intro.classList.add("fade-in");
+            <div
+                class="received-letter"
+                id="receivedLetter"
+            >
+                This is where the confession will appear.
+            </div>
 
-            },
-            500
-        );
+            <div class="letter-signature">
 
-    }
-);
+                — Someone who wanted to tell you something
 
+            </div>
 
-// =========================
-// ACCOUNT HOME → CREATE ACCOUNT
-// =========================
+        </div>
 
-createAccountButton.addEventListener(
-    "click",
-    function () {
+    </section>
 
-        initAudio();
 
-        playClickSound();
+    <!-- =========================
+         SEND CONFESSION
+    ========================= -->
 
-        accountHome.classList.add("fade-out");
+    <main
+        class="writing-screen hidden"
+        id="writingScreen"
+    >
 
-        setTimeout(
-            function () {
+        <button
+            class="writing-back-button"
+            id="writingBackButton"
+        >
+            ← Go Back
+        </button>
 
-                accountHome.classList.add("hidden");
 
-                accountHome.classList.remove("fade-out");
+        <div class="writing-header">
 
-                createAccountScreen.classList.remove("hidden");
+            <span>
+                CONFESSIONS
+            </span>
 
-                createAccountScreen.classList.add("fade-in");
+            <h1>
+                Write Your Letter
+            </h1>
 
-            },
-            500
-        );
+            <p>
+                Take your time. Say what you really want to say.
+            </p>
 
-    }
-);
+        </div>
 
 
-// =========================
-// ACCOUNT HOME → LOG IN
-// =========================
+        <div class="writing-paper">
 
-loginButton.addEventListener(
-    "click",
-    function () {
+            <div class="paper-top">
 
-        initAudio();
+                <span>
+                    💌
+                </span>
 
-        playClickSound();
+                <span>
+                    A LETTER FROM THE HEART
+                </span>
 
-        accountHome.classList.add("fade-out");
+            </div>
 
-        setTimeout(
-            function () {
 
-                accountHome.classList.add("hidden");
+            <textarea
+                id="confessionMessage"
+                placeholder="Dear someone...
 
-                accountHome.classList.remove("fade-out");
+Start writing your confession here..."
+            ></textarea>
 
-                loginScreen.classList.remove("hidden");
 
-                loginScreen.classList.add("fade-in");
+            <div class="paper-footer">
 
-            },
-            500
-        );
+                <span>
+                    Your words matter.
+                </span>
 
-    }
-);
+                <span id="letterCharacterCount">
+                    0 characters
+                </span>
 
+            </div>
 
-// =========================
-// CREATE ACCOUNT → BACK
-// =========================
+        </div>
 
-createAccountBack.addEventListener(
-    "click",
-    function () {
 
-        initAudio();
+        <button
+            class="next-button"
+            id="nextDetailsButton"
+        >
+            Next →
+        </button>
 
-        playClickSound();
+    </main>
 
-        createAccountScreen.classList.add("fade-out");
 
-        setTimeout(
-            function () {
+    <!-- =========================
+         CONFESSION DETAILS
+    ========================= -->
 
-                createAccountScreen.classList.add("hidden");
+    <main
+        class="details-screen hidden"
+        id="detailsScreen"
+    >
 
-                createAccountScreen.classList.remove("fade-out");
+        <button
+            class="writing-back-button"
+            id="detailsBackButton"
+        >
+            ← Go Back
+        </button>
 
-                accountHome.classList.remove("hidden");
 
-                accountHome.classList.add("fade-in");
+        <div class="details-box">
 
-            },
-            500
-        );
+            <div class="details-icon">
+                ✉️
+            </div>
 
-    }
-);
+            <h1>
+                Almost there.
+            </h1>
 
+            <p>
+                Tell us where this confession should go.
+            </p>
 
-// =========================
-// LOG IN → BACK
-// =========================
 
-loginBack.addEventListener(
-    "click",
-    function () {
+            <form id="confessionDetailsForm">
 
-        initAudio();
+                <label for="recipientUsername">
+                    Who are you sending it to?
+                </label>
 
-        playClickSound();
+                <input
+                    type="text"
+                    id="recipientUsername"
+                    placeholder="@username"
+                    autocomplete="off"
+                    required
+                >
 
-        loginScreen.classList.add("fade-out");
 
-        setTimeout(
-            function () {
+                <label for="senderDisplayName">
+                    How should they see you?
+                </label>
 
-                loginScreen.classList.add("hidden");
+                <input
+                    type="text"
+                    id="senderDisplayName"
+                    placeholder="Your name or Anonymous"
+                    autocomplete="off"
+                    required
+                >
 
-                loginScreen.classList.remove("fade-out");
 
-                accountHome.classList.remove("hidden");
+                <label class="checkbox-row">
 
-                accountHome.classList.add("fade-in");
+                    <input
+                        type="checkbox"
+                        id="anonymousCheckbox"
+                    >
 
-            },
-            500
-        );
+                    <span>
+                        Send anonymously
+                    </span>
 
-    }
-);
+                </label>
 
 
-// =========================
-// CREATE ACCOUNT FORM
-// SUPABASE
-// =========================
+                <button
+                    type="submit"
+                    id="sendConfessionSubmit"
+                >
+                    Send Confession 💌
+                </button>
 
-createAccountForm.addEventListener(
-    "submit",
-    async function (event) {
+            </form>
 
-        event.preventDefault();
 
-        initAudio();
+            <p
+                class="form-status"
+                id="confessionStatus"
+            ></p>
 
-        playClickSound();
+        </div>
 
-        createAccountSubmit.disabled = true;
+    </main>
 
-        createAccountSubmit.textContent =
-            "Creating Account...";
 
-        createAccountStatus.textContent = "";
+    <!-- =========================
+         GUEST NOTICE
+    ========================= -->
 
-        const username =
-            createUsername.value.trim();
+    <main
+        class="container hidden"
+        id="guestScreen"
+    >
 
-        const email =
-            createEmail.value.trim();
+        <h1>
+            Guest Mode 💌
+        </h1>
 
-        const password =
-            createPassword.value;
+        <p>
+            Guest mode is no longer connected to a personal confession.
+        </p>
 
-        if (!supabaseClient) {
+        <p>
+            Create an account to send and receive letters.
+        </p>
 
-            createAccountStatus.textContent =
-                "Supabase could not load. Please refresh the page.";
+        <button id="guestCreateAccountButton">
+            Create Account
+        </button>
 
-            createAccountSubmit.disabled =
-                false;
+        <button
+            class="response-back-button"
+            id="guestBackButton"
+        >
+            ← Back
+        </button>
 
-            createAccountSubmit.textContent =
-                "Create Account 💌";
+    </main>
 
-            return;
 
-        }
+    <!-- =========================
+         SUPABASE
+    ========================= -->
 
-        try {
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-            const {
-                data,
-                error
-            } =
-                await supabaseClient.auth.signUp({
-                    email: email,
-                    password: password,
+    <script src="script.js"></script>
 
-                    options: {
-                        data: {
-                            username: username
-                        }
-                    }
-                });
+</body>
 
-            if (error) {
-                throw error;
-            }
-
-            if (data.session) {
-
-                createAccountStatus.textContent =
-                    "Account created! Welcome to Confessions 💌";
-
-                createAccountForm.reset();
-
-                createAccountSubmit.textContent =
-                    "Account Created 💌";
-
-                setTimeout(
-                    function () {
-
-                        createAccountScreen.classList.add(
-                            "fade-out"
-                        );
-
-                        setTimeout(
-                            function () {
-
-                                createAccountScreen.classList.add(
-                                    "hidden"
-                                );
-
-                                createAccountScreen.classList.remove(
-                                    "fade-out"
-                                );
-
-                                intro.classList.remove(
-                                    "hidden"
-                                );
-
-                                intro.classList.add(
-                                    "fade-in"
-                                );
-
-                            },
-                            500
-                        );
-
-                    },
-                    1000
-                );
-
-            } else {
-
-                createAccountStatus.textContent =
-                    "Account created! Check your email to confirm your account 📧";
-
-                createAccountForm.reset();
-
-                createAccountSubmit.textContent =
-                    "Account Created 💌";
-
-            }
-
-        } catch (error) {
-
-            console.error(error);
-
-            createAccountStatus.textContent =
-                error.message ||
-                "Something went wrong. Try again 😭";
-
-            createAccountSubmit.disabled =
-                false;
-
-            createAccountSubmit.textContent =
-                "Create Account 💌";
-
-        }
-
-    }
-);
-
-
-// =========================
-// LOGIN FORM
-// SUPABASE
-// =========================
-
-loginForm.addEventListener(
-    "submit",
-    async function (event) {
-
-        event.preventDefault();
-
-        initAudio();
-
-        playClickSound();
-
-        loginSubmit.disabled = true;
-
-        loginSubmit.textContent =
-            "Logging In...";
-
-        loginStatus.textContent = "";
-
-        const email =
-            loginEmail.value.trim();
-
-        const password =
-            loginPassword.value;
-
-        if (!supabaseClient) {
-
-            loginStatus.textContent =
-                "Supabase could not load. Please refresh the page.";
-
-            loginSubmit.disabled =
-                false;
-
-            loginSubmit.textContent =
-                "Log In 💌";
-
-            return;
-
-        }
-
-        try {
-
-            const {
-                data,
-                error
-            } =
-                await supabaseClient.auth.signInWithPassword({
-                    email: email,
-                    password: password
-                });
-
-            if (error) {
-                throw error;
-            }
-
-            loginStatus.textContent =
-                "Logged in! Welcome back 💌";
-
-            loginForm.reset();
-
-            loginSubmit.textContent =
-                "Logged In 💌";
-
-            setTimeout(
-                function () {
-
-                    loginScreen.classList.add(
-                        "fade-out"
-                    );
-
-                    setTimeout(
-                        function () {
-
-                            loginScreen.classList.add(
-                                "hidden"
-                            );
-
-                            loginScreen.classList.remove(
-                                "fade-out"
-                            );
-
-                            intro.classList.remove(
-                                "hidden"
-                            );
-
-                            intro.classList.add(
-                                "fade-in"
-                            );
-
-                        },
-                        500
-                    );
-
-                },
-                700
-            );
-
-        } catch (error) {
-
-            console.error(error);
-
-            loginStatus.textContent =
-                error.message ||
-                "Login failed. Check your email and password.";
-
-            loginSubmit.disabled =
-                false;
-
-            loginSubmit.textContent =
-                "Log In 💌";
-
-        }
-
-    }
-);
-
-
-// =========================
-// INTRO → LETTER
-// =========================
-
-openButton.addEventListener(
-    "click",
-    function () {
-
-        initAudio();
-
-        playClickSound();
-
-        intro.classList.add("fade-out");
-
-        setTimeout(
-            function () {
-
-                intro.classList.add("hidden");
-
-                intro.classList.remove("fade-out");
-
-                letter.classList.remove("hidden");
-
-                letter.classList.add("fade-in");
-
-            },
-            500
-        );
-
-    }
-);
-
-
-// =========================
-// OPEN ENVELOPE
-// =========================
-
-envelope.addEventListener(
-    "click",
-    function () {
-
-        initAudio();
-
-        if (
-            envelope.classList.contains("open")
-        ) {
-            return;
-        }
-
-        envelope.classList.add("open");
-
-        letter.classList.add("opened");
-
-        playPaperSound();
-
-    }
-);
-
-
-// =========================
-// LETTER → QUESTION
-// =========================
-
-continueButton.addEventListener(
-    "click",
-    function () {
-
-        initAudio();
-
-        playClickSound();
-
-        letter.classList.add("fade-out");
-
-        setTimeout(
-            function () {
-
-                letter.classList.add("hidden");
-
-                letter.classList.remove("fade-out");
-
-                question.classList.remove("hidden");
-
-                question.classList.add("fade-in");
-
-            },
-            500
-        );
-
-    }
-);
-
-
-// =========================
-// QUESTION → LETTER
-// =========================
-
-previousButton.addEventListener(
-    "click",
-    function () {
-
-        initAudio();
-
-        playClickSound();
-
-        question.classList.add("fade-out");
-
-        setTimeout(
-            function () {
-
-                question.classList.add("hidden");
-
-                question.classList.remove("fade-out");
-
-                letter.classList.remove("hidden");
-
-                letter.classList.remove("fade-out");
-
-                letter.classList.add("fade-in");
-
-            },
-            500
-        );
-
-    }
-);
-
-
-// =========================
-// YES
-// =========================
-
-yesButton.addEventListener(
-    "click",
-    function () {
-
-        initAudio();
-
-        playClickSound();
-
-        question.classList.add("fade-out");
-
-        setTimeout(
-            function () {
-
-                question.classList.add("hidden");
-
-                yesResponse.classList.remove("hidden");
-
-                yesResponse.classList.add("fade-in");
-
-                updateSubmitButton(
-                    yesName,
-                    yesReason,
-                    yesSubmit,
-                    yesSkip
-                );
-
-            },
-            500
-        );
-
-    }
-);
-
-
-// =========================
-// NO
-// =========================
-
-noButton.addEventListener(
-    "click",
-    function () {
-
-        initAudio();
-
-        playClickSound();
-
-        question.classList.add("fade-out");
-
-        setTimeout(
-            function () {
-
-                question.classList.add("hidden");
-
-                noResponse.classList.remove("hidden");
-
-                noResponse.classList.add("fade-in");
-
-                updateSubmitButton(
-                    noName,
-                    noReason,
-                    noSubmit,
-                    noSkip
-                );
-
-            },
-            500
-        );
-
-    }
-);
-
-
-// =========================
-// RESPONSE → QUESTION
-// =========================
-
-function goBackToQuestion(responseScreen) {
-
-    initAudio();
-
-    playClickSound();
-
-    responseScreen.classList.add("fade-out");
-
-    setTimeout(
-        function () {
-
-            responseScreen.classList.add("hidden");
-
-            responseScreen.classList.remove("fade-out");
-
-            question.classList.remove("hidden");
-
-            question.classList.add("fade-in");
-
-        },
-        500
-    );
-
-}
-
-
-yesBack.addEventListener(
-    "click",
-    function () {
-
-        goBackToQuestion(yesResponse);
-
-    }
-);
-
-
-noBack.addEventListener(
-    "click",
-    function () {
-
-        goBackToQuestion(noResponse);
-
-    }
-);
-
-
-// =========================
-// SHOW FINISH SCREEN
-// =========================
-
-function showFinishScreen() {
-
-    yesResponse.classList.add("fade-out");
-
-    noResponse.classList.add("fade-out");
-
-    setTimeout(
-        function () {
-
-            yesResponse.classList.add("hidden");
-
-            noResponse.classList.add("hidden");
-
-            finish.classList.remove("hidden");
-
-            finish.classList.add("fade-in");
-
-            playFinishSound();
-
-        },
-        500
-    );
-
-}
-
-
-// =========================
-// YES FORM SUBMIT
-// =========================
-
-yesForm.addEventListener(
-    "submit",
-    async function (event) {
-
-        event.preventDefault();
-
-        initAudio();
-
-        playSendSound();
-
-        yesSubmit.disabled = true;
-
-        yesSkip.disabled = true;
-
-        yesSubmit.textContent =
-            "Sending... 💌";
-
-        yesStatus.textContent = "";
-
-        const formData =
-            new FormData(yesForm);
-
-        try {
-
-            const response =
-                await fetch(
-                    yesForm.action,
-                    {
-                        method: "POST",
-
-                        body: formData,
-
-                        headers: {
-                            "Accept":
-                                "application/json"
-                        }
-                    }
-                );
-
-            if (response.ok) {
-
-                yesStatus.textContent =
-                    "Sent! 💗 Thank you for being honest.";
-
-                yesForm.reset();
-
-                yesSubmit.disabled = true;
-
-                yesSkip.disabled = true;
-
-                yesSubmit.textContent =
-                    "Sent 💌";
-
-                setTimeout(
-                    showFinishScreen,
-                    1000
-                );
-
-            } else {
-
-                yesStatus.textContent =
-                    "Something went wrong. Try again 😭";
-
-                updateSubmitButton(
-                    yesName,
-                    yesReason,
-                    yesSubmit,
-                    yesSkip
-                );
-
-            }
-
-        } catch (error) {
-
-            yesStatus.textContent =
-                "Couldn't send it. Check your internet connection.";
-
-            updateSubmitButton(
-                yesName,
-                yesReason,
-                yesSubmit,
-                yesSkip
-            );
-
-        }
-
-    }
-);
-
-
-// =========================
-// NO FORM SUBMIT
-// =========================
-
-noForm.addEventListener(
-    "submit",
-    async function (event) {
-
-        event.preventDefault();
-
-        initAudio();
-
-        playSendSound();
-
-        noSubmit.disabled = true;
-
-        noSkip.disabled = true;
-
-        noSubmit.textContent =
-            "Sending... 💌";
-
-        noStatus.textContent = "";
-
-        const formData =
-            new FormData(noForm);
-
-        try {
-
-            const response =
-                await fetch(
-                    noForm.action,
-                    {
-                        method: "POST",
-
-                        body: formData,
-
-                        headers: {
-                            "Accept":
-                                "application/json"
-                        }
-                    }
-                );
-
-            if (response.ok) {
-
-                noStatus.textContent =
-                    "Sent. Thank you for being honest. 💗";
-
-                noForm.reset();
-
-                noSubmit.disabled = true;
-
-                noSkip.disabled = true;
-
-                noSubmit.textContent =
-                    "Sent 💌";
-
-                setTimeout(
-                    showFinishScreen,
-                    1000
-                );
-
-            } else {
-
-                noStatus.textContent =
-                    "Something went wrong. Try again 😭";
-
-                updateSubmitButton(
-                    noName,
-                    noReason,
-                    noSubmit,
-                    noSkip
-                );
-
-            }
-
-        } catch (error) {
-
-            noStatus.textContent =
-                "Couldn't send it. Check your internet connection.";
-
-            updateSubmitButton(
-                noName,
-                noReason,
-                noSubmit,
-                noSkip
-            );
-
-        }
-
-    }
-);
-
-
-// =========================
-// SKIP YES
-// =========================
-
-yesSkip.addEventListener(
-    "click",
-    async function () {
-
-        initAudio();
-
-        playClickSound();
-
-        yesSkip.disabled = true;
-
-        yesSubmit.disabled = true;
-
-        yesSkip.textContent =
-            "Saving...";
-
-        const formData =
-            new FormData();
-
-        formData.append(
-            "response",
-            "YES 💕"
-        );
-
-        formData.append(
-            "name",
-            ""
-        );
-
-        formData.append(
-            "reason",
-            ""
-        );
-
-        try {
-
-            const response =
-                await fetch(
-                    yesForm.action,
-                    {
-                        method: "POST",
-
-                        body: formData,
-
-                        headers: {
-                            "Accept":
-                                "application/json"
-                        }
-                    }
-                );
-
-            if (response.ok) {
-
-                showFinishScreen();
-
-            } else {
-
-                yesSkip.disabled = false;
-
-                updateSubmitButton(
-                    yesName,
-                    yesReason,
-                    yesSubmit,
-                    yesSkip
-                );
-
-                yesSkip.textContent =
-                    "Skip →";
-
-            }
-
-        } catch (error) {
-
-            yesSkip.disabled = false;
-
-            updateSubmitButton(
-                yesName,
-                yesReason,
-                yesSubmit,
-                yesSkip
-            );
-
-            yesSkip.textContent =
-                "Skip →";
-
-        }
-
-    }
-);
-
-
-// =========================
-// SKIP NO
-// =========================
-
-noSkip.addEventListener(
-    "click",
-    async function () {
-
-        initAudio();
-
-        playClickSound();
-
-        noSkip.disabled = true;
-
-        noSubmit.disabled = true;
-
-        noSkip.textContent =
-            "Saving...";
-
-        const formData =
-            new FormData();
-
-        formData.append(
-            "response",
-            "NO 🥲"
-        );
-
-        formData.append(
-            "name",
-            ""
-        );
-
-        formData.append(
-            "reason",
-            ""
-        );
-
-        try {
-
-            const response =
-                await fetch(
-                    noForm.action,
-                    {
-                        method: "POST",
-
-                        body: formData,
-
-                        headers: {
-                            "Accept":
-                                "application/json"
-                        }
-                    }
-                );
-
-            if (response.ok) {
-
-                showFinishScreen();
-
-            } else {
-
-                noSkip.disabled = false;
-
-                updateSubmitButton(
-                    noName,
-                    noReason,
-                    noSubmit,
-                    noSkip
-                );
-
-                noSkip.textContent =
-                    "Skip →";
-
-            }
-
-        } catch (error) {
-
-            noSkip.disabled = false;
-
-            updateSubmitButton(
-                noName,
-                noReason,
-                noSubmit,
-                noSkip
-            );
-
-            noSkip.textContent =
-                "Skip →";
-
-        }
-
-    }
-);
-
-
-// =========================
-// SEND + SKIP BUTTON STATE
-// =========================
-
-function updateSubmitButton(
-    nameInput,
-    textarea,
-    submitButton,
-    skipButton
-) {
-
-    const hasName =
-        nameInput.value.trim().length > 0;
-
-    const hasText =
-        textarea.value.trim().length > 0;
-
-    submitButton.disabled =
-        !(hasName && hasText);
-
-    skipButton.disabled =
-        hasName || hasText;
-
-}
-
-
-// =========================
-// TYPEWRITER + DELETE SOUND
-// =========================
-
-let lastTypeSoundTime = 0;
-
-
-function handleTyping(event) {
-
-    const now = Date.now();
-
-
-    // =========================
-    // DELETE / BACKSPACE
-    // =========================
-
-    if (
-        event.inputType &&
-        event.inputType.startsWith("delete")
-    ) {
-
-        if (
-            now - lastTypeSoundTime >= 35
-        ) {
-
-            lastTypeSoundTime = now;
-
-            playDeleteSound();
-
-        }
-
-    }
-
-
-    // =========================
-    // NORMAL TYPING
-    // =========================
-
-    else if (
-        now - lastTypeSoundTime >= 35 &&
-        event.data
-    ) {
-
-        lastTypeSoundTime = now;
-
-        playTypewriterSound();
-
-    }
-
-
-    // =========================
-    // CREATE ACCOUNT INPUTS
-    // =========================
-
-    if (
-        event.target === createUsername ||
-        event.target === createEmail ||
-        event.target === createPassword
-    ) {
-
-        return;
-
-    }
-
-
-    // =========================
-    // LOGIN INPUTS
-    // =========================
-
-    if (
-        event.target === loginEmail ||
-        event.target === loginPassword
-    ) {
-
-        return;
-
-    }
-
-
-    // =========================
-    // YES NAME
-    // =========================
-
-    if (
-        event.target === yesName
-    ) {
-
-        updateSubmitButton(
-            yesName,
-            yesReason,
-            yesSubmit,
-            yesSkip
-        );
-
-    }
-
-
-    // =========================
-    // YES TEXTAREA
-    // =========================
-
-    if (
-        event.target === yesReason
-    ) {
-
-        updateSubmitButton(
-            yesName,
-            yesReason,
-            yesSubmit,
-            yesSkip
-        );
-
-    }
-
-
-    // =========================
-    // NO NAME
-    // =========================
-
-    if (
-        event.target === noName
-    ) {
-
-        updateSubmitButton(
-            noName,
-            noReason,
-            noSubmit,
-            noSkip
-        );
-
-    }
-
-
-    // =========================
-    // NO TEXTAREA
-    // =========================
-
-    if (
-        event.target === noReason
-    ) {
-
-        updateSubmitButton(
-            noName,
-            noReason,
-            noSubmit,
-            noSkip
-        );
-
-    }
-
-}
-
-
-// =========================
-// TEXT INPUT LISTENERS
-// =========================
-
-createUsername.addEventListener(
-    "input",
-    handleTyping
-);
-
-createEmail.addEventListener(
-    "input",
-    handleTyping
-);
-
-createPassword.addEventListener(
-    "input",
-    handleTyping
-);
-
-loginEmail.addEventListener(
-    "input",
-    handleTyping
-);
-
-loginPassword.addEventListener(
-    "input",
-    handleTyping
-);
-
-yesName.addEventListener(
-    "input",
-    handleTyping
-);
-
-yesReason.addEventListener(
-    "input",
-    handleTyping
-);
-
-noName.addEventListener(
-    "input",
-    handleTyping
-);
-
-noReason.addEventListener(
-    "input",
-    handleTyping
-);
-
-
-// =========================
-// INITIAL BUTTON STATE
-// =========================
-
-updateSubmitButton(
-    yesName,
-    yesReason,
-    yesSubmit,
-    yesSkip
-);
-
-updateSubmitButton(
-    noName,
-    noReason,
-    noSubmit,
-    noSkip
-);
-
-
-// =========================
-// INITIALIZE AUDIO
-// ON BUTTON CLICK
-// =========================
-
-document.querySelectorAll("button").forEach(
-    function (button) {
-
-        button.addEventListener(
-            "click",
-            function () {
-
-                initAudio();
-
-            }
-        );
-
-    }
-);
-
-
-// =========================
-// REMEMBER LOGIN SESSION
-// =========================
-
-async function checkExistingSession() {
-
-    if (!supabaseClient) {
-        return;
-    }
-
-    const {
-        data: { session }
-    } =
-        await supabaseClient.auth.getSession();
-
-    if (
-        session &&
-        session.user
-    ) {
-
-        // For now, automatically continue
-        // to the intro when a saved session exists.
-
-        accountHome.classList.add("hidden");
-
-        intro.classList.remove("hidden");
-
-    }
-
-}
-
-checkExistingSession();
+</html>
