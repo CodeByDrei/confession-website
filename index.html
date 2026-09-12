@@ -5,14 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>For You</title>
+    <title>Confessions 💌</title>
 
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <!-- ACCOUNT HOME -->
+    <!-- =========================
+         ACCOUNT HOME
+    ========================= -->
+
     <main class="container" id="accountHome">
 
         <h1>Confessions 💌</h1>
@@ -45,8 +48,14 @@
     </main>
 
 
-    <!-- CREATE ACCOUNT -->
-    <main class="container hidden" id="createAccountScreen">
+    <!-- =========================
+         CREATE ACCOUNT
+    ========================= -->
+
+    <main
+        class="container hidden"
+        id="createAccountScreen"
+    >
 
         <h1>Create Account 💌</h1>
 
@@ -105,8 +114,14 @@
     </main>
 
 
-    <!-- LOG IN -->
-    <main class="container hidden" id="loginScreen">
+    <!-- =========================
+         LOGIN
+    ========================= -->
+
+    <main
+        class="container hidden"
+        id="loginScreen"
+    >
 
         <h1>Welcome Back 💌</h1>
 
@@ -157,315 +172,699 @@
     </main>
 
 
-    <!-- INTRO -->
-    <main class="container hidden" id="intro">
+    <!-- =========================
+         MAIN HOME
+    ========================= -->
 
-        <h1>Hey...</h1>
+    <main
+        class="home-screen hidden"
+        id="homeScreen"
+    >
 
-        <p>I made something for you.</p>
+        <!-- MENU BUTTON -->
 
-        <button id="openButton">
-            Open
+        <button
+            class="home-icon-button menu-button"
+            id="menuButton"
+            aria-label="Open menu"
+        >
+            ☰
+        </button>
+
+
+        <!-- MAIL BUTTON -->
+
+        <button
+            class="home-icon-button mail-button"
+            id="mailButton"
+            aria-label="Open inbox"
+        >
+
+            📬
+
+            <span
+                class="notification-badge hidden"
+                id="mailBadge"
+            >
+                0
+            </span>
+
+        </button>
+
+
+        <!-- HOME CONTENT -->
+
+        <div class="home-content">
+
+            <div class="home-logo">
+                💌
+            </div>
+
+            <h1>
+                Confessions
+            </h1>
+
+            <p id="homeWelcome">
+                Welcome back.
+            </p>
+
+            <button
+                class="send-confession-button"
+                id="sendConfessionButton"
+            >
+
+                <span>
+                    💌
+                </span>
+
+                <strong>
+                    Send a Confession
+                </strong>
+
+                <small>
+                    Write something from the heart.
+                </small>
+
+            </button>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================
+         BACKGROUND OVERLAY
+    ========================= -->
+
+    <div
+        class="overlay hidden"
+        id="overlay"
+    ></div>
+
+
+    <!-- =========================
+         LEFT MENU
+    ========================= -->
+
+    <aside
+        class="side-menu"
+        id="sideMenu"
+    >
+
+        <div class="side-menu-header">
+
+            <h2>
+                Quick Access
+            </h2>
+
+            <button
+                class="close-button"
+                id="closeMenuButton"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="side-menu-user">
+
+            <div class="side-user-icon">
+                👤
+            </div>
+
+            <div>
+
+                <strong id="sideMenuUsername">
+                    @username
+                </strong>
+
+                <span>
+                    Your account
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <button
+            class="side-menu-item"
+            id="accountInfoButton"
+        >
+
+            <span>
+                👤
+            </span>
+
+            <div>
+
+                <strong>
+                    Account Information
+                </strong>
+
+                <small>
+                    Username and email
+                </small>
+
+            </div>
+
+        </button>
+
+
+        <button
+            class="side-menu-item"
+            id="settingsButton"
+        >
+
+            <span>
+                ⚙️
+            </span>
+
+            <div>
+
+                <strong>
+                    Settings
+                </strong>
+
+                <small>
+                    Manage your account
+                </small>
+
+            </div>
+
+        </button>
+
+
+        <div class="side-menu-spacer"></div>
+
+
+        <button
+            class="side-menu-item logout-item"
+            id="logoutButton"
+        >
+
+            <span>
+                🚪
+            </span>
+
+            <div>
+
+                <strong>
+                    Log Out
+                </strong>
+
+                <small>
+                    Sign out of your account
+                </small>
+
+            </div>
+
+        </button>
+
+    </aside>
+
+
+    <!-- =========================
+         ACCOUNT INFORMATION
+    ========================= -->
+
+    <section
+        class="popup-panel hidden"
+        id="accountInfoPanel"
+    >
+
+        <div class="popup-header">
+
+            <h2>
+                Account Information
+            </h2>
+
+            <button
+                class="close-button"
+                id="closeAccountInfo"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="account-details">
+
+            <div class="account-detail">
+
+                <span>
+                    Username
+                </span>
+
+                <strong id="accountInfoUsername">
+                    @username
+                </strong>
+
+            </div>
+
+
+            <div class="account-detail">
+
+                <span>
+                    Email
+                </span>
+
+                <strong id="accountInfoEmail">
+                    email@example.com
+                </strong>
+
+            </div>
+
+
+            <div class="account-detail">
+
+                <span>
+                    Password
+                </span>
+
+                <strong>
+                    ••••••••••••
+                </strong>
+
+                <small>
+                    Your password is securely managed by your account provider.
+                </small>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         SETTINGS
+    ========================= -->
+
+    <section
+        class="popup-panel hidden"
+        id="settingsPanel"
+    >
+
+        <div class="popup-header">
+
+            <h2>
+                Settings ⚙️
+            </h2>
+
+            <button
+                class="close-button"
+                id="closeSettings"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="settings-list">
+
+            <div class="setting-row">
+
+                <div>
+
+                    <strong>
+                        Account
+                    </strong>
+
+                    <small>
+                        Manage your account information.
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="setting-row">
+
+                <div>
+
+                    <strong>
+                        Notifications
+                    </strong>
+
+                    <small>
+                        Confession notifications will appear in your inbox.
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="setting-row">
+
+                <div>
+
+                    <strong>
+                        Privacy
+                    </strong>
+
+                    <small>
+                        More privacy controls coming soon.
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         INBOX POPUP
+    ========================= -->
+
+    <section
+        class="mail-popup hidden"
+        id="mailPopup"
+    >
+
+        <div class="mail-popup-header">
+
+            <div>
+
+                <h2>
+                    Your Confessions
+                </h2>
+
+                <p>
+                    Letters sent to you.
+                </p>
+
+            </div>
+
+            <button
+                class="close-button"
+                id="closeMailButton"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div
+            class="inbox-list"
+            id="inboxList"
+        >
+
+            <div
+                class="empty-inbox"
+                id="emptyInbox"
+            >
+
+                <div>
+                    📭
+                </div>
+
+                <h3>
+                    No confessions yet
+                </h3>
+
+                <p>
+                    When someone sends you a confession, it'll appear here.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         LETTER VIEWER
+    ========================= -->
+
+    <section
+        class="letter-viewer hidden"
+        id="letterViewer"
+    >
+
+        <div class="letter-viewer-paper">
+
+            <button
+                class="letter-close-button"
+                id="closeLetterViewer"
+            >
+                ×
+            </button>
+
+            <p class="letter-label">
+                SOMEONE SENT YOU A CONFESSION
+            </p>
+
+            <h1>
+                💌 A Letter For You
+            </h1>
+
+            <div
+                class="received-letter"
+                id="receivedLetter"
+            >
+                This is where the confession will appear.
+            </div>
+
+            <div class="letter-signature">
+
+                — Someone who wanted to tell you something
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         SEND CONFESSION
+    ========================= -->
+
+    <main
+        class="writing-screen hidden"
+        id="writingScreen"
+    >
+
+        <button
+            class="writing-back-button"
+            id="writingBackButton"
+        >
+            ← Go Back
+        </button>
+
+
+        <div class="writing-header">
+
+            <span>
+                CONFESSIONS
+            </span>
+
+            <h1>
+                Write Your Letter
+            </h1>
+
+            <p>
+                Take your time. Say what you really want to say.
+            </p>
+
+        </div>
+
+
+        <div class="writing-paper">
+
+            <div class="paper-top">
+
+                <span>
+                    💌
+                </span>
+
+                <span>
+                    A LETTER FROM THE HEART
+                </span>
+
+            </div>
+
+
+            <textarea
+                id="confessionMessage"
+                placeholder="Dear someone...
+
+Start writing your confession here..."
+            ></textarea>
+
+
+            <div class="paper-footer">
+
+                <span>
+                    Your words matter.
+                </span>
+
+                <span id="letterCharacterCount">
+                    0 characters
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <button
+            class="next-button"
+            id="nextDetailsButton"
+        >
+            Next →
         </button>
 
     </main>
 
 
-    <!-- LETTER -->
-    <section class="letter hidden" id="letter">
+    <!-- =========================
+         CONFESSION DETAILS
+    ========================= -->
 
-        <div class="message">
-            <p>I've been wanting to tell you something...</p>
-        </div>
-
-        <div class="envelope" id="envelope">
-
-            <div class="envelope-top"></div>
-
-            <div class="envelope-body">
-                <span>💌</span>
-                <p>Click me</p>
-            </div>
-
-            <div class="paper">
-
-                <h2>For You</h2>
-
-                <p>
-                    There's something I've been wanting to say...
-                </p>
-
-                <p>
-                    Dear Kristina,
-
-I honestly don't know how to start this. I've thought for a long time about what I want to say, but my mind's still blank. So I'm typing this straight from my heart or whatever I could think of while typing. Now let's continue, I'm gonna be straightforward — I like you. Yes I do like you, and I did since Grade 7.
-
-I don't know how or when I started to like you. It kind of just happened. I realized I liked you when I kept seeing you every day.
-
-Let's go back to today. My feelings grew each day, until I finally gained enough courage to confess to you, but not in person (I know I'm a wiener) but I made a website so I could tell you how I felt.
-
-I just wanted to tell you so I can finally get this pressure off my chest.
-
-There's a lot of things about you that I like, like the way you talk or how you're almost nice to everyone.
-
-Even though we've been classmates for 2 years, I still fully don't know you or what you like. And there's a part of me that wanna change that, or put it simply I fully wanna know what you're like.
-
-There's also a part of me that get nervous when I talk to you, I feel like it's pretty obvious.
-
-I didn't really get to talk to you over the 2 years we've been classmates, and I know that's my fault since I was nervous to talk to you. But seeing you every day was fun. I liked how you were always cheerful.
-
-I decided to confess to you now because I don't know what would happen if I kept these feelings in longer.
-
-Lastly, I'm fully ready for whatever answer you give me. But I do hope we continue to be friends if you say No. I don't want this to make things awkward between us. I just wanted to finally be honest with you about how I feel.
-
-No matter what your answer is, I'm glad I finally got the courage to tell you.
-
-Thank you for reading this long letter.
-
-— Andrei
-                </p>
-
-            </div>
-
-        </div>
-
-        <button
-            class="continue-button"
-            id="continueButton"
-        >
-            Continue →
-        </button>
-
-    </section>
-
-
-    <!-- QUESTION -->
-    <section
-        class="question hidden"
-        id="question"
+    <main
+        class="details-screen hidden"
+        id="detailsScreen"
     >
 
-        <div class="question-box">
-
-            <h1>
-                Do you like me back? ❤️
-            </h1>
-
-            <div class="answer-buttons">
-
-                <button id="yesButton">
-                    Yes ❤️
-                </button>
-
-                <button id="noButton">
-                    No 🥲
-                </button>
-
-            </div>
-
-        </div>
-
         <button
-            class="previous-button"
-            id="previousButton"
+            class="writing-back-button"
+            id="detailsBackButton"
         >
-            ← Previous
+            ← Go Back
         </button>
 
-    </section>
 
+        <div class="details-box">
 
-    <!-- YES RESPONSE -->
-    <section
-        class="response hidden"
-        id="yesResponse"
-    >
-
-        <div class="response-box">
+            <div class="details-icon">
+                ✉️
+            </div>
 
             <h1>
-                YAYY!! 🥹❤️
+                Almost there.
             </h1>
 
             <p>
-                Do you mind telling me why you like me back?
+                Tell us where this confession should go.
             </p>
 
-            <form
-                id="yesForm"
-                action="https://formspree.io/f/mljepglw"
-                method="POST"
-            >
 
-                <input
-                    type="hidden"
-                    name="response"
-                    value="YES 💕"
-                >
+            <form id="confessionDetailsForm">
+
+                <label for="recipientUsername">
+                    Who are you sending it to?
+                </label>
 
                 <input
                     type="text"
-                    id="yesName"
-                    name="name"
-                    placeholder="Your name..."
-                    autocomplete="name"
+                    id="recipientUsername"
+                    placeholder="@username"
+                    autocomplete="off"
+                    required
                 >
 
-                <textarea
-                    id="yesReason"
-                    name="reason"
-                    placeholder="Tell me why... "
-                ></textarea>
 
-                <div class="form-buttons">
+                <label for="senderDisplayName">
+                    How should they see you?
+                </label>
 
-                    <button
-                        type="submit"
-                        id="yesSubmit"
-                        disabled
+                <input
+                    type="text"
+                    id="senderDisplayName"
+                    placeholder="Your name or Anonymous"
+                    autocomplete="off"
+                    required
+                >
+
+
+                <label class="checkbox-row">
+
+                    <input
+                        type="checkbox"
+                        id="anonymousCheckbox"
                     >
-                        Send 💌
-                    </button>
 
-                    <button
-                        type="button"
-                        class="skip-button"
-                        id="yesSkip"
-                    >
-                        Skip →
-                    </button>
+                    <span>
+                        Send anonymously
+                    </span>
 
-                </div>
+                </label>
+
 
                 <button
-                    type="button"
-                    class="response-back-button"
-                    id="yesBack"
+                    type="submit"
+                    id="sendConfessionSubmit"
                 >
-                    ← Back
+                    Send Confession 💌
                 </button>
 
             </form>
 
+
             <p
                 class="form-status"
-                id="yesStatus"
+                id="confessionStatus"
             ></p>
 
         </div>
 
-    </section>
+    </main>
 
 
-    <!-- NO RESPONSE -->
-    <section
-        class="response hidden"
-        id="noResponse"
+    <!-- =========================
+         GUEST NOTICE
+    ========================= -->
+
+    <main
+        class="container hidden"
+        id="guestScreen"
     >
 
-        <div class="response-box">
+        <h1>
+            Guest Mode 💌
+        </h1>
 
-            <h1>
-                Awww man 😭
-            </h1>
+        <p>
+            Guest mode is no longer connected to a personal confession.
+        </p>
 
-            <p>
-                That's okay... but do you mind telling me why?
-            </p>
+        <p>
+            Create an account to send and receive letters.
+        </p>
 
-            <form
-                id="noForm"
-                action="https://formspree.io/f/mljepglw"
-                method="POST"
-            >
+        <button id="guestCreateAccountButton">
+            Create Account
+        </button>
 
-                <input
-                    type="hidden"
-                    name="response"
-                    value="NO 🥲"
-                >
+        <button
+            class="response-back-button"
+            id="guestBackButton"
+        >
+            ← Back
+        </button>
 
-                <input
-                    type="text"
-                    id="noName"
-                    name="name"
-                    placeholder="Your name..."
-                    autocomplete="name"
-                >
-
-                <textarea
-                    id="noReason"
-                    name="reason"
-                    placeholder="Be honest with me... 🥲"
-                ></textarea>
-
-                <div class="form-buttons">
-
-                    <button
-                        type="submit"
-                        id="noSubmit"
-                        disabled
-                    >
-                        Send 💌
-                    </button>
-
-                    <button
-                        type="button"
-                        class="skip-button"
-                        id="noSkip"
-                    >
-                        Skip →
-                    </button>
-
-                </div>
-
-                <button
-                    type="button"
-                    class="response-back-button"
-                    id="noBack"
-                >
-                    ← Back
-                </button>
-
-            </form>
-
-            <p
-                class="form-status"
-                id="noStatus"
-            ></p>
-
-        </div>
-
-    </section>
+    </main>
 
 
-    <!-- FINISH -->
-    <section
-        class="finish hidden"
-        id="finish"
-    >
+    <!-- =========================
+         SUPABASE
+    ========================= -->
 
-        <div class="finish-box">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-            <h1>
-                Thank you 💌
-            </h1>
-
-            <p>
-                That's all I wanted to ask.
-            </p>
-
-            <p>
-                Take care ❤️
-            </p>
-
-        </div>
-
-    </section>
-
-
-   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="script.js"></script>
+    <script src="script.js"></script>
 
 </body>
 
