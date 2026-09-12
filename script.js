@@ -1,871 +1,1292 @@
-<!DOCTYPE html>
-<html lang="en">
+// ============================================================
+// SUPABASE
+// ============================================================
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+const SUPABASE_URL =
+    "https://fkcqiruudgrkvossdjtr.supabase.co";
 
-    <title>Confessions 💌</title>
+const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_proRa69j5ixAYcqRjJOFOw_SzRjB15q";
 
-    <link rel="stylesheet" href="style.css">
-</head>
-
-<body>
-
-    <!-- =========================
-         ACCOUNT HOME
-    ========================= -->
+let supabaseClient = null;
 
-    <main class="container" id="accountHome">
+if (
+    window.supabase &&
+    typeof window.supabase.createClient === "function"
+) {
+    supabaseClient =
+        window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_PUBLISHABLE_KEY
+        );
+}
 
-        <h1>Confessions 💌</h1>
 
-        <p>Send and receive letters in a whole new way.</p>
+// ============================================================
+// ELEMENTS
+// ============================================================
 
-        <div
-            style="
-                display: flex;
-                flex-direction: column;
-                gap: 12px;
-                margin-top: 25px;
-            "
-        >
+// ACCOUNT HOME
+const accountHome =
+    document.getElementById("accountHome");
 
-            <button id="createAccountButton">
-                Create Account
-            </button>
+const createAccountButton =
+    document.getElementById("createAccountButton");
 
-            <button id="loginButton">
-                Log In
-            </button>
+const loginButton =
+    document.getElementById("loginButton");
 
-            <button id="guestButton">
-                Continue as Guest
-            </button>
+const guestButton =
+    document.getElementById("guestButton");
 
-        </div>
-
-    </main>
-
-
-    <!-- =========================
-         CREATE ACCOUNT
-    ========================= -->
-
-    <main
-        class="container hidden"
-        id="createAccountScreen"
-    >
-
-        <h1>Create Account 💌</h1>
-
-        <p>
-            Create your account to start sending and receiving confessions.
-        </p>
-
-        <form id="createAccountForm">
-
-            <input
-                type="text"
-                id="createUsername"
-                placeholder="Username..."
-                autocomplete="username"
-                required
-            >
-
-            <input
-                type="email"
-                id="createEmail"
-                placeholder="Email..."
-                autocomplete="email"
-                required
-            >
-
-            <input
-                type="password"
-                id="createPassword"
-                placeholder="Password..."
-                autocomplete="new-password"
-                required
-            >
-
-            <button
-                type="submit"
-                id="createAccountSubmit"
-            >
-                Create Account 💌
-            </button>
-
-        </form>
-
-        <p
-            class="form-status"
-            id="createAccountStatus"
-        ></p>
-
-        <button
-            type="button"
-            class="response-back-button"
-            id="createAccountBack"
-        >
-            ← Back
-        </button>
-
-    </main>
-
-
-    <!-- =========================
-         LOGIN
-    ========================= -->
 
-    <main
-        class="container hidden"
-        id="loginScreen"
-    >
+// CREATE ACCOUNT
+const createAccountScreen =
+    document.getElementById("createAccountScreen");
 
-        <h1>Welcome Back 💌</h1>
+const createAccountForm =
+    document.getElementById("createAccountForm");
 
-        <p>
-            Log in to continue to your account.
-        </p>
+const createUsername =
+    document.getElementById("createUsername");
 
-        <form id="loginForm">
+const createEmail =
+    document.getElementById("createEmail");
 
-            <input
-                type="email"
-                id="loginEmail"
-                placeholder="Email..."
-                autocomplete="email"
-                required
-            >
+const createPassword =
+    document.getElementById("createPassword");
 
-            <input
-                type="password"
-                id="loginPassword"
-                placeholder="Password..."
-                autocomplete="current-password"
-                required
-            >
+const createAccountSubmit =
+    document.getElementById("createAccountSubmit");
 
-            <button
-                type="submit"
-                id="loginSubmit"
-            >
-                Log In 💌
-            </button>
+const createAccountStatus =
+    document.getElementById("createAccountStatus");
 
-        </form>
+const createAccountBack =
+    document.getElementById("createAccountBack");
 
-        <p
-            class="form-status"
-            id="loginStatus"
-        ></p>
 
-        <button
-            type="button"
-            class="response-back-button"
-            id="loginBack"
-        >
-            ← Back
-        </button>
+// LOGIN
+const loginScreen =
+    document.getElementById("loginScreen");
 
-    </main>
+const loginForm =
+    document.getElementById("loginForm");
 
+const loginEmail =
+    document.getElementById("loginEmail");
 
-    <!-- =========================
-         MAIN HOME
-    ========================= -->
+const loginPassword =
+    document.getElementById("loginPassword");
 
-    <main
-        class="home-screen hidden"
-        id="homeScreen"
-    >
+const loginSubmit =
+    document.getElementById("loginSubmit");
 
-        <!-- MENU BUTTON -->
+const loginStatus =
+    document.getElementById("loginStatus");
 
-        <button
-            class="home-icon-button menu-button"
-            id="menuButton"
-            aria-label="Open menu"
-        >
-            ☰
-        </button>
+const loginBack =
+    document.getElementById("loginBack");
 
 
-        <!-- MAIL BUTTON -->
+// HOME
+const homeScreen =
+    document.getElementById("homeScreen");
 
-        <button
-            class="home-icon-button mail-button"
-            id="mailButton"
-            aria-label="Open inbox"
-        >
+const menuButton =
+    document.getElementById("menuButton");
 
-            📬
+const mailButton =
+    document.getElementById("mailButton");
 
-            <span
-                class="notification-badge hidden"
-                id="mailBadge"
-            >
-                0
-            </span>
+const mailBadge =
+    document.getElementById("mailBadge");
 
-        </button>
+const homeWelcome =
+    document.getElementById("homeWelcome");
 
+const sendConfessionButton =
+    document.getElementById("sendConfessionButton");
 
-        <!-- HOME CONTENT -->
 
-        <div class="home-content">
+// OVERLAY
+const overlay =
+    document.getElementById("overlay");
 
-            <div class="home-logo">
-                💌
-            </div>
 
-            <h1>
-                Confessions
-            </h1>
+// SIDE MENU
+const sideMenu =
+    document.getElementById("sideMenu");
 
-            <p id="homeWelcome">
-                Welcome back.
-            </p>
+const closeMenuButton =
+    document.getElementById("closeMenuButton");
 
-            <button
-                class="send-confession-button"
-                id="sendConfessionButton"
-            >
+const sideMenuUsername =
+    document.getElementById("sideMenuUsername");
 
-                <span>
-                    💌
-                </span>
+const accountInfoButton =
+    document.getElementById("accountInfoButton");
 
-                <strong>
-                    Send a Confession
-                </strong>
+const settingsButton =
+    document.getElementById("settingsButton");
 
-                <small>
-                    Write something from the heart.
-                </small>
+const logoutButton =
+    document.getElementById("logoutButton");
 
-            </button>
 
-        </div>
+// ACCOUNT INFORMATION
+const accountInfoPanel =
+    document.getElementById("accountInfoPanel");
 
-    </main>
+const closeAccountInfo =
+    document.getElementById("closeAccountInfo");
 
+const accountInfoUsername =
+    document.getElementById("accountInfoUsername");
 
-    <!-- =========================
-         BACKGROUND OVERLAY
-    ========================= -->
+const accountInfoEmail =
+    document.getElementById("accountInfoEmail");
 
-    <div
-        class="overlay hidden"
-        id="overlay"
-    ></div>
 
+// SETTINGS
+const settingsPanel =
+    document.getElementById("settingsPanel");
 
-    <!-- =========================
-         LEFT MENU
-    ========================= -->
+const closeSettings =
+    document.getElementById("closeSettings");
 
-    <aside
-        class="side-menu"
-        id="sideMenu"
-    >
 
-        <div class="side-menu-header">
+// MAIL
+const mailPopup =
+    document.getElementById("mailPopup");
 
-            <h2>
-                Quick Access
-            </h2>
+const closeMailButton =
+    document.getElementById("closeMailButton");
 
-            <button
-                class="close-button"
-                id="closeMenuButton"
-            >
-                ×
-            </button>
+const inboxList =
+    document.getElementById("inboxList");
 
-        </div>
+const emptyInbox =
+    document.getElementById("emptyInbox");
 
 
-        <div class="side-menu-user">
+// LETTER VIEWER
+const letterViewer =
+    document.getElementById("letterViewer");
 
-            <div class="side-user-icon">
-                👤
-            </div>
+const closeLetterViewer =
+    document.getElementById("closeLetterViewer");
 
-            <div>
+const receivedLetter =
+    document.getElementById("receivedLetter");
 
-                <strong id="sideMenuUsername">
-                    @username
-                </strong>
 
-                <span>
-                    Your account
-                </span>
+// WRITING
+const writingScreen =
+    document.getElementById("writingScreen");
 
-            </div>
+const writingBackButton =
+    document.getElementById("writingBackButton");
 
-        </div>
+const confessionMessage =
+    document.getElementById("confessionMessage");
 
+const letterCharacterCount =
+    document.getElementById("letterCharacterCount");
 
-        <button
-            class="side-menu-item"
-            id="accountInfoButton"
-        >
+const nextDetailsButton =
+    document.getElementById("nextDetailsButton");
 
-            <span>
-                👤
-            </span>
 
-            <div>
+// DETAILS
+const detailsScreen =
+    document.getElementById("detailsScreen");
 
-                <strong>
-                    Account Information
-                </strong>
+const detailsBackButton =
+    document.getElementById("detailsBackButton");
 
-                <small>
-                    Username and email
-                </small>
+const confessionDetailsForm =
+    document.getElementById("confessionDetailsForm");
 
-            </div>
+const recipientUsername =
+    document.getElementById("recipientUsername");
 
-        </button>
+const senderDisplayName =
+    document.getElementById("senderDisplayName");
 
+const anonymousCheckbox =
+    document.getElementById("anonymousCheckbox");
 
-        <button
-            class="side-menu-item"
-            id="settingsButton"
-        >
+const sendConfessionSubmit =
+    document.getElementById("sendConfessionSubmit");
 
-            <span>
-                ⚙️
-            </span>
+const confessionStatus =
+    document.getElementById("confessionStatus");
 
-            <div>
 
-                <strong>
-                    Settings
-                </strong>
+// GUEST
+const guestScreen =
+    document.getElementById("guestScreen");
 
-                <small>
-                    Manage your account
-                </small>
+const guestCreateAccountButton =
+    document.getElementById("guestCreateAccountButton");
 
-            </div>
+const guestBackButton =
+    document.getElementById("guestBackButton");
 
-        </button>
 
+// ============================================================
+// CURRENT USER
+// ============================================================
 
-        <div class="side-menu-spacer"></div>
+let currentUser = null;
 
 
-        <button
-            class="side-menu-item logout-item"
-            id="logoutButton"
-        >
+// ============================================================
+// HELPER FUNCTIONS
+// ============================================================
 
-            <span>
-                🚪
-            </span>
+function hideAllMainScreens() {
 
-            <div>
+    accountHome.classList.add("hidden");
 
-                <strong>
-                    Log Out
-                </strong>
+    createAccountScreen.classList.add("hidden");
 
-                <small>
-                    Sign out of your account
-                </small>
+    loginScreen.classList.add("hidden");
 
-            </div>
+    homeScreen.classList.add("hidden");
 
-        </button>
+    guestScreen.classList.add("hidden");
 
-    </aside>
+    writingScreen.classList.add("hidden");
 
+    detailsScreen.classList.add("hidden");
 
-    <!-- =========================
-         ACCOUNT INFORMATION
-    ========================= -->
+}
 
-    <section
-        class="popup-panel hidden"
-        id="accountInfoPanel"
-    >
 
-        <div class="popup-header">
+function closeEverything() {
 
-            <h2>
-                Account Information
-            </h2>
+    sideMenu.classList.remove("visible");
 
-            <button
-                class="close-button"
-                id="closeAccountInfo"
-            >
-                ×
-            </button>
+    accountInfoPanel.classList.add("hidden");
 
-        </div>
+    settingsPanel.classList.add("hidden");
 
+    mailPopup.classList.add("hidden");
 
-        <div class="account-details">
+    letterViewer.classList.add("hidden");
 
-            <div class="account-detail">
+    overlay.classList.remove("visible");
 
-                <span>
-                    Username
-                </span>
+    overlay.classList.add("hidden");
 
-                <strong id="accountInfoUsername">
-                    @username
-                </strong>
+}
 
-            </div>
 
+function showAccountHome() {
 
-            <div class="account-detail">
+    closeEverything();
 
-                <span>
-                    Email
-                </span>
+    hideAllMainScreens();
 
-                <strong id="accountInfoEmail">
-                    email@example.com
-                </strong>
+    accountHome.classList.remove("hidden");
 
-            </div>
+}
 
 
-            <div class="account-detail">
+function showCreateAccount() {
 
-                <span>
-                    Password
-                </span>
+    closeEverything();
 
-                <strong>
-                    ••••••••••••
-                </strong>
+    hideAllMainScreens();
 
-                <small>
-                    Your password is securely managed by your account provider.
-                </small>
+    createAccountScreen.classList.remove("hidden");
 
-            </div>
+    createAccountStatus.textContent = "";
 
-        </div>
+}
 
-    </section>
 
+function showLogin() {
 
-    <!-- =========================
-         SETTINGS
-    ========================= -->
+    closeEverything();
 
-    <section
-        class="popup-panel hidden"
-        id="settingsPanel"
-    >
+    hideAllMainScreens();
 
-        <div class="popup-header">
+    loginScreen.classList.remove("hidden");
 
-            <h2>
-                Settings ⚙️
-            </h2>
+    loginStatus.textContent = "";
 
-            <button
-                class="close-button"
-                id="closeSettings"
-            >
-                ×
-            </button>
+}
 
-        </div>
 
+function showGuest() {
 
-        <div class="settings-list">
+    closeEverything();
 
-            <div class="setting-row">
+    hideAllMainScreens();
 
-                <div>
+    guestScreen.classList.remove("hidden");
 
-                    <strong>
-                        Account
-                    </strong>
+}
 
-                    <small>
-                        Manage your account information.
-                    </small>
 
-                </div>
+function getUsername(user) {
 
-            </div>
+    if (!user) {
+        return "there";
+    }
 
+    return (
+        user.user_metadata?.username ||
+        user.email?.split("@")[0] ||
+        "there"
+    );
 
-            <div class="setting-row">
+}
 
-                <div>
 
-                    <strong>
-                        Notifications
-                    </strong>
+function updateUserInformation(user) {
 
-                    <small>
-                        Confession notifications will appear in your inbox.
-                    </small>
+    if (!user) {
+        return;
+    }
 
-                </div>
+    const username =
+        getUsername(user);
 
-            </div>
+    const email =
+        user.email || "No email";
 
+    homeWelcome.textContent =
+        `Welcome back, ${username}.`;
 
-            <div class="setting-row">
+    sideMenuUsername.textContent =
+        `@${username}`;
 
-                <div>
+    accountInfoUsername.textContent =
+        `@${username}`;
 
-                    <strong>
-                        Privacy
-                    </strong>
+    accountInfoEmail.textContent =
+        email;
 
-                    <small>
-                        More privacy controls coming soon.
-                    </small>
+}
 
-                </div>
 
-            </div>
+function showHome(user) {
 
-        </div>
+    currentUser = user;
 
-    </section>
+    closeEverything();
 
+    hideAllMainScreens();
 
-    <!-- =========================
-         INBOX POPUP
-    ========================= -->
+    updateUserInformation(user);
 
-    <section
-        class="mail-popup hidden"
-        id="mailPopup"
-    >
+    homeScreen.classList.remove("hidden");
 
-        <div class="mail-popup-header">
+    // No real inbox database yet.
+    mailBadge.classList.add("hidden");
 
-            <div>
+}
 
-                <h2>
-                    Your Confessions
-                </h2>
 
-                <p>
-                    Letters sent to you.
-                </p>
+function openOverlay() {
 
-            </div>
+    overlay.classList.remove("hidden");
 
-            <button
-                class="close-button"
-                id="closeMailButton"
-            >
-                ×
-            </button>
+    // Small delay lets the CSS opacity transition work.
+    requestAnimationFrame(() => {
+        overlay.classList.add("visible");
+    });
 
-        </div>
+}
 
 
-        <div
-            class="inbox-list"
-            id="inboxList"
-        >
+function closeOverlay() {
 
-            <div
-                class="empty-inbox"
-                id="emptyInbox"
-            >
+    overlay.classList.remove("visible");
 
-                <div>
-                    📭
-                </div>
+    setTimeout(() => {
 
-                <h3>
-                    No confessions yet
-                </h3>
+        if (!overlay.classList.contains("visible")) {
+            overlay.classList.add("hidden");
+        }
 
-                <p>
-                    When someone sends you a confession, it'll appear here.
-                </p>
+    }, 300);
 
-            </div>
+}
 
-        </div>
 
-    </section>
+function openMenu() {
 
+    closeEverything();
 
-    <!-- =========================
-         LETTER VIEWER
-    ========================= -->
+    openOverlay();
 
-    <section
-        class="letter-viewer hidden"
-        id="letterViewer"
-    >
+    sideMenu.classList.add("visible");
 
-        <div class="letter-viewer-paper">
+}
 
-            <button
-                class="letter-close-button"
-                id="closeLetterViewer"
-            >
-                ×
-            </button>
 
-            <p class="letter-label">
-                SOMEONE SENT YOU A CONFESSION
-            </p>
+function closeMenu() {
 
-            <h1>
-                💌 A Letter For You
-            </h1>
+    sideMenu.classList.remove("visible");
 
-            <div
-                class="received-letter"
-                id="receivedLetter"
-            >
-                This is where the confession will appear.
-            </div>
+    closeOverlay();
 
-            <div class="letter-signature">
+}
 
-                — Someone who wanted to tell you something
 
-            </div>
+function resetConfessionForm() {
 
-        </div>
+    confessionMessage.value = "";
 
-    </section>
+    recipientUsername.value = "";
 
+    senderDisplayName.value = "";
 
-    <!-- =========================
-         SEND CONFESSION
-    ========================= -->
+    anonymousCheckbox.checked = false;
 
-    <main
-        class="writing-screen hidden"
-        id="writingScreen"
-    >
+    confessionStatus.textContent = "";
 
-        <button
-            class="writing-back-button"
-            id="writingBackButton"
-        >
-            ← Go Back
-        </button>
+    updateCharacterCount();
 
+}
 
-        <div class="writing-header">
 
-            <span>
-                CONFESSIONS
-            </span>
+function showWritingScreen() {
 
-            <h1>
-                Write Your Letter
-            </h1>
+    closeEverything();
 
-            <p>
-                Take your time. Say what you really want to say.
-            </p>
+    hideAllMainScreens();
 
-        </div>
+    resetConfessionForm();
 
+    writingScreen.classList.remove("hidden");
 
-        <div class="writing-paper">
+    updateCharacterCount();
 
-            <div class="paper-top">
+}
 
-                <span>
-                    💌
-                </span>
 
-                <span>
-                    A LETTER FROM THE HEART
-                </span>
+function showDetailsScreen() {
 
-            </div>
+    const message =
+        confessionMessage.value.trim();
 
+    if (!message) {
 
-            <textarea
-                id="confessionMessage"
-                placeholder="Dear someone...
+        confessionMessage.focus();
 
-Start writing your confession here..."
-            ></textarea>
+        return;
 
+    }
 
-            <div class="paper-footer">
+    closeEverything();
 
-                <span>
-                    Your words matter.
-                </span>
+    hideAllMainScreens();
 
-                <span id="letterCharacterCount">
-                    0 characters
-                </span>
+    detailsScreen.classList.remove("hidden");
 
-            </div>
+}
 
-        </div>
 
+function updateCharacterCount() {
 
-        <button
-            class="next-button"
-            id="nextDetailsButton"
-        >
-            Next →
-        </button>
+    const count =
+        confessionMessage.value.length;
 
-    </main>
+    letterCharacterCount.textContent =
+        `${count} characters`;
 
+}
 
-    <!-- =========================
-         CONFESSION DETAILS
-    ========================= -->
 
-    <main
-        class="details-screen hidden"
-        id="detailsScreen"
-    >
+// ============================================================
+// ACCOUNT NAVIGATION
+// ============================================================
 
-        <button
-            class="writing-back-button"
-            id="detailsBackButton"
-        >
-            ← Go Back
-        </button>
+createAccountButton.addEventListener(
+    "click",
+    () => {
 
+        showCreateAccount();
 
-        <div class="details-box">
+    }
+);
 
-            <div class="details-icon">
-                ✉️
-            </div>
 
-            <h1>
-                Almost there.
-            </h1>
+loginButton.addEventListener(
+    "click",
+    () => {
 
-            <p>
-                Tell us where this confession should go.
-            </p>
+        showLogin();
 
+    }
+);
 
-            <form id="confessionDetailsForm">
 
-                <label for="recipientUsername">
-                    Who are you sending it to?
-                </label>
+guestButton.addEventListener(
+    "click",
+    () => {
 
-                <input
-                    type="text"
-                    id="recipientUsername"
-                    placeholder="@username"
-                    autocomplete="off"
-                    required
-                >
+        showGuest();
 
+    }
+);
 
-                <label for="senderDisplayName">
-                    How should they see you?
-                </label>
 
-                <input
-                    type="text"
-                    id="senderDisplayName"
-                    placeholder="Your name or Anonymous"
-                    autocomplete="off"
-                    required
-                >
+createAccountBack.addEventListener(
+    "click",
+    () => {
 
+        showAccountHome();
 
-                <label class="checkbox-row">
+    }
+);
 
-                    <input
-                        type="checkbox"
-                        id="anonymousCheckbox"
-                    >
 
-                    <span>
-                        Send anonymously
-                    </span>
+loginBack.addEventListener(
+    "click",
+    () => {
 
-                </label>
+        showAccountHome();
 
+    }
+);
 
-                <button
-                    type="submit"
-                    id="sendConfessionSubmit"
-                >
-                    Send Confession 💌
-                </button>
 
-            </form>
+guestBackButton.addEventListener(
+    "click",
+    () => {
 
+        showAccountHome();
 
-            <p
-                class="form-status"
-                id="confessionStatus"
-            ></p>
+    }
+);
 
-        </div>
 
-    </main>
+guestCreateAccountButton.addEventListener(
+    "click",
+    () => {
 
+        showCreateAccount();
 
-    <!-- =========================
-         GUEST NOTICE
-    ========================= -->
+    }
+);
 
-    <main
-        class="container hidden"
-        id="guestScreen"
-    >
 
-        <h1>
-            Guest Mode 💌
-        </h1>
+// ============================================================
+// CREATE ACCOUNT
+// ============================================================
 
-        <p>
-            Guest mode is no longer connected to a personal confession.
-        </p>
+createAccountForm.addEventListener(
+    "submit",
+    async (event) => {
 
-        <p>
-            Create an account to send and receive letters.
-        </p>
+        event.preventDefault();
 
-        <button id="guestCreateAccountButton">
-            Create Account
-        </button>
+        if (!supabaseClient) {
 
-        <button
-            class="response-back-button"
-            id="guestBackButton"
-        >
-            ← Back
-        </button>
+            createAccountStatus.textContent =
+                "Supabase could not be loaded.";
 
-    </main>
+            return;
 
+        }
 
-    <!-- =========================
-         SUPABASE
-    ========================= -->
+        const username =
+            createUsername.value.trim();
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+        const email =
+            createEmail.value.trim();
 
-    <script src="script.js"></script>
+        const password =
+            createPassword.value;
 
-</body>
+        if (!username || !email || !password) {
 
-</html>
+            createAccountStatus.textContent =
+                "Please fill in all fields.";
+
+            return;
+
+        }
+
+        if (username.length < 3) {
+
+            createAccountStatus.textContent =
+                "Username must be at least 3 characters.";
+
+            return;
+
+        }
+
+        if (password.length < 6) {
+
+            createAccountStatus.textContent =
+                "Password must be at least 6 characters.";
+
+            return;
+
+        }
+
+
+        createAccountSubmit.disabled = true;
+
+        createAccountSubmit.textContent =
+            "Creating Account...";
+
+        createAccountStatus.textContent =
+            "";
+
+
+        try {
+
+            const {
+                data,
+                error
+            } =
+                await supabaseClient.auth.signUp({
+
+                    email: email,
+
+                    password: password,
+
+                    options: {
+
+                        data: {
+                            username: username
+                        }
+
+                    }
+
+                });
+
+
+            if (error) {
+                throw error;
+            }
+
+
+            /*
+             * Supabase may require email confirmation.
+             *
+             * If a session is returned immediately,
+             * go straight to the home screen.
+             */
+
+            if (data.session && data.user) {
+
+                showHome(data.user);
+
+            } else {
+
+                createAccountStatus.textContent =
+                    "Account created! Check your email to confirm your account, then log in.";
+
+                createAccountForm.reset();
+
+            }
+
+        } catch (error) {
+
+            console.error(
+                "Create account error:",
+                error
+            );
+
+            createAccountStatus.textContent =
+                error.message ||
+                "Something went wrong while creating your account.";
+
+        } finally {
+
+            createAccountSubmit.disabled = false;
+
+            createAccountSubmit.textContent =
+                "Create Account 💌";
+
+        }
+
+    }
+);
+
+
+// ============================================================
+// LOGIN
+// ============================================================
+
+loginForm.addEventListener(
+    "submit",
+    async (event) => {
+
+        event.preventDefault();
+
+        if (!supabaseClient) {
+
+            loginStatus.textContent =
+                "Supabase could not be loaded.";
+
+            return;
+
+        }
+
+        const email =
+            loginEmail.value.trim();
+
+        const password =
+            loginPassword.value;
+
+
+        if (!email || !password) {
+
+            loginStatus.textContent =
+                "Please enter your email and password.";
+
+            return;
+
+        }
+
+
+        loginSubmit.disabled = true;
+
+        loginSubmit.textContent =
+            "Logging In...";
+
+        loginStatus.textContent =
+            "";
+
+
+        try {
+
+            const {
+                data,
+                error
+            } =
+                await supabaseClient.auth.signInWithPassword({
+
+                    email: email,
+
+                    password: password
+
+                });
+
+
+            if (error) {
+                throw error;
+            }
+
+
+            if (
+                data.session &&
+                data.user
+            ) {
+
+                showHome(data.user);
+
+            } else {
+
+                loginStatus.textContent =
+                    "Login succeeded, but no session was returned.";
+
+            }
+
+        } catch (error) {
+
+            console.error(
+                "Login error:",
+                error
+            );
+
+            loginStatus.textContent =
+                error.message ||
+                "Incorrect email or password.";
+
+        } finally {
+
+            loginSubmit.disabled = false;
+
+            loginSubmit.textContent =
+                "Log In 💌";
+
+        }
+
+    }
+);
+
+
+// ============================================================
+// HOME MENU
+// ============================================================
+
+menuButton.addEventListener(
+    "click",
+    () => {
+
+        openMenu();
+
+    }
+);
+
+
+closeMenuButton.addEventListener(
+    "click",
+    () => {
+
+        closeMenu();
+
+    }
+);
+
+
+overlay.addEventListener(
+    "click",
+    () => {
+
+        closeEverything();
+
+    }
+);
+
+
+// ============================================================
+// ACCOUNT INFORMATION
+// ============================================================
+
+accountInfoButton.addEventListener(
+    "click",
+    () => {
+
+        sideMenu.classList.remove("visible");
+
+        accountInfoPanel.classList.remove("hidden");
+
+    }
+);
+
+
+closeAccountInfo.addEventListener(
+    "click",
+    () => {
+
+        accountInfoPanel.classList.add("hidden");
+
+        closeOverlay();
+
+    }
+);
+
+
+// ============================================================
+// SETTINGS
+// ============================================================
+
+settingsButton.addEventListener(
+    "click",
+    () => {
+
+        sideMenu.classList.remove("visible");
+
+        settingsPanel.classList.remove("hidden");
+
+    }
+);
+
+
+closeSettings.addEventListener(
+    "click",
+    () => {
+
+        settingsPanel.classList.add("hidden");
+
+        closeOverlay();
+
+    }
+);
+
+
+// ============================================================
+// LOGOUT
+// ============================================================
+
+logoutButton.addEventListener(
+    "click",
+    async () => {
+
+        if (!supabaseClient) {
+
+            showAccountHome();
+
+            return;
+
+        }
+
+
+        logoutButton.disabled = true;
+
+
+        try {
+
+            const {
+                error
+            } =
+                await supabaseClient.auth.signOut();
+
+
+            if (error) {
+                throw error;
+            }
+
+
+            currentUser = null;
+
+            showAccountHome();
+
+
+        } catch (error) {
+
+            console.error(
+                "Logout error:",
+                error
+            );
+
+            logoutButton.disabled = false;
+
+        }
+
+    }
+);
+
+
+// ============================================================
+// INBOX
+// ============================================================
+
+mailButton.addEventListener(
+    "click",
+    () => {
+
+        closeEverything();
+
+        openOverlay();
+
+        mailPopup.classList.remove("hidden");
+
+    }
+);
+
+
+closeMailButton.addEventListener(
+    "click",
+    () => {
+
+        mailPopup.classList.add("hidden");
+
+        closeOverlay();
+
+    }
+);
+
+
+// ============================================================
+// LETTER VIEWER
+// ============================================================
+
+closeLetterViewer.addEventListener(
+    "click",
+    () => {
+
+        letterViewer.classList.add("hidden");
+
+        closeOverlay();
+
+    }
+);
+
+
+// ============================================================
+// SEND CONFESSION
+// ============================================================
+
+sendConfessionButton.addEventListener(
+    "click",
+    () => {
+
+        showWritingScreen();
+
+    }
+);
+
+
+writingBackButton.addEventListener(
+    "click",
+    () => {
+
+        showHome(currentUser);
+
+    }
+);
+
+
+confessionMessage.addEventListener(
+    "input",
+    () => {
+
+        updateCharacterCount();
+
+    }
+);
+
+
+nextDetailsButton.addEventListener(
+    "click",
+    () => {
+
+        showDetailsScreen();
+
+    }
+);
+
+
+// ============================================================
+// DETAILS
+// ============================================================
+
+detailsBackButton.addEventListener(
+    "click",
+    () => {
+
+        detailsScreen.classList.add("hidden");
+
+        writingScreen.classList.remove("hidden");
+
+    }
+);
+
+
+anonymousCheckbox.addEventListener(
+    "change",
+    () => {
+
+        if (anonymousCheckbox.checked) {
+
+            senderDisplayName.value =
+                "Anonymous";
+
+            senderDisplayName.disabled =
+                true;
+
+        } else {
+
+            senderDisplayName.value =
+                "";
+
+            senderDisplayName.disabled =
+                false;
+
+        }
+
+    }
+);
+
+
+confessionDetailsForm.addEventListener(
+    "submit",
+    async (event) => {
+
+        event.preventDefault();
+
+
+        const message =
+            confessionMessage.value.trim();
+
+        const recipient =
+            recipientUsername.value.trim();
+
+        const displayName =
+            senderDisplayName.value.trim();
+
+
+        if (!message) {
+
+            confessionStatus.textContent =
+                "Your confession is empty.";
+
+            return;
+
+        }
+
+
+        if (!recipient) {
+
+            confessionStatus.textContent =
+                "Please enter the recipient's username.";
+
+            recipientUsername.focus();
+
+            return;
+
+        }
+
+
+        if (!displayName) {
+
+            confessionStatus.textContent =
+                "Please enter a display name.";
+
+            senderDisplayName.focus();
+
+            return;
+
+        }
+
+
+        /*
+         * DATABASE SENDING IS NOT CONNECTED YET.
+         *
+         * We are intentionally not pretending that
+         * the confession has actually been delivered.
+         */
+
+        sendConfessionSubmit.disabled =
+            true;
+
+        sendConfessionSubmit.textContent =
+            "Preparing Letter...";
+
+
+        confessionStatus.textContent =
+            "";
+
+
+        await new Promise(
+            resolve => setTimeout(resolve, 700)
+        );
+
+
+        confessionStatus.textContent =
+            "Your letter is ready, but sending is not connected to the database yet.";
+
+
+        sendConfessionSubmit.disabled =
+            false;
+
+        sendConfessionSubmit.textContent =
+            "Send Confession 💌";
+
+    }
+);
+
+
+// ============================================================
+// SESSION CHECK
+// ============================================================
+
+async function checkExistingSession() {
+
+    if (!supabaseClient) {
+
+        console.error(
+            "Supabase client was not initialized."
+        );
+
+        showAccountHome();
+
+        return;
+
+    }
+
+
+    try {
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient.auth.getSession();
+
+
+        if (error) {
+            throw error;
+        }
+
+
+        const session =
+            data.session;
+
+
+        if (
+            session &&
+            session.user
+        ) {
+
+            showHome(session.user);
+
+        } else {
+
+            showAccountHome();
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Session check error:",
+            error
+        );
+
+        showAccountHome();
+
+    }
+
+}
+
+
+// ============================================================
+// AUTH STATE LISTENER
+// ============================================================
+
+if (supabaseClient) {
+
+    supabaseClient.auth.onAuthStateChange(
+        (event, session) => {
+
+            console.log(
+                "Auth event:",
+                event
+            );
+
+
+            if (
+                session &&
+                session.user
+            ) {
+
+                currentUser =
+                    session.user;
+
+            }
+
+        }
+    );
+
+}
+
+
+// ============================================================
+// INITIALIZE
+// ============================================================
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        updateCharacterCount();
+
+        checkExistingSession();
+
+    }
+);
