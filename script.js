@@ -439,8 +439,8 @@ function showHome(user) {
 
     homeScreen.classList.remove("hidden");
 
-    // No real inbox database yet.
-    mailBadge.classList.add("hidden");
+    // Load real unread count from database.
+    loadUnreadCount();
 
 }
 
@@ -596,6 +596,423 @@ function updateCharacterCount() {
 
 
 // ============================================================
+// DATABASE — GET UNREAD COUNT
+// ============================================================
+
+async function loadUnreadCount() {
+
+    if (
+        !supabaseClient ||
+        !currentUser
+    ) {
+        mailBadge.classList.add("hidden");
+        return;
+    }
+
+    try {
+
+        const {
+            count,
+            error
+        } =
+            await supabaseClient
+                .from("confessions")
+                .select(
+                    "id",
+                    {
+                        count: "exact",
+                        head: true
+                    }
+                )
+                .eq(
+                    "recipient_id",
+                    currentUser.id
+                )
+                .eq(
+                    "is_read",
+                    false
+                );
+
+        if (error) {
+            throw error;
+        }
+
+        if (count && count > 0) {
+
+            mailBadge.textContent =
+                count > 99 ? "99+" : count;
+
+            mailBadge.classList.remove("hidden");
+
+        } else {
+
+            mailBadge.classList.add("hidden");
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Unread count error:",
+            error
+        );
+
+        mailBadge.classList.add("hidden");
+
+    }
+
+}
+
+
+// ============================================================
+// DATABASE — LOAD INBOX
+// ============================================================
+
+async function loadInbox() {
+
+    if (
+        !supabaseClient ||
+        !currentUser
+    ) {
+        return;
+    }
+
+    inboxList.innerHTML = "";
+
+    emptyInbox.classList.add("hidden");
+
+    try {
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient
+                .from("confessions")
+                .select(
+                    "id, message, sender_display_name, is_anonymous, is_read, created_at"
+                )
+                .eq(
+                    "recipient_id",
+                    currentUser.id
+                )
+                .order(
+                    "created_at",
+                    {
+                        ascending: false
+                    }
+                );
+
+        if (error) {
+            throw error;
+        }
+
+
+        if (!data || data.length === 0) {
+
+            emptyInbox.classList.remove("hidden");
+
+            return;
+
+        }
+
+
+        data.forEach(
+            confession => {
+
+                const item =
+                    document.createElement("button");
+
+                item.type =
+                    "button";
+
+                item.className =
+                    "inbox-letter-card";
+
+                if (!confession.is_read) {
+
+                    item.classList.add(
+                        "unread"
+                    );
+
+                }
+
+
+                const topRow =
+                    document.createElement("div");
+
+                topRow.className =
+                    "inbox-letter-top";
+
+
+                const sender =
+                    document.createElement("span");
+
+                sender.className =
+                    "inbox-letter-sender";
+
+                sender.textContent =
+                    confession.is_anonymous
+                        ? "Anonymous"
+                        : (
+                            confession.sender_display_name ||
+                            "Someone"
+                        );
+
+
+                const unreadDot =
+                    document.createElement("span");
+
+                unreadDot.className =
+                    "inbox-unread-dot";
+
+                if (confession.is_read) {
+
+                    unreadDot.classList.add(
+                        "hidden"
+                    );
+
+                }
+
+
+                topRow.appendChild(sender);
+
+                topRow.appendChild(unreadDot);
+
+
+                const preview =
+                    document.createElement("div");
+
+                preview.className =
+                    "inbox-letter-preview";
+
+                preview.textContent =
+                    confession.message.length > 90
+                        ? confession.message.slice(0, 90) + "..."
+                        : confession.message;
+
+
+                const date =
+                    document.createElement("div");
+
+                date.className =
+                    "inbox-letter-date";
+
+                date.textContent =
+                    formatConfessionDate(
+                        confession.created_at
+                    );
+
+
+                item.appendChild(topRow);
+
+                item.appendChild(preview);
+
+                item.appendChild(date);
+
+
+                item.addEventListener(
+                    "click",
+                    () => {
+
+                        openReceivedLetter(
+                            confession
+                        );
+
+                    }
+                );
+
+
+                inboxList.appendChild(item);
+
+            }
+        );
+
+
+        await loadUnreadCount();
+
+    } catch (error) {
+
+        console.error(
+            "Inbox loading error:",
+            error
+        );
+
+        emptyInbox.classList.remove("hidden");
+
+        emptyInbox.textContent =
+            "Couldn't load your inbox right now.";
+
+    }
+
+}
+
+
+// ============================================================
+// FORMAT DATE
+// ============================================================
+
+function formatConfessionDate(
+    timestamp
+) {
+
+    if (!timestamp) {
+        return "";
+    }
+
+    const date =
+        new Date(timestamp);
+
+    if (Number.isNaN(date.getTime())) {
+        return "";
+    }
+
+    return date.toLocaleString(
+        undefined,
+        {
+            month: "short",
+            day: "numeric",
+            year: "numeric",
+            hour: "numeric",
+            minute: "2-digit"
+        }
+    );
+
+}
+
+
+// ============================================================
+// DATABASE — OPEN RECEIVED LETTER
+// ============================================================
+
+async function openReceivedLetter(
+    confession
+) {
+
+    closePanelsOnly();
+
+    openOverlay();
+
+
+    /*
+     * Find the existing elements inside the
+     * letter viewer and update their text.
+     *
+     * We use textContent instead of innerHTML
+     * so received messages cannot inject HTML.
+     */
+
+    const letterMessage =
+        receivedLetter.querySelector(
+            ".letter-message"
+        );
+
+    const letterSignature =
+        receivedLetter.querySelector(
+            ".letter-signature"
+        );
+
+    const letterSender =
+        receivedLetter.querySelector(
+            ".letter-sender"
+        );
+
+
+    if (letterMessage) {
+
+        letterMessage.textContent =
+            confession.message;
+
+    } else {
+
+        receivedLetter.textContent =
+            confession.message;
+
+    }
+
+
+    if (letterSignature) {
+
+        letterSignature.textContent =
+            confession.is_anonymous
+                ? "Anonymous"
+                : (
+                    confession.sender_display_name ||
+                    "Someone"
+                );
+
+    }
+
+
+    if (letterSender) {
+
+        letterSender.textContent =
+            confession.is_anonymous
+                ? "Anonymous"
+                : (
+                    confession.sender_display_name ||
+                    "Someone"
+                );
+
+    }
+
+
+    letterViewer.classList.remove(
+        "hidden"
+    );
+
+    requestAnimationFrame(() => {
+
+        letterViewer.classList.add(
+            "open"
+        );
+
+    });
+
+
+    // Mark the letter as read.
+    if (!confession.is_read) {
+
+        try {
+
+            const {
+                error
+            } =
+                await supabaseClient
+                    .from("confessions")
+                    .update({
+                        is_read: true
+                    })
+                    .eq(
+                        "id",
+                        confession.id
+                    )
+                    .eq(
+                        "recipient_id",
+                        currentUser.id
+                    );
+
+            if (error) {
+                throw error;
+            }
+
+            await loadUnreadCount();
+
+        } catch (error) {
+
+            console.error(
+                "Mark as read error:",
+                error
+            );
+
+        }
+
+    }
+
+}
+
+
+// ============================================================
 // ACCOUNT NAVIGATION
 // ============================================================
 
@@ -688,14 +1105,23 @@ createAccountForm.addEventListener(
 
         }
 
+        /*
+         * Usernames are stored in lowercase so
+         * recipient searches are consistent.
+         */
+
         const username =
-            createUsername.value.trim();
+            createUsername.value
+                .trim()
+                .replace(/^@/, "")
+                .toLowerCase();
 
         const email =
             createEmail.value.trim();
 
         const password =
             createPassword.value;
+
 
         if (!username || !email || !password) {
 
@@ -706,6 +1132,7 @@ createAccountForm.addEventListener(
 
         }
 
+
         if (username.length < 3) {
 
             createAccountStatus.textContent =
@@ -714,6 +1141,7 @@ createAccountForm.addEventListener(
             return;
 
         }
+
 
         if (password.length < 6) {
 
@@ -769,7 +1197,10 @@ createAccountForm.addEventListener(
              * go straight to the home screen.
              */
 
-            if (data.session && data.user) {
+            if (
+                data.session &&
+                data.user
+            ) {
 
                 showHome(data.user);
 
@@ -1078,7 +1509,7 @@ logoutButton.addEventListener(
 
 mailButton.addEventListener(
     "click",
-    () => {
+    async () => {
 
         // Close other panels but KEEP the home screen.
         closePanelsOnly();
@@ -1092,6 +1523,9 @@ mailButton.addEventListener(
             mailPopup.classList.add("open");
 
         });
+
+        // Load actual database inbox.
+        await loadInbox();
 
     }
 );
@@ -1215,6 +1649,10 @@ anonymousCheckbox.addEventListener(
 );
 
 
+// ============================================================
+// SEND CONFESSION TO DATABASE
+// ============================================================
+
 confessionDetailsForm.addEventListener(
     "submit",
     async (event) => {
@@ -1222,11 +1660,27 @@ confessionDetailsForm.addEventListener(
         event.preventDefault();
 
 
+        if (
+            !supabaseClient ||
+            !currentUser
+        ) {
+
+            confessionStatus.textContent =
+                "You need to be logged in to send a confession.";
+
+            return;
+
+        }
+
+
         const message =
             confessionMessage.value.trim();
 
         const recipient =
-            recipientUsername.value.trim();
+            recipientUsername.value
+                .trim()
+                .replace(/^@/, "")
+                .toLowerCase();
 
         const displayName =
             senderDisplayName.value.trim();
@@ -1266,38 +1720,151 @@ confessionDetailsForm.addEventListener(
         }
 
 
-        /*
-         * DATABASE SENDING IS NOT CONNECTED YET.
-         *
-         * We are intentionally not pretending that
-         * the confession has actually been delivered.
-         */
-
         sendConfessionSubmit.disabled =
             true;
 
         sendConfessionSubmit.textContent =
-            "Preparing Letter...";
-
+            "Sending Letter...";
 
         confessionStatus.textContent =
             "";
 
 
-        await new Promise(
-            resolve => setTimeout(resolve, 700)
-        );
+        try {
+
+            // ==================================================
+            // FIND RECIPIENT BY USERNAME
+            // ==================================================
+
+            const {
+                data: recipientProfile,
+                error: recipientError
+            } =
+                await supabaseClient
+                    .from("profiles")
+                    .select(
+                        "id, username"
+                    )
+                    .eq(
+                        "username",
+                        recipient
+                    )
+                    .maybeSingle();
 
 
-        confessionStatus.textContent =
-            "Your letter is ready, but sending is not connected to the database yet.";
+            if (recipientError) {
+                throw recipientError;
+            }
 
 
-        sendConfessionSubmit.disabled =
-            false;
+            if (!recipientProfile) {
 
-        sendConfessionSubmit.textContent =
-            "Send Confession 💌";
+                confessionStatus.textContent =
+                    "That username doesn't exist.";
+
+                recipientUsername.focus();
+
+                return;
+
+            }
+
+
+            // ==================================================
+            // PREVENT SENDING TO YOURSELF
+            // ==================================================
+
+            if (
+                recipientProfile.id ===
+                currentUser.id
+            ) {
+
+                confessionStatus.textContent =
+                    "You can't send a confession to yourself.";
+
+                return;
+
+            }
+
+
+            // ==================================================
+            // INSERT CONFESSION
+            // ==================================================
+
+            const {
+                error: sendError
+            } =
+                await supabaseClient
+                    .from("confessions")
+                    .insert({
+
+                        sender_id:
+                            currentUser.id,
+
+                        recipient_id:
+                            recipientProfile.id,
+
+                        message:
+                            message,
+
+                        sender_display_name:
+                            displayName,
+
+                        is_anonymous:
+                            anonymousCheckbox.checked
+
+                    });
+
+
+            if (sendError) {
+                throw sendError;
+            }
+
+
+            // ==================================================
+            // SUCCESS
+            // ==================================================
+
+            confessionStatus.textContent =
+                "Confession sent! 💌";
+
+            sendConfessionSubmit.textContent =
+                "Sent! 💌";
+
+
+            await new Promise(
+                resolve =>
+                    setTimeout(
+                        resolve,
+                        1000
+                    )
+            );
+
+
+            resetConfessionForm();
+
+            showHome(currentUser);
+
+
+        } catch (error) {
+
+            console.error(
+                "Send confession error:",
+                error
+            );
+
+            confessionStatus.textContent =
+                error.message ||
+                "Something went wrong while sending your confession.";
+
+        } finally {
+
+            sendConfessionSubmit.disabled =
+                false;
+
+            sendConfessionSubmit.textContent =
+                "Send Confession 💌";
+
+        }
 
     }
 );
