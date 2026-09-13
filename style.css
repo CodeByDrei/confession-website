@@ -416,9 +416,6 @@ button:disabled {
 .home-icon-button {
     position: fixed;
 
-    /*
-     * ABOVE THE OVERLAY
-     */
     z-index: 40;
 
     width: 55px;
@@ -469,6 +466,10 @@ button:disabled {
 }
 
 
+/* =========================
+   MAIN MAIL BUTTON BADGE
+========================= */
+
 .notification-badge {
     position: absolute;
 
@@ -486,7 +487,7 @@ button:disabled {
 
     justify-content: center;
 
-    border-radius: 50%;
+    border-radius: 8px;
 
     background: #ff5f86;
 
@@ -626,11 +627,6 @@ button:disabled {
         transform 0.35s ease;
 }
 
-
-/*
- * IMPORTANT:
- * JavaScript uses .visible
- */
 
 .side-menu.visible {
     transform:
@@ -1022,6 +1018,15 @@ button:disabled {
 
 
 /* =========================
+   INBOX LIST
+========================= */
+
+.inbox-list {
+    margin-top: 18px;
+}
+
+
+/* =========================
    EMPTY INBOX
 ========================= */
 
@@ -1054,6 +1059,171 @@ button:disabled {
 
 
 /* =========================
+   RECEIVED LETTER CARDS
+========================= */
+
+.inbox-letter-card {
+    width: 100%;
+
+    padding: 20px;
+
+    margin-top: 15px;
+
+    display: block;
+
+    text-align: left;
+
+    background:
+        repeating-linear-gradient(
+            #fffdf8,
+            #fffdf8 29px,
+            #f3e4e7 30px
+        );
+
+    border:
+        1px solid #ead8dc;
+
+    border-radius: 7px;
+
+    color: #3b2630;
+
+    box-shadow:
+        0 8px 20px
+        rgba(70, 30, 45, 0.10);
+
+    position: relative;
+
+    overflow: hidden;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.inbox-letter-card:hover {
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 14px 30px
+        rgba(70, 30, 45, 0.15);
+}
+
+
+/* =========================
+   INBOX LETTER TOP
+========================= */
+
+.inbox-letter-top {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 10px;
+
+    margin-bottom: 10px;
+}
+
+
+.inbox-letter-sender {
+    font-family: Georgia, serif;
+
+    font-size: 1rem;
+
+    font-weight: bold;
+
+    color: #4b3039;
+}
+
+
+/* =========================
+   NEW NOTIFICATION
+========================= */
+
+.inbox-unread-badge {
+    min-width: 42px;
+    height: 25px;
+
+    padding:
+        0 9px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 8px;
+
+    background: #ff5f86;
+
+    color: white;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 0.68rem;
+
+    font-weight: bold;
+
+    letter-spacing: 0.5px;
+
+    line-height: 1;
+
+    box-shadow:
+        0 4px 10px
+        rgba(255, 95, 134, 0.2);
+}
+
+
+/* =========================
+   INBOX LETTER PREVIEW
+========================= */
+
+.inbox-letter-preview {
+    color: #80606d;
+
+    font-family: Georgia, serif;
+
+    font-size: 0.95rem;
+
+    line-height: 1.5;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+
+/* =========================
+   INBOX LETTER DATE
+========================= */
+
+.inbox-letter-date {
+    margin-top: 12px;
+
+    color: #b08391;
+
+    font-size: 0.75rem;
+}
+
+
+/* =========================
+   READ LETTER STYLE
+========================= */
+
+.inbox-letter-card:not(.unread) {
+    opacity: 0.82;
+}
+
+
+/* =========================
    LETTER VIEWER
 ========================= */
 
@@ -1071,6 +1241,16 @@ button:disabled {
     justify-content: center;
 
     padding: 25px;
+
+    opacity: 0;
+
+    transition:
+        opacity 0.3s ease;
+}
+
+
+.letter-viewer.open {
+    opacity: 1;
 }
 
 
@@ -1084,19 +1264,27 @@ button:disabled {
 
     overflow-y: auto;
 
-    padding: 55px;
+    padding: 60px 55px;
 
     background:
-        #fffdf8;
+        repeating-linear-gradient(
+            #fffdf8,
+            #fffdf8 39px,
+            #f3e4e7 40px
+        );
 
-    border-radius: 8px;
+    border-radius: 7px;
+
+    border:
+        1px solid #ead8dc;
 
     box-shadow:
-        0 25px 70px
-        rgba(60, 30, 40, 0.25);
+        0 30px 80px
+        rgba(60, 30, 40, 0.28);
 
     transform:
-        scale(0.95);
+        scale(0.95)
+        rotate(-0.5deg);
 
     opacity: 0;
 
@@ -1108,7 +1296,8 @@ button:disabled {
 
 .letter-viewer.open .letter-viewer-paper {
     transform:
-        scale(1);
+        scale(1)
+        rotate(0deg);
 
     opacity: 1;
 }
@@ -1130,6 +1319,8 @@ button:disabled {
     color: #a05269;
 
     font-size: 1.5rem;
+
+    z-index: 2;
 }
 
 
@@ -1150,28 +1341,55 @@ button:disabled {
     font-family: Georgia, serif;
 
     margin-bottom: 30px;
+
+    color: #4b3039;
 }
 
 
 .received-letter {
+    position: relative;
+
+    padding:
+        5px 5px 0;
+}
+
+
+.received-letter-message {
     white-space: pre-wrap;
 
     font-family: Georgia, serif;
 
-    font-size: 1.1rem;
+    font-size: 1.12rem;
 
-    line-height: 1.8;
+    line-height: 40px;
+
+    color: #3b2630;
+
+    min-height: 80px;
 }
 
 
-.letter-signature {
-    margin-top: 35px;
+.received-letter-divider {
+    width: 100%;
 
+    height: 1px;
+
+    margin:
+        35px 0 20px;
+
+    background:
+        #ead5da;
+}
+
+
+.received-letter-sender {
     color: #80606d;
 
     font-family: Georgia, serif;
 
     font-style: italic;
+
+    font-size: 1rem;
 }
 
 
@@ -1575,7 +1793,30 @@ button:disabled {
 
         max-height: 82vh;
 
-        padding: 35px 25px;
+        padding: 40px 25px;
+    }
+
+
+    .received-letter-message {
+        font-size: 1rem;
+
+        line-height: 35px;
+    }
+
+
+    .inbox-letter-card {
+        padding: 17px;
+    }
+
+
+    .inbox-unread-badge {
+        min-width: 40px;
+        height: 24px;
+
+        padding:
+            0 8px;
+
+        border-radius: 8px;
     }
 
 
