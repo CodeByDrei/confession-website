@@ -265,17 +265,42 @@ function hideAllMainScreens() {
 }
 
 
-function closeEverything() {
+// ============================================================
+// CLOSE ONLY PANELS
+// IMPORTANT:
+// This does NOT close the background overlay.
+// ============================================================
+
+function closePanelsOnly() {
 
     sideMenu.classList.remove("visible");
 
+    accountInfoPanel.classList.remove("open");
+
     accountInfoPanel.classList.add("hidden");
+
+    settingsPanel.classList.remove("open");
 
     settingsPanel.classList.add("hidden");
 
+    mailPopup.classList.remove("open");
+
     mailPopup.classList.add("hidden");
 
+    letterViewer.classList.remove("open");
+
     letterViewer.classList.add("hidden");
+
+}
+
+
+// ============================================================
+// CLOSE EVERYTHING
+// ============================================================
+
+function closeEverything() {
+
+    closePanelsOnly();
 
     overlay.classList.remove("visible");
 
@@ -283,6 +308,10 @@ function closeEverything() {
 
 }
 
+
+// ============================================================
+// ACCOUNT HOME
+// ============================================================
 
 function showAccountHome() {
 
@@ -294,6 +323,10 @@ function showAccountHome() {
 
 }
 
+
+// ============================================================
+// CREATE ACCOUNT
+// ============================================================
 
 function showCreateAccount() {
 
@@ -308,6 +341,10 @@ function showCreateAccount() {
 }
 
 
+// ============================================================
+// LOGIN
+// ============================================================
+
 function showLogin() {
 
     closeEverything();
@@ -321,6 +358,10 @@ function showLogin() {
 }
 
 
+// ============================================================
+// GUEST
+// ============================================================
+
 function showGuest() {
 
     closeEverything();
@@ -331,6 +372,10 @@ function showGuest() {
 
 }
 
+
+// ============================================================
+// GET USERNAME
+// ============================================================
 
 function getUsername(user) {
 
@@ -346,6 +391,10 @@ function getUsername(user) {
 
 }
 
+
+// ============================================================
+// UPDATE USER INFORMATION
+// ============================================================
 
 function updateUserInformation(user) {
 
@@ -374,6 +423,10 @@ function updateUserInformation(user) {
 }
 
 
+// ============================================================
+// SHOW HOME
+// ============================================================
+
 function showHome(user) {
 
     currentUser = user;
@@ -392,17 +445,26 @@ function showHome(user) {
 }
 
 
+// ============================================================
+// OPEN OVERLAY
+// ============================================================
+
 function openOverlay() {
 
     overlay.classList.remove("hidden");
 
-    // Small delay lets the CSS opacity transition work.
     requestAnimationFrame(() => {
+
         overlay.classList.add("visible");
+
     });
 
 }
 
+
+// ============================================================
+// CLOSE OVERLAY
+// ============================================================
 
 function closeOverlay() {
 
@@ -411,7 +473,9 @@ function closeOverlay() {
     setTimeout(() => {
 
         if (!overlay.classList.contains("visible")) {
+
             overlay.classList.add("hidden");
+
         }
 
     }, 300);
@@ -419,9 +483,14 @@ function closeOverlay() {
 }
 
 
+// ============================================================
+// OPEN MENU
+// ============================================================
+
 function openMenu() {
 
-    closeEverything();
+    // Close other panels but KEEP the home screen.
+    closePanelsOnly();
 
     openOverlay();
 
@@ -429,6 +498,10 @@ function openMenu() {
 
 }
 
+
+// ============================================================
+// CLOSE MENU
+// ============================================================
 
 function closeMenu() {
 
@@ -438,6 +511,10 @@ function closeMenu() {
 
 }
 
+
+// ============================================================
+// RESET CONFESSION FORM
+// ============================================================
 
 function resetConfessionForm() {
 
@@ -449,12 +526,18 @@ function resetConfessionForm() {
 
     anonymousCheckbox.checked = false;
 
+    senderDisplayName.disabled = false;
+
     confessionStatus.textContent = "";
 
     updateCharacterCount();
 
 }
 
+
+// ============================================================
+// SHOW WRITING SCREEN
+// ============================================================
 
 function showWritingScreen() {
 
@@ -470,6 +553,10 @@ function showWritingScreen() {
 
 }
 
+
+// ============================================================
+// SHOW DETAILS SCREEN
+// ============================================================
 
 function showDetailsScreen() {
 
@@ -492,6 +579,10 @@ function showDetailsScreen() {
 
 }
 
+
+// ============================================================
+// CHARACTER COUNT
+// ============================================================
 
 function updateCharacterCount() {
 
@@ -842,6 +933,10 @@ closeMenuButton.addEventListener(
 );
 
 
+// ============================================================
+// OVERLAY CLICK
+// ============================================================
+
 overlay.addEventListener(
     "click",
     () => {
@@ -864,6 +959,12 @@ accountInfoButton.addEventListener(
 
         accountInfoPanel.classList.remove("hidden");
 
+        requestAnimationFrame(() => {
+
+            accountInfoPanel.classList.add("open");
+
+        });
+
     }
 );
 
@@ -871,6 +972,8 @@ accountInfoButton.addEventListener(
 closeAccountInfo.addEventListener(
     "click",
     () => {
+
+        accountInfoPanel.classList.remove("open");
 
         accountInfoPanel.classList.add("hidden");
 
@@ -892,6 +995,12 @@ settingsButton.addEventListener(
 
         settingsPanel.classList.remove("hidden");
 
+        requestAnimationFrame(() => {
+
+            settingsPanel.classList.add("open");
+
+        });
+
     }
 );
 
@@ -899,6 +1008,8 @@ settingsButton.addEventListener(
 closeSettings.addEventListener(
     "click",
     () => {
+
+        settingsPanel.classList.remove("open");
 
         settingsPanel.classList.add("hidden");
 
@@ -969,11 +1080,18 @@ mailButton.addEventListener(
     "click",
     () => {
 
-        closeEverything();
+        // Close other panels but KEEP the home screen.
+        closePanelsOnly();
 
         openOverlay();
 
         mailPopup.classList.remove("hidden");
+
+        requestAnimationFrame(() => {
+
+            mailPopup.classList.add("open");
+
+        });
 
     }
 );
@@ -982,6 +1100,8 @@ mailButton.addEventListener(
 closeMailButton.addEventListener(
     "click",
     () => {
+
+        mailPopup.classList.remove("open");
 
         mailPopup.classList.add("hidden");
 
@@ -998,6 +1118,8 @@ closeMailButton.addEventListener(
 closeLetterViewer.addEventListener(
     "click",
     () => {
+
+        letterViewer.classList.remove("open");
 
         letterViewer.classList.add("hidden");
 
