@@ -354,12 +354,24 @@ button:disabled {
 }
 
 
+/* =========================
+   HOME CONTENT
+========================= */
+
 .home-content {
     position: relative;
 
     z-index: 2;
 
     width: min(90%, 650px);
+
+    margin: 0 auto;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
 
     text-align: center;
 }
@@ -404,7 +416,10 @@ button:disabled {
 .home-icon-button {
     position: fixed;
 
-    z-index: 20;
+    /*
+     * ABOVE THE OVERLAY
+     */
+    z-index: 40;
 
     width: 55px;
     height: 55px;
@@ -493,6 +508,8 @@ button:disabled {
 .send-confession-button {
     width: min(90%, 390px);
 
+    margin: 0 auto;
+
     padding: 25px 30px;
 
     display: flex;
@@ -500,6 +517,10 @@ button:disabled {
     flex-direction: column;
 
     align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
 
     gap: 7px;
 
@@ -606,7 +627,12 @@ button:disabled {
 }
 
 
-.side-menu.open {
+/*
+ * IMPORTANT:
+ * JavaScript uses .visible
+ */
+
+.side-menu.visible {
     transform:
         translateX(0);
 }
@@ -1516,6 +1542,8 @@ button:disabled {
 
 
     .home-content {
+        width: 92%;
+
         padding:
             0 10px;
     }
@@ -1528,6 +1556,9 @@ button:disabled {
 
     .send-confession-button {
         width: 100%;
+
+        margin-left: auto;
+        margin-right: auto;
     }
 
 
